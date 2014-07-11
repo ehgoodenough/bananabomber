@@ -2,6 +2,7 @@ function GameState()
 {
 	this.onInitiate = function()
 	{
+		this.stage = new Stage();
 		this.bomber = new Bomber();
 	}
 	
@@ -13,6 +14,27 @@ function GameState()
 	this.onRender = function()
 	{
 		$("canvas").clearCanvas();
-		$("canvas").draw(this.bomber.render());
+		
+		render(this.stage.tiles);
+		render(this.bomber);
+	}
+}
+
+function render(stuff)
+{
+	stuff = stuff || this.stuff;
+	
+	if(stuff.render)
+	{
+		var rendering = stuff.render();
+		$("canvas").draw(rendering);
+	}
+	else
+	{
+		for(var s in stuff)
+			if(stuff[s].render)
+				this.render(stuff[s]);
+			else
+				render(stuff[s]);
 	}
 }
