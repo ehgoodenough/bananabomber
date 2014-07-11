@@ -54,6 +54,17 @@ function Stage()
 	}
 }
 
+Stage.prototype.spawn = function(bomber)
+{
+	var x = 3;
+	var y = 5;
+	
+	bomber.position.x = x * SCALE + (SCALE / 2);
+	bomber.position.y = y * SCALE + (SCALE / 2);
+	
+	this.clear(x, y);
+}
+
 Stage.prototype.clear = function(x, y)
 {
 	this.tiles[x][y].clear("all", 2);
