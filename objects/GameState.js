@@ -6,30 +6,28 @@ function GameState()
 		this.stage = stage = new Stage();
 		
 		this.stage.addBomber();
-		
-		this.delta = Date.now();
 	}
 	
 	this.onUpdate = function(delta)
 	{
 		this.stage.update();
 		this.objedex.bombers.update();
-		this.objedex.bombs.update();
 	}
 	
-	this.onRender = function()
+	this.onRender = function(delta)
 	{
 		$("canvas").clearCanvas();
 		
-		this.stage.render();
-		this.objedex.bombs.render();
-		
 		this.objedex.bombers.foreach(function(bomber)
 		{
+			this.stage.render();
+			
 			var rendering = bomber.render();
 			$("canvas").draw(rendering);
 			
-			$("#game   #bombcount").text(bomber.bombcount);
+			$("#game > #status > #bombcount").text(bomber.bombcount);
 		});
+		
+		$("#game #status #framerate").text(delta);
 	}
 }

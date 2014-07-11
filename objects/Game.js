@@ -1,5 +1,6 @@
 var Game = function()
 {
+	this.delta = Date.now();
 	this.reloop();
 }
 
@@ -14,10 +15,11 @@ Game.prototype.loop = function()
 	if(this.state)
 	{
 		this.delta = Date.now() - this.delta;
-		this.state.onUpdate(this.delta);
-		this.delta = Date.now();
 		
-		this.state.onRender();
+		this.state.onUpdate(this.delta);
+		this.state.onRender(this.delta);
+		
+		this.delta = Date.now();
 	}
 	
 	this.reloop();

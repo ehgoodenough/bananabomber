@@ -14,6 +14,11 @@ Tile.prototype.update = function()
 	{
 		this.explosion -= 1;
 	}
+	
+	if(this.hasBomb())
+	{
+		this.getBomb().update();
+	}
 }
 
 Tile.prototype.render = function()
@@ -110,4 +115,9 @@ Tile.prototype.hasBomb = function()
 Tile.prototype.spawnBomb = function(bomber)
 {
 	this.bomb = new Bomb(this.x, this.y, bomber);
+}
+
+Tile.prototype.getBomb = function(bomber)
+{
+	return this.bomb;
 }

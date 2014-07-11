@@ -1,7 +1,9 @@
 function Stage()
 {
-	this.WIDTH = 16; 32;
-	this.HEIGHT = 9; 18;
+	this.WIDTH = 32;
+	this.HEIGHT = 18;
+	this.WIDTH = 16;
+	this.HEIGHT = 9;
 	
 	this.tiles = new Array();
 	
@@ -56,8 +58,8 @@ function Stage()
 
 Stage.prototype.addBomber = function()
 {
-	var x = getRandomOddValue(this.WIDTH);
-	var y = getRandomOddValue(this.HEIGHT);
+	var x = getRandomOddValue(this.WIDTH / 2);
+	var y = getRandomOddValue(this.HEIGHT / 2);
 	
 	this.tiles[x][y].explode("all", 2);
 	var bomber = new Bomber(x, y);
@@ -68,14 +70,18 @@ Stage.prototype.getTile = function(x, y)
 	return this.tiles[pixel2tile(x)][pixel2tile(y)];
 }
 
-Stage.prototype.render = function()
+Stage.prototype.render = function(camera)
 {
 	for(var x = 0; x < this.WIDTH; x++)
 	{
 		for(var y = 0; y < this.HEIGHT; y++)
 		{
-			var rendering = this.tiles[x][y].render();
-			$("canvas").draw(rendering);
+			$("canvas").draw(this.tiles[x][y].render());
+			
+			if(this.tiles[x][y].hasBomb())
+			{
+				$("canvas").draw(this.tiles[x][y].getBomb().render());
+			}
 		}
 	}
 }

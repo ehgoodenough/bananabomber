@@ -87,7 +87,7 @@ body
 	background-color: #888;
 }
 
-#game > #status.view > #bombcount
+#game > #status.view > #framerate
 {
 	top: 1rem;
 	left: 1rem;
