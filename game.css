@@ -29,22 +29,6 @@ body
 	position: fixed;
 }
 
-#game > .view
-{
-	top: 0px;
-	left: 0px;
-	right: 0px;
-	bottom: 0px;
-	width: 100%;
-	height: 100%;
-	position: absolute;
-}
-
-#game > canvas.view
-{
-	background-color: #888;
-}
-
 @media(min-aspect-ratio: 16/9)
 {
 	#game
@@ -85,4 +69,29 @@ body
 		top: auto;
 		bottom: auto;
 	}
+}
+
+#game > .view
+{
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+
+#game > canvas.view
+{
+	background-color: #888;
+}
+
+#game > #status.view > #bombcount
+{
+	top: 1rem;
+	left: 1rem;
+	font-size: 2rem;
+	line-height: 1em;
+	position: absolute;
 }
