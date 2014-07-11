@@ -2,65 +2,61 @@ function Bomber(x, y)
 {
 	objedex.bombers.add(this);
 	
-	this.speed = SCALE / 10;
+	this.x = x * SCALE + (SCALE / 2);
+	this.y = y * SCALE + (SCALE / 2);
 	
-	this.position = new Object();
-	this.position.x = x * SCALE + (SCALE / 2);
-	this.position.y = y * SCALE + (SCALE / 2);
+	this.speed = SCALE / 10;
 }
 
 Bomber.prototype.moveNorth = function()
 {
-	var x = this.position.x;
-	var y = this.position.y - this.speed - (SCALE / 4);
+	var x = this.x;
+	var y = this.y - this.speed - (SCALE / 4);
 	
 	if(stage.getTile(x, y).type == "floor")
 	{
-		this.position.y -= this.speed;
+		this.y -= this.speed;
 	}
 }
 
 Bomber.prototype.moveSouth = function()
 {
-	var x = this.position.x;
-	var y = this.position.y + this.speed + (SCALE / 4);
+	var x = this.x;
+	var y = this.y + this.speed + (SCALE / 4);
 	
 	if(stage.getTile(x, y).type == "floor")
 	{
-		this.position.y += this.speed;
+		this.y += this.speed;
 	}
 }
 
 Bomber.prototype.moveWest = function()
 {
-	var x = this.position.x - this.speed - (SCALE / 4);
-	var y = this.position.y;
+	var x = this.x - this.speed - (SCALE / 4);
+	var y = this.y;
 	
 	if(stage.getTile(x, y).type == "floor")
 	{
-		this.position.x -= this.speed;
+		this.x -= this.speed;
 	}
 }
 
 Bomber.prototype.moveEast = function()
 {
-	var x = this.position.x + this.speed + (SCALE / 4);
-	var y = this.position.y;
+	var x = this.x + this.speed + (SCALE / 4);
+	var y = this.y;
 	
 	if(stage.getTile(x, y).type == "floor")
 	{
-		this.position.x += this.speed;
+		this.x += this.speed;
 	}
 }
 
 Bomber.prototype.dropBomb = function()
 {
-	var x = this.position.x;
-	var y = this.position.y;
-	
-	if(!stage.getTile(x, y).hasBomb())
+	if(!stage.getTile(this.x, this.y).hasBomb())
 	{
-		stage.getTile(x, y).dropBomb();
+		stage.getTile(this.x, this.y).spawnBomb();
 	}
 }
 
@@ -83,8 +79,8 @@ Bomber.prototype.render = function()
 	
 	rendering.fillStyle = "green";
 	
-	rendering.x = this.position.x;
-	rendering.y = this.position.y;
+	rendering.x = this.x;
+	rendering.y = this.y;
 	
 	rendering.width = SCALE;
 	rendering.height = SCALE;
