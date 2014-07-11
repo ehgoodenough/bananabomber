@@ -40,26 +40,22 @@ Tile.prototype.clear = function(direction, intensity)
 		{
 			this.type = "floor";
 			
-			if(direction == "all")
-			{
-				this.east.clear("east", intensity - 1);
-				this.west.clear("west", intensity - 1);
-				this.north.clear("north", intensity - 1);
-				this.south.clear("south", intensity - 1);
-			}
-			else if(direction == "east")
+			if(direction == "east" || direction == "all")
 			{
 				this.east.clear("east", intensity - 1);
 			}
-			else if(direction == "west")
+			
+			if(direction == "west" || direction == "all")
 			{
 				this.west.clear("west", intensity - 1);
 			}
-			else if(direction == "south")
+			
+			if(direction == "south" || direction == "all")
 			{
 				this.south.clear("south", intensity - 1);
 			}
-			else if(direction == "north")
+			
+			if(direction == "north" || direction == "all")
 			{
 				this.north.clear("north", intensity - 1);
 			}
