@@ -31,3 +31,38 @@ Tile.prototype.render = function()
 	
 	return rendering;
 }
+
+Tile.prototype.clear = function(direction, intensity)
+{
+	if(intensity > 0)
+	{
+		if(this.type != "wall")
+		{
+			this.type = "floor";
+			
+			if(direction == "all")
+			{
+				this.east.clear("east", intensity - 1);
+				this.west.clear("west", intensity - 1);
+				this.north.clear("north", intensity - 1);
+				this.south.clear("south", intensity - 1);
+			}
+			else if(direction == "east")
+			{
+				this.east.clear("east", intensity - 1);
+			}
+			else if(direction == "west")
+			{
+				this.west.clear("west", intensity - 1);
+			}
+			else if(direction == "south")
+			{
+				this.south.clear("south", intensity - 1);
+			}
+			else if(direction == "north")
+			{
+				this.north.clear("north", intensity - 1);
+			}
+		}
+	}
+}
