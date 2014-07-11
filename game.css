@@ -84,7 +84,7 @@ body
 
 #game > canvas.view
 {
-	background-color: #888;
+	background-color: #CCC;
 }
 
 #game > #status.view > #framerate

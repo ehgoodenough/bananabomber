@@ -28,6 +28,6 @@ function GameState()
 			$("#game > #status > #bombcount").text(bomber.bombcount);
 		});
 		
-		$("#game #status #framerate").text(delta);
+		$("#game > #status > #framerate").text(delta);
 	}
 }

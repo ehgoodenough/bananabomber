@@ -15,9 +15,9 @@ Tile.prototype.update = function()
 		this.explosion -= 1;
 	}
 	
-	if(this.hasBomb())
+	if(this.bomb)
 	{
-		this.getBomb().update();
+		this.bomb.update();
 	}
 }
 
@@ -50,6 +50,8 @@ Tile.prototype.render = function()
 	{
 		var red = (this.explosion % 16).toString(16);
 		rendering.fillStyle = "#" + red + "00";
+		
+		rendering.opacity = this.explosion / 16;
 	}
 	
 	return rendering;
