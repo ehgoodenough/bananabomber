@@ -7,16 +7,12 @@ function GameState()
 	
 	this.onUpdate = function()
 	{
+		this.bomber.update();
 	}
 	
 	this.onRender = function()
 	{
-		render(this.bomber);
+		$("canvas").clearCanvas();
+		$("canvas").draw(this.bomber.render());
 	}
-}
-
-function render(stuff)
-{
-	var rendering = stuff.render();
-	$("canvas").draw(rendering);
 }
