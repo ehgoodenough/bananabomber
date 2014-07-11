@@ -2,8 +2,8 @@ function Stage()
 {
 	this.WIDTH = 32;
 	this.HEIGHT = 18;
-	this.WIDTH = 16;
-	this.HEIGHT = 9;
+	//this.WIDTH = 16;
+	//this.HEIGHT = 9;
 	
 	this.tiles = new Array();
 	
@@ -23,7 +23,8 @@ function Stage()
 			}
 			else if(x % 2 == 1 || y % 2 == 1)
 			{
-				tile.type = "crate";
+				//tile.type = "crate";
+				tile.type = "floor";
 			}
 			
 			tiles.push(tile);
@@ -61,6 +62,9 @@ Stage.prototype.addBomber = function()
 	var x = getRandomOddValue(this.WIDTH / 2);
 	var y = getRandomOddValue(this.HEIGHT / 2);
 	
+	x = this.WIDTH / 2 - 1;
+	y = this.HEIGHT / 2 - 2;
+	
 	this.tiles[x][y].explode("all", 2);
 	var bomber = new Bomber(x, y);
 }
@@ -70,18 +74,25 @@ Stage.prototype.getTile = function(x, y)
 	return this.tiles[pixel2tile(x)][pixel2tile(y)];
 }
 
-Stage.prototype.render = function(camera)
+Stage.prototype.render = function(cx, cy)
 {
-	for(var x = 0; x < this.WIDTH; x++)
+	for(var x = 0; x < 16; x++)
 	{
-		for(var y = 0; y < this.HEIGHT; y++)
+		for(var y = 0; y < 9; y++)
 		{
-			$("canvas").draw(this.tiles[x][y].render());
+			var tx = x + pixel2tile(cx);
+			var ty = y + pixel2tile(cy);
+			var ofx = cx - (tx * SCALE);
+			var ofy = cy - (ty * SCALE);
 			
-			if(this.tiles[x][y].hasBomb())
+			var tile = this.tiles[tx][ty];
+			var rendering = tile.render(x, y);
+			$("canvas").draw(rendering);
+			
+			/*if(this.tiles[tx][ty].hasBomb())
 			{
-				$("canvas").draw(this.tiles[x][y].getBomb().render());
-			}
+				$("canvas").draw(this.tiles[tx][ty].getBomb().render());
+			}*/
 		}
 	}
 }

@@ -21,7 +21,7 @@ Tile.prototype.update = function()
 	}
 }
 
-Tile.prototype.render = function()
+Tile.prototype.render = function(x, y)
 {
 	var rendering = {};
 	
@@ -29,8 +29,8 @@ Tile.prototype.render = function()
 	
 	rendering.width = SCALE;
 	rendering.height = SCALE;
-	rendering.x = this.x * SCALE;
-	rendering.y = this.y * SCALE;
+	rendering.x = x * SCALE;
+	rendering.y = y * SCALE;
 	rendering.fromCenter = false;
 	
 	if(this.type == "wall")
