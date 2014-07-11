@@ -1,7 +1,9 @@
-function Tile(type, position)
+function Tile(x, y, type)
 {
+	this.x = x;
+	this.y = y;
+	
 	this.type = type;
-	this.position = position;
 }
 
 Tile.prototype.render = function()
@@ -22,8 +24,8 @@ Tile.prototype.render = function()
 	var rendering = {};
 	
 	rendering.type = "rectangle";
-	rendering.x = this.position.x * SCALE;
-	rendering.y = this.position.y * SCALE;
+	rendering.x = this.x * SCALE;
+	rendering.y = this.y * SCALE;
 	rendering.width = SCALE;
 	rendering.height = SCALE;
 	rendering.fillStyle = color;
@@ -61,4 +63,14 @@ Tile.prototype.explode = function(direction, intensity)
 			}
 		}
 	}
+}
+
+Tile.prototype.hasBomb = function()
+{
+	return this.bomb != undefined;
+}
+
+Tile.prototype.dropBomb = function()
+{
+	this.bomb = new Bomb(this.x, this.y);
 }

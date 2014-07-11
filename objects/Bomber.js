@@ -1,5 +1,7 @@
 function Bomber(x, y)
 {
+	objedex.bombers.add(this);
+	
 	this.speed = SCALE / 10;
 	
 	this.position = new Object();
@@ -51,6 +53,17 @@ Bomber.prototype.moveEast = function()
 	}
 }
 
+Bomber.prototype.dropBomb = function()
+{
+	var x = this.position.x;
+	var y = this.position.y;
+	
+	if(!stage.getTile(x, y).hasBomb())
+	{
+		stage.getTile(x, y).dropBomb();
+	}
+}
+
 Bomber.prototype.update = function()
 {
 	if(Keystate.get("right arrow")) {this.moveEast();}
@@ -58,6 +71,8 @@ Bomber.prototype.update = function()
 	
 	if(Keystate.get("down arrow")) {this.moveSouth();}
 	else if(Keystate.get("up arrow")) {this.moveNorth();}
+	
+	if(Keystate.get("z")) {this.dropBomb();}
 }
 
 Bomber.prototype.render = function()

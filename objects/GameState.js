@@ -11,6 +11,7 @@ function GameState()
 	this.onUpdate = function()
 	{
 		this.objedex.bombers.update();
+		this.objedex.bombs.update();
 	}
 	
 	this.onRender = function()
@@ -18,6 +19,7 @@ function GameState()
 		$("canvas").clearCanvas();
 		
 		this.stage.render();
+		this.objedex.bombs.render();
 		this.objedex.bombers.render();
 	}
 }

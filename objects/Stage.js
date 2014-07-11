@@ -11,7 +11,7 @@ function Stage()
 		
 		for(var y = 0; y < this.HEIGHT; y++)
 		{
-			var tile = new Tile("wall", {x: x, y: y});
+			var tile = new Tile(x, y, "wall");
 			
 			if(x == 0 || y == 0
 			|| x == this.WIDTH - 1
@@ -60,7 +60,7 @@ Stage.prototype.spawnBomber = function()
 	var y = getRandomOddValue(this.HEIGHT);
 	
 	this.tiles[x][y].explode("all", 2);
-	objedex.bombers.add(new Bomber(x, y));
+	var bomber = new Bomber(x, y);
 }
 
 Stage.prototype.getTile = function(x, y)
