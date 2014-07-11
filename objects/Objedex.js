@@ -30,11 +30,18 @@ ObjedexEntry.prototype.size = function()
 	return Object.keys(this.stuff).length;
 }
 
-ObjedexEntry.prototype.update = function()
+ObjedexEntry.prototype.foreach = function(func)
 {
 	for(var s in this.stuff)
-		if(this.stuff[s].update)
-			this.stuff[s].update();
+		func(this.stuff[s])
+}
+
+ObjedexEntry.prototype.update = function()
+{
+	this.foreach(function(stuff)
+	{
+		stuff.update();
+	});
 }
 
 ObjedexEntry.prototype.render = function(stuff)

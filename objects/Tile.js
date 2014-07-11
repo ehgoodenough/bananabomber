@@ -58,6 +58,16 @@ Tile.prototype.explode = function(direction, intensity, explosion)
 		{
 			this.type = "floor";
 			
+			objedex.bombers.foreach(function(bomber)
+			{
+				if(pixel2tile(bomber.x) == this.x
+				&& pixel2tile(bomber.y) == this.y)
+				{
+					Bananabomber.load(new GameState());
+				}
+			}
+			.bind(this));
+			
 			if(explosion)
 			{
 				this.explosion = 16;
