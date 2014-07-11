@@ -1,7 +1,11 @@
-function Bomber()
+function Bomber(x, y, stage)
 {
 	this.speed = SCALE / 10;
+	
+	this.stage = stage;
 	this.position = new Object();
+	this.position.x = x * SCALE + (SCALE / 2);
+	this.position.y = y * SCALE + (SCALE / 2);
 }
 
 Bomber.prototype.moveNorth = function()

@@ -54,17 +54,14 @@ function Stage()
 	}
 }
 
-Stage.prototype.spawn = function(bomber)
+Stage.prototype.spawnBomber = function()
 {
 	var x = 3;
 	var y = 5;
 	
-	bomber.position.x = x * SCALE + (SCALE / 2);
-	bomber.position.y = y * SCALE + (SCALE / 2);
-	
 	this.clear(x, y);
 	
-	bomber.stage = this;
+	return new Bomber(x, y, this);
 }
 
 Stage.prototype.getTile = function(x, y)
