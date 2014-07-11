@@ -63,6 +63,15 @@ Stage.prototype.spawn = function(bomber)
 	bomber.position.y = y * SCALE + (SCALE / 2);
 	
 	this.clear(x, y);
+	
+	bomber.stage = this;
+}
+
+Stage.prototype.getTile = function(x, y)
+{
+	x = Math.floor(x / SCALE);
+	y = Math.floor(y / SCALE);
+	return this.tiles[x][y];
 }
 
 Stage.prototype.clear = function(x, y)
