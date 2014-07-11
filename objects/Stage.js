@@ -56,8 +56,8 @@ function Stage()
 
 Stage.prototype.spawnBomber = function()
 {
-	var x = 3;
-	var y = 5;
+	var x = getRandomOddValue(this.WIDTH);
+	var y = getRandomOddValue(this.HEIGHT);
 	
 	this.tiles[x][y].explode("all", 2);
 	objedex.bombers.add(new Bomber(x, y));
@@ -80,4 +80,10 @@ Stage.prototype.render = function()
 			$("canvas").draw(rendering);
 		}
 	}
+}
+
+function getRandomOddValue(range)
+{
+	range = Math.floor((range - 1) / 2);
+	return Math.floor(Math.random() * range) * 2 + 1;
 }

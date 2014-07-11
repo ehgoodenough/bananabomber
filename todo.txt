@@ -1,2 +1,2 @@
 todo: refactor SCALE into Game.SCALE?
-todo: randomize the position during spawn.
+todo: fix where the rendering happens.
