@@ -1,8 +1,7 @@
-function Bomber(x, y, stage)
+function Bomber(x, y)
 {
 	this.speed = SCALE / 10;
 	
-	this.stage = stage;
 	this.position = new Object();
 	this.position.x = x * SCALE + (SCALE / 2);
 	this.position.y = y * SCALE + (SCALE / 2);
@@ -13,7 +12,7 @@ Bomber.prototype.moveNorth = function()
 	var x = this.position.x;
 	var y = this.position.y - this.speed - (SCALE / 4);
 	
-	if(this.stage.getTile(x, y).type == "floor")
+	if(stage.getTile(x, y).type == "floor")
 	{
 		this.position.y -= this.speed;
 	}
@@ -24,7 +23,7 @@ Bomber.prototype.moveSouth = function()
 	var x = this.position.x;
 	var y = this.position.y + this.speed + (SCALE / 4);
 	
-	if(this.stage.getTile(x, y).type == "floor")
+	if(stage.getTile(x, y).type == "floor")
 	{
 		this.position.y += this.speed;
 	}
@@ -35,7 +34,7 @@ Bomber.prototype.moveWest = function()
 	var x = this.position.x - this.speed - (SCALE / 4);
 	var y = this.position.y;
 	
-	if(this.stage.getTile(x, y).type == "floor")
+	if(stage.getTile(x, y).type == "floor")
 	{
 		this.position.x -= this.speed;
 	}
@@ -46,7 +45,7 @@ Bomber.prototype.moveEast = function()
 	var x = this.position.x + this.speed + (SCALE / 4);
 	var y = this.position.y;
 	
-	if(this.stage.getTile(x, y).type == "floor")
+	if(stage.getTile(x, y).type == "floor")
 	{
 		this.position.x += this.speed;
 	}

@@ -59,9 +59,8 @@ Stage.prototype.spawnBomber = function()
 	var x = 3;
 	var y = 5;
 	
-	this.clear(x, y);
-	
-	return new Bomber(x, y, this);
+	this.tiles[x][y].explode("all", 2);
+	objedex.bombers.add(new Bomber(x, y));
 }
 
 Stage.prototype.getTile = function(x, y)
@@ -71,7 +70,14 @@ Stage.prototype.getTile = function(x, y)
 	return this.tiles[x][y];
 }
 
-Stage.prototype.clear = function(x, y)
+Stage.prototype.render = function()
 {
-	this.tiles[x][y].clear("all", 2);
+	for(var x = 0; x < this.WIDTH; x++)
+	{
+		for(var y = 0; y < this.HEIGHT; y++)
+		{
+			var rendering = this.tiles[x][y].render();
+			$("canvas").draw(rendering);
+		}
+	}
 }

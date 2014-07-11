@@ -32,7 +32,7 @@ Tile.prototype.render = function()
 	return rendering;
 }
 
-Tile.prototype.clear = function(direction, intensity)
+Tile.prototype.explode = function(direction, intensity)
 {
 	if(intensity > 0)
 	{
@@ -42,22 +42,22 @@ Tile.prototype.clear = function(direction, intensity)
 			
 			if(direction == "east" || direction == "all")
 			{
-				this.east.clear("east", intensity - 1);
+				this.east.explode("east", intensity - 1);
 			}
 			
 			if(direction == "west" || direction == "all")
 			{
-				this.west.clear("west", intensity - 1);
+				this.west.explode("west", intensity - 1);
 			}
 			
 			if(direction == "south" || direction == "all")
 			{
-				this.south.clear("south", intensity - 1);
+				this.south.explode("south", intensity - 1);
 			}
 			
 			if(direction == "north" || direction == "all")
 			{
-				this.north.clear("north", intensity - 1);
+				this.north.explode("north", intensity - 1);
 			}
 		}
 	}
