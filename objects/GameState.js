@@ -2,16 +2,21 @@ function GameState()
 {
 	this.onInitiate = function()
 	{
-		console.log("initiated");
+		this.bomber = new Bomber();
 	}
 	
 	this.onUpdate = function()
 	{
-		console.log("updated");
 	}
 	
 	this.onRender = function()
 	{
-		console.log("rendered");
+		render(this.bomber);
 	}
+}
+
+function render(stuff)
+{
+	var rendering = stuff.render();
+	$("canvas").draw(rendering);
 }
