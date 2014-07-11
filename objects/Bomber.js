@@ -6,6 +6,8 @@ function Bomber(x, y)
 	this.y = y * SCALE + (SCALE / 2);
 	
 	this.speed = SCALE / 10;
+	
+	this.bombcount = 2;
 }
 
 Bomber.prototype.moveNorth = function()
@@ -54,9 +56,14 @@ Bomber.prototype.moveEast = function()
 
 Bomber.prototype.dropBomb = function()
 {
-	if(!stage.getTile(this.x, this.y).hasBomb())
+	if(this.bombcount > 0)
 	{
-		stage.getTile(this.x, this.y).spawnBomb();
+		if(!stage.getTile(this.x, this.y).hasBomb())
+		{
+			this.bombcount--;
+			
+			stage.getTile(this.x, this.y).spawnBomb(this);
+		}
 	}
 }
 

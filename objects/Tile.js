@@ -70,7 +70,7 @@ Tile.prototype.hasBomb = function()
 	return this.bomb != undefined;
 }
 
-Tile.prototype.spawnBomb = function()
+Tile.prototype.spawnBomb = function(bomber)
 {
-	this.bomb = new Bomb(this.x, this.y);
+	this.bomb = new Bomb(this.x, this.y, bomber);
 }

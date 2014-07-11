@@ -1,9 +1,8 @@
 todo: refactor SCALE into Game.SCALE?
 todo: fix where the rendering happens.
 
-todo: limit the amount of bombs.
-	todo: after it explodes, return the limit.
 todo: make the bomb flash with the timer.
-todo: add a cooldown so you don't place all bombs.
+todo: add a cooldown so you don't accidentally place all bombs.
 todo: place bombs over first available tile that player is over.
 todo: also blow up bombs on the tile if that tile is exploded.
+todo: show an explosion!!

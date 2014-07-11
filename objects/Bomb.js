@@ -1,11 +1,23 @@
-function Bomb(x, y)
+function Bomb(x, y, bomber)
 {
 	objedex.bombs.add(this);
 	
 	this.x = x;
 	this.y = y;
 	
+	this.bomber = bomber;
+	
 	this.timer = 100;
+}
+
+Bomb.prototype.explode = function()
+{
+	console.log("BOOM");
+	objedex.bombs.remove(this);
+	stage.tiles[this.x][this.y].bomb = undefined;
+	stage.tiles[this.x][this.y].explode("all", 2);
+	
+	this.bomber.bombcount++;
 }
 
 Bomb.prototype.update = function()
@@ -14,10 +26,7 @@ Bomb.prototype.update = function()
 	
 	if(this.timer <= 0)
 	{
-		console.log("BOOM");
-		objedex.bombs.remove(this);
-		stage.tiles[this.x][this.y].bomb = undefined;
-		stage.tiles[this.x][this.y].explode("all", 2);
+		this.explode();
 	}
 }
 
