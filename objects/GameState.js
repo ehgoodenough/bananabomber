@@ -1,14 +1,16 @@
 function GameState()
-{
+{	
 	this.onInitiate = function()
 	{
 		this.objedex = objedex = new Objedex(["bombers", "bombs"]);
 		this.stage = stage = new Stage();
 		
 		this.stage.addBomber();
+		
+		this.delta = Date.now();
 	}
 	
-	this.onUpdate = function()
+	this.onUpdate = function(delta)
 	{
 		this.stage.update();
 		this.objedex.bombers.update();

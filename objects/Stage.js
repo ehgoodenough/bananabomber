@@ -1,7 +1,7 @@
 function Stage()
 {
-	this.WIDTH = 16;
-	this.HEIGHT = 9;
+	this.WIDTH = 16; 32;
+	this.HEIGHT = 9; 18;
 	
 	this.tiles = new Array();
 	

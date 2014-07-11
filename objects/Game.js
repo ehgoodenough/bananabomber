@@ -13,7 +13,10 @@ Game.prototype.loop = function()
 {
 	if(this.state)
 	{
-		this.state.onUpdate();
+		this.delta = Date.now() - this.delta;
+		this.state.onUpdate(this.delta);
+		this.delta = Date.now();
+		
 		this.state.onRender();
 	}
 	
