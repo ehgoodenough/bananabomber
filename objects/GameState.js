@@ -10,6 +10,7 @@ function GameState()
 	
 	this.onUpdate = function()
 	{
+		this.stage.update();
 		this.objedex.bombers.update();
 		this.objedex.bombs.update();
 	}

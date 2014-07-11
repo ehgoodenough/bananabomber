@@ -80,6 +80,17 @@ Stage.prototype.render = function()
 	}
 }
 
+Stage.prototype.update = function()
+{
+	for(var x = 0; x < this.WIDTH; x++)
+	{
+		for(var y = 0; y < this.HEIGHT; y++)
+		{
+			this.tiles[x][y].update();
+		}
+	}
+}
+
 function pixel2tile(value)
 {
 	return Math.floor(value / SCALE)

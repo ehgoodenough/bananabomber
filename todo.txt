@@ -1,8 +1,5 @@
 todo: refactor SCALE into Game.SCALE?
 todo: fix where the rendering happens.
 
-todo: make the bomb flash with the timer. [modulo]
-todo: show an explosion effect. [particles?!]
-...
 todo: add a cooldown so you don't accidentally place all bombs.
 todo: place bombs over first available tile that player is over.

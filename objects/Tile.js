@@ -4,6 +4,16 @@ function Tile(x, y, type)
 	this.y = y;
 	
 	this.type = type;
+	
+	this.explosion = 0;
+}
+
+Tile.prototype.update = function()
+{
+	if(this.explosion)
+	{
+		this.explosion -= 1;
+	}
 }
 
 Tile.prototype.render = function()
@@ -31,16 +41,27 @@ Tile.prototype.render = function()
 		rendering.fillStyle = "#CCC";
 	}
 	
+	if(this.explosion > 0)
+	{
+		var red = (this.explosion % 16).toString(16);
+		rendering.fillStyle = "#" + red + "00";
+	}
+	
 	return rendering;
 }
 
-Tile.prototype.explode = function(direction, intensity)
+Tile.prototype.explode = function(direction, intensity, explosion)
 {
 	if(intensity > 0)
 	{
 		if(this.type != "wall")
 		{
 			this.type = "floor";
+			
+			if(explosion)
+			{
+				this.explosion = 16;
+			}
 			
 			if(this.bomb)
 			{
@@ -50,22 +71,22 @@ Tile.prototype.explode = function(direction, intensity)
 			
 			if(direction == "east" || direction == "all")
 			{
-				this.east.explode("east", intensity - 1);
+				this.east.explode("east", intensity - 1, explosion);
 			}
 			
 			if(direction == "west" || direction == "all")
 			{
-				this.west.explode("west", intensity - 1);
+				this.west.explode("west", intensity - 1, explosion);
 			}
 			
 			if(direction == "south" || direction == "all")
 			{
-				this.south.explode("south", intensity - 1);
+				this.south.explode("south", intensity - 1, explosion);
 			}
 			
 			if(direction == "north" || direction == "all")
 			{
-				this.north.explode("north", intensity - 1);
+				this.north.explode("north", intensity - 1, explosion);
 			}
 		}
 	}
