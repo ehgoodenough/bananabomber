@@ -8,28 +8,28 @@ function Tile(x, y, type)
 
 Tile.prototype.render = function()
 {
-	if(this.type == "wall")
-	{
-		color = "#444";
-	}
-	else if(this.type == "crate")
-	{
-		color = "#F4A460";
-	}
-	else if(this.type == "floor")
-	{
-		color = "#CCC";
-	}
-	
 	var rendering = {};
 	
 	rendering.type = "rectangle";
-	rendering.x = this.x * SCALE;
-	rendering.y = this.y * SCALE;
+	
 	rendering.width = SCALE;
 	rendering.height = SCALE;
-	rendering.fillStyle = color;
+	rendering.x = this.x * SCALE;
+	rendering.y = this.y * SCALE;
 	rendering.fromCenter = false;
+	
+	if(this.type == "wall")
+	{
+		rendering.fillStyle = "#444";
+	}
+	else if(this.type == "crate")
+	{
+		rendering.fillStyle = "#F4A460";
+	}
+	else if(this.type == "floor")
+	{
+		rendering.fillStyle = "#CCC";
+	}
 	
 	return rendering;
 }
