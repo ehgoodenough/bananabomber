@@ -1,7 +1,11 @@
 var Game = new function()
 {
+	this.state = new GameState();
+	this.state.onInitiate();
 	this.loop = new GameLoop(function()
 	{
-		console.log("I'm looooping!!");
-	});
+		this.state.onUpdate();
+		this.state.onRender();
+	}
+	.bind(this));
 }
