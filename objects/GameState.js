@@ -5,7 +5,7 @@ function GameState()
 		this.objedex = objedex = new Objedex(["bombers", "bombs"]);
 		this.stage = stage = new Stage();
 		
-		this.stage.spawnBomber();
+		this.stage.addBomber();
 	}
 	
 	this.onUpdate = function()

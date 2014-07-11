@@ -42,6 +42,12 @@ Tile.prototype.explode = function(direction, intensity)
 		{
 			this.type = "floor";
 			
+			if(this.bomb)
+			{
+				this.bomb.explode();
+				return;
+			}
+			
 			if(direction == "east" || direction == "all")
 			{
 				this.east.explode("east", intensity - 1);

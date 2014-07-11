@@ -54,7 +54,7 @@ function Stage()
 	}
 }
 
-Stage.prototype.spawnBomber = function()
+Stage.prototype.addBomber = function()
 {
 	var x = getRandomOddValue(this.WIDTH);
 	var y = getRandomOddValue(this.HEIGHT);
@@ -65,9 +65,7 @@ Stage.prototype.spawnBomber = function()
 
 Stage.prototype.getTile = function(x, y)
 {
-	x = Math.floor(x / SCALE);
-	y = Math.floor(y / SCALE);
-	return this.tiles[x][y];
+	return this.tiles[pixel2tile(x)][pixel2tile(y)];
 }
 
 Stage.prototype.render = function()
@@ -80,6 +78,11 @@ Stage.prototype.render = function()
 			$("canvas").draw(rendering);
 		}
 	}
+}
+
+function pixel2tile(value)
+{
+	return Math.floor(value / SCALE)
 }
 
 function getRandomOddValue(range)
