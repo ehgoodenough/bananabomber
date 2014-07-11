@@ -17,9 +17,13 @@ function Stage()
 			{
 				tiles.push(new Tile("wall", {x: x, y: y}))
 			}
+			else if(x % 2 == 1 || y % 2 == 1)
+			{
+				tiles.push(new Tile("crate", {x: x, y: y}));
+			}
 			else
 			{
-				tiles.push(new Tile("floor", {x: x, y: y}));
+				tiles.push(new Tile("wall", {x: x, y: y}));
 			}
 		}
 		
@@ -27,17 +31,7 @@ function Stage()
 	}
 }
 
-Stage.prototype.render = function()
+Stage.prototype.clear = function(x, y)
 {
-	var rendering = [];
-	
-	for(var x = 0; x < this.WIDTH; x++)
-	{
-		for(var y = 0; y < this.HEIGHT; y++)
-		{
-			rendering.push(this.tiles[x][y]);
-		}
-	}
-	
-	return rendering;
+	this.tiles[x][y].type = "floor"
 }

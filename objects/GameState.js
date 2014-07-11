@@ -3,7 +3,10 @@ function GameState()
 	this.onInitiate = function()
 	{
 		this.stage = new Stage();
-		this.bomber = new Bomber();
+		
+		var x = 3, y = 3;
+		this.bomber = new Bomber(x, y);
+		this.stage.clear(x, y);
 	}
 	
 	this.onUpdate = function()

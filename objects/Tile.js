@@ -2,27 +2,31 @@ function Tile(type, position)
 {
 	this.type = type;
 	this.position = position;
-	
-	if(this.type == "wall")
-	{
-		this.color = "#444";
-	}
-	else
-	{
-		this.color = "#CCC";
-	}
 }
 
 Tile.prototype.render = function()
 {
+	if(this.type == "wall")
+	{
+		color = "#444";
+	}
+	else if(this.type == "crate")
+	{
+		color = "#F4A460";
+	}
+	else if(this.type == "floor")
+	{
+		color = "#CCC";
+	}
+	
 	var rendering = {};
 	
 	rendering.type = "rectangle";
-	rendering.x = this.position.x * SCALE + 1;
-	rendering.y = this.position.y * SCALE + 1;
-	rendering.width = SCALE - 2;
-	rendering.height = SCALE - 2;
-	rendering.fillStyle = this.color;
+	rendering.x = this.position.x * SCALE;
+	rendering.y = this.position.y * SCALE;
+	rendering.width = SCALE;
+	rendering.height = SCALE;
+	rendering.fillStyle = color;
 	rendering.fromCenter = false;
 	
 	return rendering;

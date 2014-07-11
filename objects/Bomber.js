@@ -1,7 +1,10 @@
-function Bomber()
+function Bomber(x, y)
 {
 	this.speed = SCALE / 10;
-	this.position = {x: 150, y: 150};
+	
+	this.position = {};
+	this.position.x = x * SCALE + (SCALE / 2);
+	this.position.y = y * SCALE + (SCALE / 2);
 }
 
 Bomber.prototype.moveNorth = function()
