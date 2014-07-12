@@ -10,8 +10,8 @@ function GameState()
 	
 	this.onUpdate = function(delta)
 	{
-		this.stage.update();
-		this.objedex.bombers.update();
+		this.stage.update(delta);
+		this.objedex.bombers.update(delta);
 	}
 	
 	this.onRender = function(delta)
@@ -33,6 +33,6 @@ function GameState()
 			$("#game > #status > #bombcount").text(bomber.bombcount);
 		});
 		
-		$("#game > #status > #framerate").text(delta);
+		$("#framerate").text(delta);
 	}
 }

@@ -84,6 +84,7 @@ body
 {
 	width: 50%;
 	height: 50%;
+	outline: 2px solid black;
 }
 
 #alpha.player.view
@@ -117,7 +118,7 @@ canvas
 	background-color: #888;
 }
 
-#status.view > #framerate
+#framerate
 {
 	top: 1rem;
 	left: 1rem;

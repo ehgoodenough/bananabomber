@@ -36,11 +36,11 @@ ObjedexEntry.prototype.foreach = function(func)
 		func(this.stuff[s])
 }
 
-ObjedexEntry.prototype.update = function()
+ObjedexEntry.prototype.update = function(delta)
 {
 	this.foreach(function(stuff)
 	{
-		stuff.update();
+		stuff.update(delta);
 	});
 }
 

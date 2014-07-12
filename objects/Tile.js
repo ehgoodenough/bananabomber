@@ -8,16 +8,16 @@ function Tile(x, y, type)
 	this.explosion = 0;
 }
 
-Tile.prototype.update = function()
+Tile.prototype.update = function(delta)
 {
-	if(this.explosion)
+	if(this.explosion > 0)
 	{
 		this.explosion -= 1;
 	}
 	
 	if(this.bomb)
 	{
-		this.bomb.update();
+		this.bomb.update(delta);
 	}
 }
 

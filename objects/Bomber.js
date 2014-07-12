@@ -5,52 +5,52 @@ function Bomber(x, y)
 	this.x = x * SCALE + (SCALE / 2);
 	this.y = y * SCALE + (SCALE / 2);
 	
-	this.speed = SCALE / 10;
+	this.speed = SCALE;
 	
 	this.bombcount = 2;
 }
 
-Bomber.prototype.moveNorth = function()
+Bomber.prototype.moveNorth = function(delta)
 {
 	var x = this.x;
-	var y = this.y - this.speed - (SCALE / 4);
+	var y = this.y - (this.speed * delta) - (SCALE / 4);
 	
 	if(stage.getTile(x, y).type == "floor")
 	{
-		this.y -= this.speed;
+		this.y -= this.speed * delta;
 	}
 }
 
-Bomber.prototype.moveSouth = function()
+Bomber.prototype.moveSouth = function(delta)
 {
 	var x = this.x;
-	var y = this.y + this.speed + (SCALE / 4);
+	var y = this.y + (this.speed * delta) + (SCALE / 4);
 	
 	if(stage.getTile(x, y).type == "floor")
 	{
-		this.y += this.speed;
+		this.y += this.speed * delta;
 	}
 }
 
-Bomber.prototype.moveWest = function()
+Bomber.prototype.moveWest = function(delta)
 {
-	var x = this.x - this.speed - (SCALE / 4);
+	var x = this.x - (this.speed * delta) - (SCALE / 4);
 	var y = this.y;
 	
 	if(stage.getTile(x, y).type == "floor")
 	{
-		this.x -= this.speed;
+		this.x -= (this.speed * delta);
 	}
 }
 
-Bomber.prototype.moveEast = function()
+Bomber.prototype.moveEast = function(delta)
 {
-	var x = this.x + this.speed + (SCALE / 4);
+	var x = this.x + (this.speed * delta) + (SCALE / 4);
 	var y = this.y;
 	
 	if(stage.getTile(x, y).type == "floor")
 	{
-		this.x += this.speed;
+		this.x += this.speed * delta;
 	}
 }
 
@@ -67,13 +67,13 @@ Bomber.prototype.dropBomb = function()
 	}
 }
 
-Bomber.prototype.update = function()
+Bomber.prototype.update = function(delta)
 {
-	if(Keystate.get("right arrow")) {this.moveEast();}
-	else if(Keystate.get("left arrow")) {this.moveWest();}
+	if(Keystate.get("right arrow")) {this.moveEast(delta);}
+	else if(Keystate.get("left arrow")) {this.moveWest(delta);}
 	
-	if(Keystate.get("down arrow")) {this.moveSouth();}
-	else if(Keystate.get("up arrow")) {this.moveNorth();}
+	if(Keystate.get("down arrow")) {this.moveSouth(delta);}
+	else if(Keystate.get("up arrow")) {this.moveNorth(delta);}
 	
 	if(Keystate.get("z")) {this.dropBomb();}
 }

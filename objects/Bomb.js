@@ -21,7 +21,7 @@ Bomb.prototype.explode = function()
 	this.bomber.bombcount++;
 }
 
-Bomb.prototype.update = function()
+Bomb.prototype.update = function(delta)
 {
 	this.timer -= 1;
 	

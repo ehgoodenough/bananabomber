@@ -97,23 +97,20 @@ Stage.prototype.render = function(camera)
 	return rendering;
 }
 
-Stage.prototype.update = function()
+Stage.prototype.update = function(delta)
 {
 	for(var x = 0; x < this.WIDTH; x++)
 	{
 		for(var y = 0; y < this.HEIGHT; y++)
 		{
-			this.tiles[x][y].update();
+			this.tiles[x][y].update(delta);
 		}
 	}
 }
 
-var SCALE = 60;
-var SCREEN_WIDTH = 960 / SCALE;
-var SCREEN_HEIGHT = 540 / SCALE;
-SCALE = 30; //?
-SCREEN_WIDTH = 480 / SCALE;
-SCREEN_HEIGHT = 270 / SCALE;
+var SCALE = 30; //?
+var SCREEN_WIDTH = 480 / SCALE;
+var SCREEN_HEIGHT = 270 / SCALE;
 
 function pixel2tile(value)
 {
