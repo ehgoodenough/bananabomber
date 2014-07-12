@@ -38,8 +38,7 @@ function GameState()
 			
 			this.objedex.bombers.foreach(function(bomber)
 			{
-				var rendering = bomber.render(camera);
-				$canvas.draw(rendering);
+				$canvas.draw(bomber.render(camera));
 			});
 			
 			$game.find("#bombcount").text(bomber.bombcount);

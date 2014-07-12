@@ -4,7 +4,7 @@ function Bomber(x, y, id)
 	
 	this.x = x * SCALE + (SCALE / 2);
 	this.y = y * SCALE + (SCALE / 2);
-	this.speed = SCALE;
+	this.speed = SCALE * 1.5;
 	
 	this.bombcount = 2;
 	
@@ -72,28 +72,34 @@ Bomber.prototype.dropBomb = function()
 
 Bomber.prototype.update = function(delta)
 {
-	if(Keystate.get(this.controlscheme["move east"])) {this.moveEast(delta);}
-	else if(Keystate.get(this.controlscheme["move west"])) {this.moveWest(delta);}
-	
-	if(Keystate.get(this.controlscheme["move south"])) {this.moveSouth(delta);}
-	else if(Keystate.get(this.controlscheme["move north"])) {this.moveNorth(delta);}
-	
-	if(Keystate.get(this.controlscheme["drop bomb"])) {this.dropBomb();}
+	if(this.status != "blownup")
+	{
+		if(Keystate.get(this.controlscheme["move east"])) {this.moveEast(delta);}
+		else if(Keystate.get(this.controlscheme["move west"])) {this.moveWest(delta);}
+		
+		if(Keystate.get(this.controlscheme["move south"])) {this.moveSouth(delta);}
+		else if(Keystate.get(this.controlscheme["move north"])) {this.moveNorth(delta);}
+		
+		if(Keystate.get(this.controlscheme["drop bomb"])) {this.dropBomb();}
+	}
 }
 
 Bomber.prototype.render = function(camera)
 {
 	var rendering = {};
 	
-	rendering.type = "rectangle";
-	rendering.x = SCREEN_WIDTH*SCALE / 2;
-	rendering.y = SCREEN_HEIGHT*SCALE / 2;
-	rendering.x = this.x - camera.x;
-	rendering.y = this.y - camera.y;
-	rendering.width = SCALE - 5;
-	rendering.height = SCALE - 5;
-	rendering.fillStyle = this.color;
-	rendering.cornerRadius = SCALE / 10;
+	if(this.status != "blownup")
+	{
+		rendering.type = "rectangle";
+		rendering.x = SCREEN_WIDTH*SCALE / 2;
+		rendering.y = SCREEN_HEIGHT*SCALE / 2;
+		rendering.x = this.x - camera.x;
+		rendering.y = this.y - camera.y;
+		rendering.width = SCALE - 5;
+		rendering.height = SCALE - 5;
+		rendering.fillStyle = this.color;
+		rendering.cornerRadius = SCALE / 10;
+	}
 	
 	return rendering;
 }

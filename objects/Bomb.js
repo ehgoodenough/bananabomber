@@ -13,12 +13,38 @@ function Bomb(x, y, bomber)
 
 Bomb.prototype.explode = function()
 {
-	console.log("BOOM");
+	console.log("KA-BOOM!!");
+	
 	objedex.bombs.remove(this);
 	stage.tiles[this.x][this.y].bomb = undefined;
 	stage.tiles[this.x][this.y].explode("all", this.intensity, true);
 	
 	this.bomber.bombcount++;
+	
+	var notblownup;
+	var blownupcount = 0;
+	objedex.bombers.foreach(function(bomber)
+	{
+		if(bomber.status == "blownup")
+		{
+			blownupcount++;
+		}
+		else
+		{
+			notblownup = bomber;
+		}
+	});
+	
+	if(blownupcount == 3)
+	{
+		console.log("game over! " + notblownup.color + " wins!");
+		Bananabomber.load(new GameState());
+	}
+	else if(blownupcount == 4)
+	{
+		console.log("game over! everyone loses!")
+		Bananabomber.load(new GameState());
+	}
 }
 
 Bomb.prototype.update = function(delta)
