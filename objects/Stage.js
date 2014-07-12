@@ -86,17 +86,16 @@ Stage.prototype.render = function(camera)
 			var tile = this.tiles[x][y];
 			rendering.push(tile.render(offset.x, offset.y));
 			
-			if(tile.hasBomb())
-			{
-				var bomb = tile.getBomb();
-				rendering.push(bomb.render(offset.x, offset.y));
-			}
-			
 			if(tile.powerup)
 			{
 				rendering.push(tile.powerup.render(offset.x, offset.y));
 			}
 			
+			if(tile.hasBomb())
+			{
+				var bomb = tile.getBomb();
+				rendering.push(bomb.render(offset.x, offset.y));
+			}
 			
 			if(tile.explosion > 0)
 			{

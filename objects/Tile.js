@@ -55,11 +55,26 @@ Tile.prototype.explode = function(direction, intensity, explosion)
 	{
 		if(this.type != "wall")
 		{
+			this.powerup = undefined;
+			
 			if(explosion && this.type == "crate")
 			{
-				if(Math.random() < 0.1)
+				if(Math.random() < 0.2)
 				{
-					this.powerup = new Powerup(this.x, this.y, "power");
+					var random = Math.random();
+					
+					if(random < 1/3)
+					{
+						this.powerup = new Powerup(this.x, this.y, "power");
+					}
+					else if(random > 2/3)
+					{
+						this.powerup = new Powerup(this.x, this.y, "speed");
+					}
+					else
+					{
+						this.powerup = new Powerup(this.x, this.y, "amount");
+					}
 				}
 			}
 			
