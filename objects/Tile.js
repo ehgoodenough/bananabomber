@@ -49,6 +49,22 @@ Tile.prototype.render = function(x, y)
 	return rendering;
 }
 
+Tile.prototype.isPassable = function()
+{
+	if(this.type != "floor")
+	{
+		return false;
+	}
+	else if(this.bomb)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
 Tile.poweruprate = 1;
 
 Tile.prototype.explode = function(direction, intensity, explosion)
@@ -61,7 +77,7 @@ Tile.prototype.explode = function(direction, intensity, explosion)
 			
 			if(explosion && this.type == "crate")
 			{
-				if(Tile.poweruprate++ % 7 == 0)
+				if(Tile.poweruprate++ % 11 == 0)
 				{
 					var random = Math.random();
 					

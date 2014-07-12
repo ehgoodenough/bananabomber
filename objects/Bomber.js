@@ -20,7 +20,8 @@ Bomber.prototype.moveNorth = function(delta)
 	var x = this.x;
 	var y = this.y - (this.speed * SCALE * delta) - (SCALE / 4);
 	
-	if(stage.getTile(x, y).type == "floor")
+	if(stage.getTile(x, y).type == "floor"
+	&& !(stage.getTile(x, y).bomb && stage.getTile(this.x, this.y) != stage.getTile(x, y)))
 	{
 		this.y -= this.speed * SCALE * delta;
 		
@@ -38,7 +39,8 @@ Bomber.prototype.moveSouth = function(delta)
 	var x = this.x;
 	var y = this.y + (this.speed * SCALE * delta) + (SCALE / 4);
 	
-	if(stage.getTile(x, y).type == "floor")
+	if(stage.getTile(x, y).type == "floor"
+	&& !(stage.getTile(x, y).bomb && stage.getTile(this.x, this.y) != stage.getTile(x, y)))
 	{
 		this.y += this.speed * SCALE * delta;
 		
@@ -56,7 +58,8 @@ Bomber.prototype.moveWest = function(delta)
 	var x = this.x - (this.speed * SCALE * delta) - (SCALE / 4);
 	var y = this.y;
 	
-	if(stage.getTile(x, y).type == "floor")
+	if(stage.getTile(x, y).type == "floor"
+	&& !(stage.getTile(x, y).bomb && stage.getTile(this.x, this.y) != stage.getTile(x, y)))
 	{
 		this.x -= (this.speed * SCALE * delta);
 		
@@ -74,7 +77,8 @@ Bomber.prototype.moveEast = function(delta)
 	var x = this.x + (this.speed * SCALE * delta) + (SCALE / 4);
 	var y = this.y;
 	
-	if(stage.getTile(x, y).type == "floor")
+	if(stage.getTile(x, y).type == "floor"
+	&& !(stage.getTile(x, y).bomb && stage.getTile(this.x, this.y) != stage.getTile(x, y)))
 	{
 		this.x += this.speed * SCALE * delta;
 		
