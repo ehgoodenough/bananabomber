@@ -111,6 +111,9 @@ Stage.prototype.update = function()
 var SCALE = 60;
 var SCREEN_WIDTH = 960 / SCALE;
 var SCREEN_HEIGHT = 540 / SCALE;
+SCALE = 30; //?
+SCREEN_WIDTH = 480 / SCALE;
+SCREEN_HEIGHT = 270 / SCALE;
 
 function pixel2tile(value)
 {

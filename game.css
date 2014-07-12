@@ -71,23 +71,53 @@ body
 	}
 }
 
-#game > .view
+.view
 {
 	top: 0px;
 	left: 0px;
 	right: 0px;
 	bottom: 0px;
-	width: 100%;
-	height: 100%;
 	position: absolute;
 }
 
-#game > canvas.view
+.player.view
 {
+	width: 50%;
+	height: 50%;
+}
+
+#alpha.player.view
+{
+	bottom: auto;
+	right: auto;
+}
+
+#theta.player.view
+{
+	bottom: auto;
+	left: auto;
+}
+
+#sigma.player.view
+{
+	top: auto;
+	right: auto;
+}
+
+#omega.player.view
+{
+	top: auto;
+	left: auto;
+}
+
+canvas
+{
+	width: 100%;
+	height: 100%;
 	background-color: #888;
 }
 
-#game > #status.view > #framerate
+#status.view > #framerate
 {
 	top: 1rem;
 	left: 1rem;
