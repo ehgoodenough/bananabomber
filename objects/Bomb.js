@@ -8,7 +8,7 @@ function Bomb(x, y, bomber)
 	this.bomber = bomber;
 	
 	this.timer = 100;
-	this.intensity = 2;
+	this.intensity = 5;
 }
 
 Bomb.prototype.explode = function()
@@ -37,13 +37,17 @@ Bomb.prototype.explode = function()
 	
 	if(blownupcount == 3)
 	{
-		console.log("game over! " + notblownup.color + " wins!");
-		Bananabomber.load(new GameState());
+		setTimeout(function()
+		{
+			Bananabomber.load(new WinGameState(notblownup.color));
+		}, 3000);
 	}
 	else if(blownupcount == 4)
 	{
-		console.log("game over! everyone loses!")
-		Bananabomber.load(new GameState());
+		setTimeout(function()
+		{
+			Bananabomber.load(new WinGameState());
+		}, 3000);
 	}
 }
 

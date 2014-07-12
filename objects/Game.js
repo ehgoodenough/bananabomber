@@ -6,6 +6,11 @@ var Game = function()
 
 Game.prototype.load = function(state)
 {
+	if(this.state)
+	{
+		this.state.onTerminate();
+	}
+	
 	this.state = state;
 	this.state.onInitiate();
 }

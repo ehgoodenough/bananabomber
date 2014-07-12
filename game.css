@@ -125,3 +125,17 @@ canvas
 	line-height: 1em;
 	position: absolute;
 }
+
+#win.view
+{
+	color: black;
+	font-size: 5rem;
+	text-align: center;
+}
+
+#lose.view
+{
+	font-size: 5rem;
+	text-align: center;
+	background-color: #888;
+}

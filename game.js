@@ -1,2 +1,2 @@
 var Bananabomber = new Game();
-Bananabomber.load(new GameState());
+Bananabomber.load(new InGameState());

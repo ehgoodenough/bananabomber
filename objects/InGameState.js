@@ -1,4 +1,4 @@
-function GameState()
+function InGameState()
 {	
 	this.onInitiate = function()
 	{
@@ -43,5 +43,13 @@ function GameState()
 			
 			$game.find("#bombcount").text(bomber.bombcount);
 		});
+	}
+	
+	this.onTerminate = function()
+	{
+		//console.log("good game!");
+		
+		this.objedex = objedex = undefined;
+		this.stage = stage = undefined;
 	}
 }
