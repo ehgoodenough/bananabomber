@@ -27,24 +27,29 @@ var Keystate = new function()
 	this.keyStrings["left arrow"] = 37;
 	this.keyStrings["down arrow"] = 40;
 	this.keyStrings["right arrow"] = 39;
+	
 	this.keyStrings["space bar"] = 32;
 	this.keyStrings["enter"] = 13;
 	this.keyStrings["return"] = 13;
+	this.keyStrings["ctrl"] = 17;
 	
 	this.keyStrings["w"] = 87;
 	this.keyStrings["a"] = 65;
 	this.keyStrings["s"] = 83;
 	this.keyStrings["d"] = 68;
+	this.keyStrings["e"] = 69;
 	
 	this.keyStrings["i"] = 73;
 	this.keyStrings["j"] = 74;
 	this.keyStrings["k"] = 75;
 	this.keyStrings["l"] = 76;
+	this.keyStrings["o"] = 79;
 	
+	this.keyStrings["t"] = 84;
+	this.keyStrings["f"] = 70;
 	this.keyStrings["g"] = 71;
-	this.keyStrings["z"] = 90;
-	this.keyStrings["/"] = 191;
-	this.keyStrings[","] = 188;
+	this.keyStrings["h"] = 72;
+	this.keyStrings["y"] = 89;
 }
 
 $(document).on("keydown", function(event)

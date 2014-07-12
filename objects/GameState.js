@@ -5,7 +5,10 @@ function GameState()
 		this.objedex = objedex = new Objedex(["bombers", "bombs"]);
 		this.stage = stage = new Stage();
 		
-		this.stage.addBomber();
+		this.stage.addBomber("alpha");
+		this.stage.addBomber("theta");
+		this.stage.addBomber("sigma");
+		this.stage.addBomber("omega");
 	}
 	
 	this.onUpdate = function(delta)
@@ -20,19 +23,26 @@ function GameState()
 		
 		this.objedex.bombers.foreach(function(bomber)
 		{
+			var $game = $("#" + bomber.id);
+			var $canvas = $game.find("canvas");
+			
 			var camera = new Object();
 			camera.x = bomber.x - (SCREEN_WIDTH*SCALE / 2);
 			camera.y = bomber.y - (SCREEN_HEIGHT*SCALE / 2);
 			
 			var rendering = this.stage.render(camera);
-			for(var i in rendering) {$("canvas").draw(rendering[i]);}
+			for(var i in rendering)
+			{
+				$canvas.draw(rendering[i]);
+			}
 			
-			var rendering = bomber.render();
-			$("canvas").draw(rendering);
+			this.objedex.bombers.foreach(function(bomber)
+			{
+				var rendering = bomber.render(camera);
+				$canvas.draw(rendering);
+			});
 			
-			$("#game > #status > #bombcount").text(bomber.bombcount);
+			$game.find("#bombcount").text(bomber.bombcount);
 		});
-		
-		$("#framerate").text(delta);
 	}
 }

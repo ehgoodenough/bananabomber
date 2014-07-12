@@ -118,11 +118,10 @@ canvas
 	background-color: #888;
 }
 
-#framerate
+#bombcount
 {
 	top: 1rem;
 	left: 1rem;
-	font-size: 2rem;
 	line-height: 1em;
 	position: absolute;
 }

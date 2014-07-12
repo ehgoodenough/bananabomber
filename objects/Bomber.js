@@ -1,13 +1,16 @@
-function Bomber(x, y)
+function Bomber(x, y, id)
 {
 	objedex.bombers.add(this);
 	
 	this.x = x * SCALE + (SCALE / 2);
 	this.y = y * SCALE + (SCALE / 2);
-	
 	this.speed = SCALE;
 	
 	this.bombcount = 2;
+	
+	this.id = id;
+	this.controlscheme = Bomber.controlschemes[id];
+	this.color = Bomber.colors[id];
 }
 
 Bomber.prototype.moveNorth = function(delta)
@@ -69,26 +72,66 @@ Bomber.prototype.dropBomb = function()
 
 Bomber.prototype.update = function(delta)
 {
-	if(Keystate.get("right arrow")) {this.moveEast(delta);}
-	else if(Keystate.get("left arrow")) {this.moveWest(delta);}
+	if(Keystate.get(this.controlscheme["move east"])) {this.moveEast(delta);}
+	else if(Keystate.get(this.controlscheme["move west"])) {this.moveWest(delta);}
 	
-	if(Keystate.get("down arrow")) {this.moveSouth(delta);}
-	else if(Keystate.get("up arrow")) {this.moveNorth(delta);}
+	if(Keystate.get(this.controlscheme["move south"])) {this.moveSouth(delta);}
+	else if(Keystate.get(this.controlscheme["move north"])) {this.moveNorth(delta);}
 	
-	if(Keystate.get("z")) {this.dropBomb();}
+	if(Keystate.get(this.controlscheme["drop bomb"])) {this.dropBomb();}
 }
 
-Bomber.prototype.render = function()
+Bomber.prototype.render = function(camera)
 {
 	var rendering = {};
 	
 	rendering.type = "rectangle";
 	rendering.x = SCREEN_WIDTH*SCALE / 2;
 	rendering.y = SCREEN_HEIGHT*SCALE / 2;
+	rendering.x = this.x - camera.x;
+	rendering.y = this.y - camera.y;
 	rendering.width = SCALE - 5;
 	rendering.height = SCALE - 5;
-	rendering.fillStyle = "green";
+	rendering.fillStyle = this.color;
 	rendering.cornerRadius = SCALE / 10;
 	
 	return rendering;
+}
+
+Bomber.controlschemes = {
+	"alpha": {
+		"move north": "up arrow",
+		"move south": "down arrow",
+		"move west": "left arrow",
+		"move east": "right arrow",
+		"drop bomb": "ctrl"
+	},
+	"theta": {
+		"move north": "w",
+		"move south": "s",
+		"move west": "a",
+		"move east": "d",
+		"drop bomb": "e"
+	},
+	"sigma": {
+		"move north": "i",
+		"move south": "k",
+		"move west": "j",
+		"move east": "l",
+		"drop bomb": "o"
+	},
+	"omega": {
+		"move north": "t",
+		"move south": "g",
+		"move west": "f",
+		"move east": "h",
+		"drop bomb": "y"
+	},
+};
+
+Bomber.colors = {
+	"alpha": "red",
+	"theta": "green",
+	"sigma": "yellow",
+	"omega": "blue"
 }

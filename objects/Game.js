@@ -14,7 +14,7 @@ Game.prototype.loop = function()
 {
 	if(this.state)
 	{
-		this.delta = (this.getDelta() - this.delta) / 100;
+		this.delta = ((this.getDelta() - this.delta) / 100) * 2;
 		
 		this.state.onUpdate(this.delta);
 		this.state.onRender(this.delta);

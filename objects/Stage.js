@@ -51,13 +51,13 @@ function Stage()
 	}
 }
 
-Stage.prototype.addBomber = function()
+Stage.prototype.addBomber = function(id)
 {
 	var x = getRandomOddValue(this.WIDTH);
 	var y = getRandomOddValue(this.HEIGHT);
 	
 	this.tiles[x][y].explode("all", 2);
-	var bomber = new Bomber(x, y);
+	var bomber = new Bomber(x, y, id);
 }
 
 Stage.prototype.getTile = function(x, y)
