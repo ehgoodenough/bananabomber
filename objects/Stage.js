@@ -73,7 +73,7 @@ Stage.prototype.render = function(camera)
 	camera.tile.min.x = Math.max(0, pixel2tile(camera.x));
 	camera.tile.min.y = Math.max(0, pixel2tile(camera.y));
 	camera.tile.max.x = Math.min(camera.tile.min.x + SCREEN_WIDTH + 1, this.WIDTH);
-	camera.tile.max.y = Math.min(camera.tile.min.x + SCREEN_HEIGHT + 1, this.HEIGHT);
+	camera.tile.max.y = Math.min(camera.tile.min.y + SCREEN_HEIGHT + 1, this.HEIGHT);
 	
 	for(var x = camera.tile.min.x; x < camera.tile.max.x; x++)
 	{
@@ -88,9 +88,10 @@ Stage.prototype.render = function(camera)
 			var rendering = tile.render(offset.x, offset.y);
 			$("canvas").draw(rendering);
 			
-			if(this.tiles[x][y].hasBomb())
+			if(tile.hasBomb())
 			{
-				$("canvas").draw(this.tiles[x][y].getBomb().render(offset.x, offset.y));
+				var bomb = tile.getBomb();
+				$("canvas").draw(bomb.render(offset.x, offset.y));
 			}
 		}
 	}
