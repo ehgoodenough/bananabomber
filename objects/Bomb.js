@@ -8,8 +8,7 @@ function Bomb(x, y, bomber)
 	this.bomber = bomber;
 	
 	this.timer = 100;
-	this.intensity = 2;
-	this.intensity = 5; //debug
+	this.intensity = this.bomber.bombpower;
 }
 
 Bomb.prototype.explode = function()

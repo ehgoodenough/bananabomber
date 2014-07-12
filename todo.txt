@@ -12,3 +12,5 @@ todo: see current powerups
 todo: make powerups do stuff
 
 todo: dead players still move
+todo: dead players have no gui
+todo: better gui

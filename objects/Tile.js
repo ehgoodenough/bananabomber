@@ -49,6 +49,8 @@ Tile.prototype.render = function(x, y)
 	return rendering;
 }
 
+Tile.poweruprate = 1;
+
 Tile.prototype.explode = function(direction, intensity, explosion)
 {
 	if(intensity > 0)
@@ -59,7 +61,7 @@ Tile.prototype.explode = function(direction, intensity, explosion)
 			
 			if(explosion && this.type == "crate")
 			{
-				if(Math.random() < 0.2)
+				if(Tile.poweruprate++ % 7 == 0)
 				{
 					var random = Math.random();
 					

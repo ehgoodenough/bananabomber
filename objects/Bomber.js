@@ -4,9 +4,11 @@ function Bomber(x, y, id)
 	
 	this.x = x * SCALE + (SCALE / 2);
 	this.y = y * SCALE + (SCALE / 2);
-	this.speed = SCALE * 1.5;
 	
+	
+	this.speed = 1.5;
 	this.bombcount = 2;
+	this.bombpower = 2;
 	
 	this.id = id;
 	this.controlscheme = Bomber.controlschemes[id];
@@ -16,44 +18,72 @@ function Bomber(x, y, id)
 Bomber.prototype.moveNorth = function(delta)
 {
 	var x = this.x;
-	var y = this.y - (this.speed * delta) - (SCALE / 4);
+	var y = this.y - (this.speed * SCALE * delta) - (SCALE / 4);
 	
 	if(stage.getTile(x, y).type == "floor")
 	{
-		this.y -= this.speed * delta;
+		this.y -= this.speed * SCALE * delta;
+		
+		if(stage.getTile(x, y).powerup)
+		{
+			var powerup = stage.getTile(x, y).powerup;
+			stage.getTile(x, y).powerup = undefined;
+			this.apply(powerup);
+		}
 	}
 }
 
 Bomber.prototype.moveSouth = function(delta)
 {
 	var x = this.x;
-	var y = this.y + (this.speed * delta) + (SCALE / 4);
+	var y = this.y + (this.speed * SCALE * delta) + (SCALE / 4);
 	
 	if(stage.getTile(x, y).type == "floor")
 	{
-		this.y += this.speed * delta;
+		this.y += this.speed * SCALE * delta;
+		
+		if(stage.getTile(x, y).powerup)
+		{
+			var powerup = stage.getTile(x, y).powerup;
+			stage.getTile(x, y).powerup = undefined;
+			this.apply(powerup);
+		}
 	}
 }
 
 Bomber.prototype.moveWest = function(delta)
 {
-	var x = this.x - (this.speed * delta) - (SCALE / 4);
+	var x = this.x - (this.speed * SCALE * delta) - (SCALE / 4);
 	var y = this.y;
 	
 	if(stage.getTile(x, y).type == "floor")
 	{
-		this.x -= (this.speed * delta);
+		this.x -= (this.speed * SCALE * delta);
+		
+		if(stage.getTile(x, y).powerup)
+		{
+			var powerup = stage.getTile(x, y).powerup;
+			stage.getTile(x, y).powerup = undefined;
+			this.apply(powerup);
+		}
 	}
 }
 
 Bomber.prototype.moveEast = function(delta)
 {
-	var x = this.x + (this.speed * delta) + (SCALE / 4);
+	var x = this.x + (this.speed * SCALE * delta) + (SCALE / 4);
 	var y = this.y;
 	
 	if(stage.getTile(x, y).type == "floor")
 	{
-		this.x += this.speed * delta;
+		this.x += this.speed * SCALE * delta;
+		
+		if(stage.getTile(x, y).powerup)
+		{
+			var powerup = stage.getTile(x, y).powerup;
+			stage.getTile(x, y).powerup = undefined;
+			this.apply(powerup);
+		}
 	}
 }
 
@@ -67,6 +97,22 @@ Bomber.prototype.dropBomb = function()
 			
 			stage.getTile(this.x, this.y).spawnBomb(this);
 		}
+	}
+}
+
+Bomber.prototype.apply = function(powerup)
+{
+	if(powerup.type == "amount")
+	{
+		this.bombcount++;
+	}
+	else if(powerup.type == "power")
+	{
+		this.bombpower++;
+	}
+	else if(powerup.type == "speed")
+	{
+		this.speed++;
 	}
 }
 

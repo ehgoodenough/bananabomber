@@ -21,7 +21,7 @@ Powerup.prototype.render = function(x, y)
 	}
 	else if(this.type == "speed")
 	{
-		rendering.fillStyle = "pink";
+		rendering.fillStyle = "red";
 	}
 	else if(this.type == "amount")
 	{
