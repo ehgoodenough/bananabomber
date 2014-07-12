@@ -23,10 +23,10 @@ function GameState()
 			var camx = bomber.x - (960 / 2);
 			var camy = bomber.y - (540 / 2);
 			
-			camx = Math.max(camx, 0);
+			/*camx = Math.max(camx, 0);
 			camy = Math.max(camy, 0);
 			camx = Math.min(camx, 960 - (960 / 2));
-			camy = Math.min(camy, 540 - (540 / 2));
+			camy = Math.min(camy, 540 - (540 / 2));*/
 			
 			this.stage.render(camx, camy);
 			

@@ -1,7 +1,7 @@
 function Stage()
 {
-	this.WIDTH = 32;
-	this.HEIGHT = 18;
+	this.WIDTH = 33;
+	this.HEIGHT = 19;
 	//this.WIDTH = 16;
 	//this.HEIGHT = 9;
 	
@@ -62,8 +62,8 @@ Stage.prototype.addBomber = function()
 	var x = getRandomOddValue(this.WIDTH / 2);
 	var y = getRandomOddValue(this.HEIGHT / 2);
 	
-	x = this.WIDTH / 2 - 1;
-	y = this.HEIGHT / 2 - 2;
+	x = Math.floor(this.WIDTH / 2);
+	y = Math.floor(this.HEIGHT / 2);
 	
 	this.tiles[x][y].explode("all", 2);
 	var bomber = new Bomber(x, y);
@@ -76,17 +76,16 @@ Stage.prototype.getTile = function(x, y)
 
 Stage.prototype.render = function(cx, cy)
 {
-	for(var x = 0; x < 16; x++)
+	for(var x = 0; x < this.WIDTH; x++)
 	{
-		for(var y = 0; y < 9; y++)
+		for(var y = 0; y < this.HEIGHT; y++)
 		{
-			var tx = x + pixel2tile(cx);
-			var ty = y + pixel2tile(cy);
-			var ofx = cx - (tx * SCALE);
-			var ofy = cy - (ty * SCALE);
+			var tile = this.tiles[x][y];
 			
-			var tile = this.tiles[tx][ty];
-			var rendering = tile.render(x, y);
+			var ofx = x * SCALE - cx;
+			var ofy = y * SCALE - cy;
+			
+			var rendering = tile.render(ofx, ofy);
 			$("canvas").draw(rendering);
 			
 			/*if(this.tiles[tx][ty].hasBomb())

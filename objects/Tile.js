@@ -29,8 +29,8 @@ Tile.prototype.render = function(x, y)
 	
 	rendering.width = SCALE;
 	rendering.height = SCALE;
-	rendering.x = x * SCALE;
-	rendering.y = y * SCALE;
+	rendering.x = x;
+	rendering.y = y;
 	rendering.fromCenter = false;
 	
 	if(this.type == "wall")
