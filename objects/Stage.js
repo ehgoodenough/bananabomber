@@ -91,6 +91,27 @@ Stage.prototype.render = function(camera)
 				var bomb = tile.getBomb();
 				rendering.push(bomb.render(offset.x, offset.y));
 			}
+			
+			if(tile.powerup)
+			{
+				rendering.push(tile.powerup.render(offset.x, offset.y));
+			}
+			
+			
+			if(tile.explosion > 0)
+			{
+				var red = (tile.explosion % 16).toString(16);
+				rendering.push({
+					type: "rectangle",
+					fromCenter: false,
+					x: offset.x,
+					y: offset.y,
+					width: SCALE,
+					height: SCALE,
+					fillStyle: "#" + red + "00",
+					opacity: tile.explosion / 16
+				});
+			}
 		}
 	}
 	

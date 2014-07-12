@@ -46,13 +46,6 @@ Tile.prototype.render = function(x, y)
 		rendering.fillStyle = "#CCC";
 	}
 	
-	if(this.explosion > 0)
-	{
-		var red = (this.explosion % 16).toString(16);
-		rendering.fillStyle = "#" + red + "00";
-		rendering.opacity = this.explosion / 16;
-	}
-	
 	return rendering;
 }
 
@@ -62,6 +55,14 @@ Tile.prototype.explode = function(direction, intensity, explosion)
 	{
 		if(this.type != "wall")
 		{
+			if(explosion && this.type == "crate")
+			{
+				if(Math.random() < 0.1)
+				{
+					this.powerup = new Powerup(this.x, this.y, "power");
+				}
+			}
+			
 			this.type = "floor";
 			
 			objedex.bombers.foreach(function(bomber)
