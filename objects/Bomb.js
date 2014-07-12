@@ -31,13 +31,13 @@ Bomb.prototype.update = function()
 	}
 }
 
-Bomb.prototype.render = function()
+Bomb.prototype.render = function(x, y)
 {
 	var rendering = {};
 	
 	rendering.type = "arc";
-	rendering.x = this.x * SCALE + (SCALE / 2);
-	rendering.y = this.y * SCALE + (SCALE / 2);
+	rendering.x = x + (SCALE / 2);
+	rendering.y = y + (SCALE / 2);
 	rendering.radius = SCALE / 2 - 5;
 	
 	var red = (this.timer % 16).toString(16);

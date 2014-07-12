@@ -86,7 +86,7 @@ Bomber.prototype.render = function()
 	
 	rendering.fillStyle = "green";
 	
-	rendering.x = (960 / 2);
+	rendering.x = 960 / 2;
 	rendering.y = 540 / 2;
 	
 	/*if(this.x < (960 / 2))

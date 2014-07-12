@@ -76,9 +76,14 @@ Stage.prototype.getTile = function(x, y)
 
 Stage.prototype.render = function(cx, cy)
 {
-	for(var x = 0; x < this.WIDTH; x++)
+	var tx = Math.max(0, pixel2tile(cx));
+	var ty = Math.max(0, pixel2tile(cy));
+	var txlim = Math.min(tx + 16 + 1, this.WIDTH);
+	var tylim = Math.min(ty + 9 + 1, this.HEIGHT);
+	
+	for(var x = tx; x < txlim; x++)
 	{
-		for(var y = 0; y < this.HEIGHT; y++)
+		for(var y = ty; y < tylim; y++)
 		{
 			var tile = this.tiles[x][y];
 			
@@ -88,10 +93,10 @@ Stage.prototype.render = function(cx, cy)
 			var rendering = tile.render(ofx, ofy);
 			$("canvas").draw(rendering);
 			
-			/*if(this.tiles[tx][ty].hasBomb())
+			if(this.tiles[x][y].hasBomb())
 			{
-				$("canvas").draw(this.tiles[tx][ty].getBomb().render());
-			}*/
+				$("canvas").draw(this.tiles[x][y].getBomb().render(ofx, ofy));
+			}
 		}
 	}
 }
