@@ -83,19 +83,11 @@ Bomber.prototype.render = function()
 	var rendering = {};
 	
 	rendering.type = "rectangle";
-	
+	rendering.x = SCREEN_WIDTH*SCALE / 2;
+	rendering.y = SCREEN_HEIGHT*SCALE / 2;
+	rendering.width = SCALE - 5;
+	rendering.height = SCALE - 5;
 	rendering.fillStyle = "green";
-	
-	rendering.x = 960 / 2;
-	rendering.y = 540 / 2;
-	
-	/*if(this.x < (960 / 2))
-	{
-		rendering.x -= this.x;
-	}*/
-	
-	rendering.width = SCALE;
-	rendering.height = SCALE;
 	rendering.cornerRadius = SCALE / 10;
 	
 	return rendering;

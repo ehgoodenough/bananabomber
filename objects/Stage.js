@@ -69,7 +69,7 @@ Stage.prototype.render = function(camera)
 {
 	var rendering = new Array();
 	
-	camera.tile = {min: {}, max: {}};
+	camera.tile = { min: {}, max: {} };
 	camera.tile.min.x = Math.max(0, pixel2tile(camera.x));
 	camera.tile.min.y = Math.max(0, pixel2tile(camera.y));
 	camera.tile.max.x = Math.min(camera.tile.min.x + SCREEN_WIDTH + 1, this.WIDTH);
@@ -79,19 +79,17 @@ Stage.prototype.render = function(camera)
 	{
 		for(var y = camera.tile.min.y; y < camera.tile.max.y; y++)
 		{
-			var tile = this.tiles[x][y];
-			
 			var offset = {};
-			offset.x = (x * SCALE) - camera.x;
-			offset.y = (y * SCALE) - camera.y;
+			offset.x = tile2pixel(x) - camera.x;
+			offset.y = tile2pixel(y) - camera.y;
 			
-			var rendering = tile.render(offset.x, offset.y);
-			$("canvas").draw(rendering);
+			var tile = this.tiles[x][y];
+			rendering.push(tile.render(offset.x, offset.y));
 			
 			if(tile.hasBomb())
 			{
 				var bomb = tile.getBomb();
-				$("canvas").draw(bomb.render(offset.x, offset.y));
+				rendering.push(bomb.render(offset.x, offset.y));
 			}
 		}
 	}
@@ -117,6 +115,11 @@ var SCREEN_HEIGHT = 540 / SCALE;
 function pixel2tile(value)
 {
 	return Math.floor(value / SCALE);
+}
+
+function tile2pixel(value)
+{
+	return value * SCALE;
 }
 
 function getRandomOddValue(range)

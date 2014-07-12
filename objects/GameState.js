@@ -21,15 +21,11 @@ function GameState()
 		this.objedex.bombers.foreach(function(bomber)
 		{
 			var camera = new Object();
-			camera.x = bomber.x - (960 / 2);
-			camera.y = bomber.y - (540 / 2);
+			camera.x = bomber.x - (SCREEN_WIDTH*SCALE / 2);
+			camera.y = bomber.y - (SCREEN_HEIGHT*SCALE / 2);
 			
-			//camx = Math.max(camx, 0);
-			//camy = Math.max(camy, 0);
-			//camx = Math.min(camx, 960 - (960 / 2) - 50);
-			//camy = Math.min(camy, 540 - (540 / 2) - 50);
-			
-			this.stage.render(camera);
+			var rendering = this.stage.render(camera);
+			for(var i in rendering) {$("canvas").draw(rendering[i]);}
 			
 			var rendering = bomber.render();
 			$("canvas").draw(rendering);

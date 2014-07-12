@@ -1,6 +1,6 @@
-todo: refactor SCALE into Game.SCALE?
-todo: fix where the rendering happens.
-
+todo: refactor SCALE into Game.SCALE? refactor SCREEN_* as well.
+todo: fix where the rendering happens; all jquery happens in gmaesate?
+todo: moduralize the views for each player so it is passed a canvas.
 todo: somehow affiliate bomber with tiles they are standing on.
 
 todo: add a cooldown so you don't accidentally place all bombs.
