@@ -2,8 +2,6 @@ function Stage()
 {
 	this.WIDTH = 33;
 	this.HEIGHT = 19;
-	//this.WIDTH = 16;
-	//this.HEIGHT = 9;
 	
 	this.tiles = new Array();
 	
@@ -13,21 +11,17 @@ function Stage()
 		
 		for(var y = 0; y < this.HEIGHT; y++)
 		{
-			var tile = new Tile(x, y, "wall");
-			
-			if(x == 0 || y == 0
+			if((x % 2 == 1 || y % 2 == 1)
+			&& !(y == this.HEIGHT - 1
 			|| x == this.WIDTH - 1
-			|| y == this.HEIGHT - 1)
+			|| x == 0 || y == 0))
 			{
-				tile.type = "wall";
+				tiles.push(new Tile(x, y, "crate"));
 			}
-			else if(x % 2 == 1 || y % 2 == 1)
+			else
 			{
-				//tile.type = "crate";
-				tile.type = "floor";
+				tiles.push(new Tile(x, y, "wall"));
 			}
-			
-			tiles.push(tile);
 		}
 		
 		this.tiles.push(tiles);
@@ -59,11 +53,8 @@ function Stage()
 
 Stage.prototype.addBomber = function()
 {
-	var x = getRandomOddValue(this.WIDTH / 2);
-	var y = getRandomOddValue(this.HEIGHT / 2);
-	
-	x = Math.floor(this.WIDTH / 2);
-	y = Math.floor(this.HEIGHT / 2);
+	var x = getRandomOddValue(this.WIDTH);
+	var y = getRandomOddValue(this.HEIGHT);
 	
 	this.tiles[x][y].explode("all", 2);
 	var bomber = new Bomber(x, y);
@@ -74,31 +65,37 @@ Stage.prototype.getTile = function(x, y)
 	return this.tiles[pixel2tile(x)][pixel2tile(y)];
 }
 
-Stage.prototype.render = function(cx, cy)
+Stage.prototype.render = function(camera)
 {
-	var tx = Math.max(0, pixel2tile(cx));
-	var ty = Math.max(0, pixel2tile(cy));
-	var txlim = Math.min(tx + 16 + 1, this.WIDTH);
-	var tylim = Math.min(ty + 9 + 1, this.HEIGHT);
+	var rendering = new Array();
 	
-	for(var x = tx; x < txlim; x++)
+	camera.tile = {min: {}, max: {}};
+	camera.tile.min.x = Math.max(0, pixel2tile(camera.x));
+	camera.tile.min.y = Math.max(0, pixel2tile(camera.y));
+	camera.tile.max.x = Math.min(camera.tile.min.x + SCREEN_WIDTH + 1, this.WIDTH);
+	camera.tile.max.y = Math.min(camera.tile.min.x + SCREEN_HEIGHT + 1, this.HEIGHT);
+	
+	for(var x = camera.tile.min.x; x < camera.tile.max.x; x++)
 	{
-		for(var y = ty; y < tylim; y++)
+		for(var y = camera.tile.min.y; y < camera.tile.max.y; y++)
 		{
 			var tile = this.tiles[x][y];
 			
-			var ofx = x * SCALE - cx;
-			var ofy = y * SCALE - cy;
+			var offset = {};
+			offset.x = (x * SCALE) - camera.x;
+			offset.y = (y * SCALE) - camera.y;
 			
-			var rendering = tile.render(ofx, ofy);
+			var rendering = tile.render(offset.x, offset.y);
 			$("canvas").draw(rendering);
 			
 			if(this.tiles[x][y].hasBomb())
 			{
-				$("canvas").draw(this.tiles[x][y].getBomb().render(ofx, ofy));
+				$("canvas").draw(this.tiles[x][y].getBomb().render(offset.x, offset.y));
 			}
 		}
 	}
+	
+	return rendering;
 }
 
 Stage.prototype.update = function()
@@ -112,9 +109,13 @@ Stage.prototype.update = function()
 	}
 }
 
+var SCALE = 60;
+var SCREEN_WIDTH = 960 / SCALE;
+var SCREEN_HEIGHT = 540 / SCALE;
+
 function pixel2tile(value)
 {
-	return Math.floor(value / SCALE)
+	return Math.floor(value / SCALE);
 }
 
 function getRandomOddValue(range)

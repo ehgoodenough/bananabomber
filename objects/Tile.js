@@ -26,12 +26,12 @@ Tile.prototype.render = function(x, y)
 	var rendering = {};
 	
 	rendering.type = "rectangle";
+	rendering.fromCenter = false;
 	
-	rendering.width = SCALE;
-	rendering.height = SCALE;
 	rendering.x = x;
 	rendering.y = y;
-	rendering.fromCenter = false;
+	rendering.width = SCALE;
+	rendering.height = SCALE;
 	
 	if(this.type == "wall")
 	{
@@ -50,7 +50,6 @@ Tile.prototype.render = function(x, y)
 	{
 		var red = (this.explosion % 16).toString(16);
 		rendering.fillStyle = "#" + red + "00";
-		
 		rendering.opacity = this.explosion / 16;
 	}
 	
