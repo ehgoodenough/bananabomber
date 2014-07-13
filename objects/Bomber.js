@@ -51,7 +51,7 @@ Bomber.prototype.getWestestPosition = function() {return this.x - this.radius;}
 
 Bomber.prototype.moveNorth = function(delta)
 {
-	var step = (this.speed * SCALE);
+	var step = tile2pixel(this.speed);
 	
 	var x1 = pixel2tile(this.getEastestPosition());
 	var x2 = pixel2tile(this.getWestestPosition());
@@ -146,11 +146,19 @@ Bomber.prototype.dropBomb = function()
 	}
 }
 
+var MAX_BOMBCOUNT = 5;
+var MAX_BOMBPOWER = 7;
+var MAX_SPEED = 2 / 6;
+
 Bomber.prototype.apply = function(powerup)
 {
 	if(powerup.type == "amount")
 	{
 		this.bombcount++;
+		if(this.bombcount > MAX_BOMBCOUNT)
+		{
+			this.bombcount = MAX_BOMBCOUNT;
+		}
 	}
 	else if(powerup.type == "power")
 	{
@@ -158,7 +166,12 @@ Bomber.prototype.apply = function(powerup)
 	}
 	else if(powerup.type == "speed")
 	{
-		this.speed++;
+		this.speed += 1 / 24;
+		
+		if(this.speed > MAX_SPEED)
+		{
+			this.speed = MAX_SPEED;
+		}
 	}
 }
 
