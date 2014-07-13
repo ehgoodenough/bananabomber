@@ -11,10 +11,13 @@ function Stage()
 		
 		for(var y = 0; y < this.HEIGHT; y++)
 		{
-			if((x % 2 == 1 || y % 2 == 1)
-			&& !(y == this.HEIGHT - 1
+			if(x == 0 || y == 0
 			|| x == this.WIDTH - 1
-			|| x == 0 || y == 0))
+			|| y == this.HEIGHT - 1)
+			{
+				tiles.push(new Tile(x, y, "sidewall"));
+			}
+			else if(x % 2 == 1 || y % 2 == 1)
 			{
 				tiles.push(new Tile(x, y, "crate"));
 			}
