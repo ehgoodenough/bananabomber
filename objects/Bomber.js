@@ -64,6 +64,10 @@ Bomber.prototype.moveNorth = function(delta)
 		this.reconnectTile();
 		this.collectPowerups();
 	}
+	else
+	{
+		this.y = tile2pixel(y+1) + Math.floor(SCALE / 2) - 9;
+	}
 }
 
 Bomber.prototype.moveSouth = function(delta)
@@ -80,6 +84,10 @@ Bomber.prototype.moveSouth = function(delta)
 		this.y += step;
 		this.reconnectTile();
 		this.collectPowerups();
+	}
+	else
+	{
+		this.y = tile2pixel(y-1) + Math.ceil(SCALE / 2) + 9;
 	}
 }
 
@@ -98,6 +106,10 @@ Bomber.prototype.moveEast = function(delta)
 		this.reconnectTile();
 		this.collectPowerups();
 	}
+	else
+	{
+		this.x = tile2pixel(x-1) + Math.ceil(SCALE / 2) + 9;
+	}
 }
 
 Bomber.prototype.moveWest = function(delta)
@@ -114,6 +126,10 @@ Bomber.prototype.moveWest = function(delta)
 		this.x -= step;
 		this.reconnectTile();
 		this.collectPowerups();
+	}
+	else
+	{
+		this.x = tile2pixel(x+1) + Math.floor(SCALE / 2) - 9;
 	}
 }
 
