@@ -79,6 +79,18 @@ Tile.prototype.render = function(x, y)
 	return rendering;
 }
 
+Tile.prototype.hasPowerup = function()
+{
+	return this.powerup != undefined;
+}
+
+Tile.prototype.getPowerup = function()
+{
+	var powerup = this.powerup;
+	delete this.powerup;
+	return powerup;
+}
+
 Tile.prototype.hasBombers = function()
 {
 	return Object.keys(this.bombers).length > 0;
@@ -110,7 +122,7 @@ Tile.prototype.isWalkable = function(bomber)
 	}
 }
 
-Tile.poweruprate = 1;
+Tile.poweruprate = 0;
 
 Tile.prototype.explode = function(direction, intensity, explosion)
 {
@@ -122,7 +134,7 @@ Tile.prototype.explode = function(direction, intensity, explosion)
 			
 			if(explosion && this.type == "crate")
 			{
-				if(Tile.poweruprate++ % 11 == 0)
+				if(++Tile.poweruprate % 7 == 0)
 				{
 					var random = Math.random();
 					
