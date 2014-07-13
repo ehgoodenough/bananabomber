@@ -10,22 +10,22 @@ Powerup.prototype.render = function(x, y)
 {
 	var rendering = {};
 	
-	rendering.type = "arc";
+	rendering.type = "image";
 	rendering.x = x + (SCALE / 2);
 	rendering.y = y + (SCALE / 2);
 	rendering.radius = SCALE / 4;
 	
 	if(this.type == "power")
 	{
-		rendering.fillStyle = "yellow";
+		rendering.source = "images/powerup.png";
 	}
 	else if(this.type == "speed")
 	{
-		rendering.fillStyle = "red";
+		rendering.source = "images/speedup.png";
 	}
 	else if(this.type == "amount")
 	{
-		rendering.fillStyle = "purple";
+		rendering.source = "images/amountup.png";
 	}
 	
 	return rendering;

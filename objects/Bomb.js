@@ -65,13 +65,12 @@ Bomb.prototype.render = function(x, y)
 {
 	var rendering = {};
 	
-	rendering.type = "arc";
+	rendering.type = "image";
+	rendering.source = "images/bomb" + this.timer % 16 + ".png";
+	console.log(rendering.source);
+	
 	rendering.x = x + (SCALE / 2);
 	rendering.y = y + (SCALE / 2);
-	rendering.radius = SCALE / 2 - 5;
-	
-	var red = (this.timer % 16).toString(16);
-	rendering.fillStyle = "#" + red + "00";
 	
 	return rendering;
 }
