@@ -146,18 +146,18 @@ Tile.prototype.explode = function(direction, intensity, explosion)
 				{
 					var random = Math.random();
 					
-					if(random < 1/3)
+					if(random < 1/2)
 					{
 						this.powerup = new Powerup(this.x, this.y, "power");
 					}
-					else if(random > 2/3)
-					{
-						this.powerup = new Powerup(this.x, this.y, "speed");
-					}
-					else
+					else if(random >= 1/2)
 					{
 						this.powerup = new Powerup(this.x, this.y, "amount");
 					}
+					/*else
+					{
+						this.powerup = new Powerup(this.x, this.y, "speed");
+					}*/
 				}
 			}
 			
