@@ -5,8 +5,9 @@ function Bomber(x, y, id)
 	this.x = x * SCALE + (SCALE / 2);
 	this.y = y * SCALE + (SCALE / 2);
 	
+	this.radius = SCALE / 2.5;
 	
-	this.speed = 1.5;
+	this.speed = 1;
 	this.bombcount = 2;
 	this.bombpower = 2;
 	
@@ -17,18 +18,22 @@ function Bomber(x, y, id)
 
 Bomber.prototype.moveNorth = function(delta)
 {
-	var x = this.x;
-	var y = this.y - (this.speed * SCALE * delta) - (SCALE / 4);
+	var step = (this.speed * SCALE) * delta;
 	
-	if(stage.getTile(x, y).type == "floor"
-	&& !(stage.getTile(x, y).bomb && stage.getTile(this.x, this.y) != stage.getTile(x, y)))
+	var x = this.x; //+- this.radius?
+	var y = this.y - step - this.radius;
+	
+	var tile = stage.getTile(x, y);
+	
+	if(tile.type == "floor" && !(tile.bomb && stage.getTile(this.x, this.y) != tile))
 	{
-		this.y -= this.speed * SCALE * delta;
+		this.y -= step;
 		
-		if(stage.getTile(x, y).powerup)
+		if(tile.powerup)
 		{
-			var powerup = stage.getTile(x, y).powerup;
-			stage.getTile(x, y).powerup = undefined;
+			var powerup = tile.powerup;
+			tile.powerup = undefined;
+			
 			this.apply(powerup);
 		}
 	}
@@ -36,18 +41,22 @@ Bomber.prototype.moveNorth = function(delta)
 
 Bomber.prototype.moveSouth = function(delta)
 {
-	var x = this.x;
-	var y = this.y + (this.speed * SCALE * delta) + (SCALE / 4);
+	var step = (this.speed * SCALE) * delta;
 	
-	if(stage.getTile(x, y).type == "floor"
-	&& !(stage.getTile(x, y).bomb && stage.getTile(this.x, this.y) != stage.getTile(x, y)))
+	var x = this.x; //+- this.radius?
+	var y = this.y + step + this.radius;
+	
+	var tile = stage.getTile(x, y);
+	
+	if(tile.type == "floor" && !(tile.bomb && stage.getTile(this.x, this.y) != tile))
 	{
-		this.y += this.speed * SCALE * delta;
+		this.y += step;
 		
-		if(stage.getTile(x, y).powerup)
+		if(tile.powerup)
 		{
-			var powerup = stage.getTile(x, y).powerup;
-			stage.getTile(x, y).powerup = undefined;
+			var powerup = tile.powerup;
+			tile.powerup = undefined;
+			
 			this.apply(powerup);
 		}
 	}
@@ -55,18 +64,22 @@ Bomber.prototype.moveSouth = function(delta)
 
 Bomber.prototype.moveWest = function(delta)
 {
-	var x = this.x - (this.speed * SCALE * delta) - (SCALE / 4);
-	var y = this.y;
+	var step = (this.speed * SCALE) * delta;
 	
-	if(stage.getTile(x, y).type == "floor"
-	&& !(stage.getTile(x, y).bomb && stage.getTile(this.x, this.y) != stage.getTile(x, y)))
+	var x = this.x - step - this.radius;
+	var y = this.y; //+- this.radius?
+	
+	var tile = stage.getTile(x, y);
+	
+	if(tile.type == "floor" && !(tile.bomb && stage.getTile(this.x, this.y) != tile))
 	{
-		this.x -= (this.speed * SCALE * delta);
+		this.x -= step;
 		
-		if(stage.getTile(x, y).powerup)
+		if(tile.powerup)
 		{
-			var powerup = stage.getTile(x, y).powerup;
-			stage.getTile(x, y).powerup = undefined;
+			var powerup = tile.powerup;
+			tile.powerup = undefined;
+			
 			this.apply(powerup);
 		}
 	}
@@ -74,18 +87,22 @@ Bomber.prototype.moveWest = function(delta)
 
 Bomber.prototype.moveEast = function(delta)
 {
-	var x = this.x + (this.speed * SCALE * delta) + (SCALE / 4);
-	var y = this.y;
+	var step = (this.speed * SCALE) * delta;
 	
-	if(stage.getTile(x, y).type == "floor"
-	&& !(stage.getTile(x, y).bomb && stage.getTile(this.x, this.y) != stage.getTile(x, y)))
+	var x = this.x + step + this.radius;
+	var y = this.y; //+- this.radius?
+	
+	var tile = stage.getTile(x, y);
+	
+	if(tile.type == "floor" && !(tile.bomb && stage.getTile(this.x, this.y) != tile))
 	{
-		this.x += this.speed * SCALE * delta;
+		this.x += step;
 		
-		if(stage.getTile(x, y).powerup)
+		if(tile.powerup)
 		{
-			var powerup = stage.getTile(x, y).powerup;
-			stage.getTile(x, y).powerup = undefined;
+			var powerup = tile.powerup;
+			tile.powerup = undefined;
+			
 			this.apply(powerup);
 		}
 	}
@@ -145,10 +162,10 @@ Bomber.prototype.render = function(camera)
 		rendering.y = SCREEN_HEIGHT*SCALE / 2;
 		rendering.x = this.x - camera.x;
 		rendering.y = this.y - camera.y;
-		rendering.width = SCALE - 5;
-		rendering.height = SCALE - 5;
+		rendering.width = this.radius * 2;
+		rendering.height = this.radius * 2;
 		rendering.fillStyle = this.color;
-		rendering.cornerRadius = SCALE / 10;
+		rendering.cornerRadius = SCALE / 8;
 	}
 	
 	return rendering;

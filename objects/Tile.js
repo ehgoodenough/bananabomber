@@ -47,6 +47,8 @@ Tile.prototype.render = function(x, y)
 	else if(this.type == "crate")
 	{
 		rendering.fillStyle = "rgb(179, 114, 56)";
+		rendering.height += SCALE * 0.25;
+		rendering.y -= SCALE * 0.25;
 	}
 	else if(this.type == "floor")
 	{
