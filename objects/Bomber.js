@@ -66,7 +66,7 @@ Bomber.prototype.moveNorth = function(delta)
 	}
 	else
 	{
-		this.y = tile2pixel(y+1) + Math.floor(SCALE / 2) - 9;
+		this.y = tile2pixel(y+1) + Math.floor(SCALE / 2) - 3;
 	}
 }
 
@@ -87,7 +87,7 @@ Bomber.prototype.moveSouth = function(delta)
 	}
 	else
 	{
-		this.y = tile2pixel(y-1) + Math.ceil(SCALE / 2) + 9;
+		this.y = tile2pixel(y-1) + Math.ceil(SCALE / 2) + 3;
 	}
 }
 
@@ -108,7 +108,7 @@ Bomber.prototype.moveEast = function(delta)
 	}
 	else
 	{
-		this.x = tile2pixel(x-1) + Math.ceil(SCALE / 2) + 9;
+		this.x = tile2pixel(x-1) + Math.ceil(SCALE / 2) + 3;
 	}
 }
 
@@ -129,7 +129,7 @@ Bomber.prototype.moveWest = function(delta)
 	}
 	else
 	{
-		this.x = tile2pixel(x+1) + Math.floor(SCALE / 2) - 9;
+		this.x = tile2pixel(x+1) + Math.floor(SCALE / 2) - 3;
 	}
 }
 
@@ -195,15 +195,12 @@ Bomber.prototype.render = function(camera)
 	
 	if(this.status != "blownup")
 	{
-		rendering.type = "rectangle";
-		rendering.x = SCREEN_WIDTH*SCALE / 2;
-		rendering.y = SCREEN_HEIGHT*SCALE / 2;
+		rendering.type = "image";
+		rendering.source = "images/" + this.color + ".png";
 		rendering.x = this.x - camera.x;
 		rendering.y = this.y - camera.y;
-		rendering.width = this.radius * 2;
-		rendering.height = this.radius * 2;
-		rendering.fillStyle = this.color;
-		rendering.cornerRadius = SCALE / 20;
+		//rendering.width = 38;
+		//rendering.height = 38;
 	}
 	
 	return rendering;
