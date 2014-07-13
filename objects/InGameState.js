@@ -37,6 +37,7 @@ function InGameState()
 			}
 			
 			$game.find("#bombcount").text(bomber.bombcount);
+			$game.find("#bombpower").text(bomber.bombpower);
 		});
 	}
 	

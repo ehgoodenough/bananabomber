@@ -119,11 +119,13 @@ canvas
 	background-color: #888;
 }
 
-#bombcount
+.player.view > #status
 {
-	top: 1rem;
-	left: 1rem;
+	top: 1vw;
+	left: 1vw;
+	font-size: 2vw;
 	line-height: 1em;
+	font-weight: bold;
 	position: absolute;
 }
 
