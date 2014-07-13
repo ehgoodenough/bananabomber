@@ -1,9 +1,14 @@
 function Bomber(x, y, id)
 {
 	objedex.bombers.add(this);
+	this.id = id;
 	
 	this.x = x * SCALE + (SCALE / 2);
 	this.y = y * SCALE + (SCALE / 2);
+	
+	this.tile = stage.tiles[x][y];
+	this.tile.removeBomber(this);
+	this.tile.addBomber(this);
 	
 	this.radius = SCALE / 2.5;
 	
@@ -11,9 +16,23 @@ function Bomber(x, y, id)
 	this.bombcount = 2;
 	this.bombpower = 2;
 	
-	this.id = id;
 	this.controlscheme = Bomber.controlschemes[id];
 	this.color = Bomber.colors[id];
+}
+
+Bomber.prototype.reconnectTile = function()
+{
+	var north = pixel2tile(this.getNorthestPosition());
+	var south = pixel2tile(this.getSouthestPosition());
+	var east = pixel2tile(this.getEastestPosition());
+	var west = pixel2tile(this.getWestestPosition());
+	
+	//this.tile.removeBomber(this);
+	
+	stage.tiles[east][north].bombers[this.id] = this;
+	stage.tiles[east][south].bombers[this.id] = this;
+	stage.tiles[west][north].bombers[this.id] = this;
+	stage.tiles[west][south].bombers[this.id] = this;
 }
 
 Bomber.prototype.getNorthestPosition = function() {return this.y - this.radius;}
@@ -33,6 +52,7 @@ Bomber.prototype.moveNorth = function(delta)
 	&& stage.tiles[x2][y].isWalkable())
 	{
 		this.y -= step;
+		this.reconnectTile();
 	}
 }
 
@@ -48,6 +68,7 @@ Bomber.prototype.moveSouth = function(delta)
 	&& stage.tiles[x2][y].isWalkable())
 	{
 		this.y += step;
+		this.reconnectTile();
 	}
 }
 
@@ -63,6 +84,7 @@ Bomber.prototype.moveEast = function(delta)
 	&& stage.tiles[x][y2].isWalkable())
 	{
 		this.x += step;
+		this.reconnectTile();
 	}
 }
 
@@ -78,6 +100,7 @@ Bomber.prototype.moveWest = function(delta)
 	&& stage.tiles[x][y2].isWalkable())
 	{
 		this.x -= step;
+		this.reconnectTile();
 	}
 }
 

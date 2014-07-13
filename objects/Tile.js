@@ -6,6 +6,8 @@ function Tile(x, y, type)
 	this.type = type;
 	
 	this.explosion = 0;
+	
+	this.bombers = new Object();
 }
 
 Tile.prototype.update = function(delta)
@@ -18,6 +20,19 @@ Tile.prototype.update = function(delta)
 	if(this.bomb)
 	{
 		this.bomb.update(delta);
+	}
+	
+	for(var i in this.bombers)
+	{
+		var bomber = this.bombers[i];
+		
+		if(pixel2tile(bomber.getEastestPosition()) < this.x
+		|| pixel2tile(bomber.getWestestPosition()) > this.x
+		|| pixel2tile(bomber.getSouthestPosition()) < this.y
+		|| pixel2tile(bomber.getNorthestPosition()) > this.y)
+		{
+			delete this.bombers[i];
+		}
 	}
 }
 
@@ -37,8 +52,8 @@ Tile.prototype.render = function(x, y)
 	if(this.type == "wall")
 	{
 		rendering.fillStyle = "#444";
-		rendering.height += SCALE * 0.25;
-		rendering.y -= SCALE * 0.25;
+		//rendering.height += SCALE * 0.25;
+		//rendering.y -= SCALE * 0.25;
 	}
 	else if(this.type == "sidewall")
 	{
@@ -47,15 +62,35 @@ Tile.prototype.render = function(x, y)
 	else if(this.type == "crate")
 	{
 		rendering.fillStyle = "rgb(179, 114, 56)";
-		rendering.height += SCALE * 0.25;
-		rendering.y -= SCALE * 0.25;
+		//rendering.height += SCALE * 0.25;
+		//rendering.y -= SCALE * 0.25;
 	}
 	else if(this.type == "floor")
 	{
 		rendering.fillStyle = "rgb(210, 210, 200)";
 	}
 	
+	if(this.hasBombers())
+	{
+		rendering.fillStyle = "green";
+	}
+	
 	return rendering;
+}
+
+Tile.prototype.hasBombers = function()
+{
+	return Object.keys(this.bombers).length > 0;
+}
+
+Tile.prototype.addBomber = function(bomber)
+{
+	this.bombers[bomber.id] = bomber;
+}
+
+Tile.prototype.removeBomber = function(bomber)
+{
+	delete this.bombers[bomber.id];
 }
 
 Tile.prototype.isWalkable = function()
@@ -96,15 +131,11 @@ Tile.prototype.explode = function(direction, intensity, explosion)
 			
 			this.type = "floor";
 			
-			objedex.bombers.foreach(function(bomber)
+			for(var i in this.bombers)
 			{
-				if(pixel2tile(bomber.x) == this.x
-				&& pixel2tile(bomber.y) == this.y)
-				{
-					bomber.status = "blownup";
-				}
+				var bomber = this.bombers[i];
+				bomber.status = "blownup";
 			}
-			.bind(this));
 			
 			if(explosion)
 			{

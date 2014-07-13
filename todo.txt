@@ -1,11 +1,8 @@
 todo: refactor SCALE into Game.SCALE? refactor SCREEN_* as well.
 todo: fix where the rendering happens; all jquery happens in gmaesate?
 todo: moduralize the views for each player so it is passed a canvas.
-todo: somehow affiliate bomber with tiles they are standing on.
 
-//todo: handle collisions from all sides before movement.
 //todo: handle collisions that fail, and compensate to maximum.
-//todo: register the bomber with the tiles they are over?
 //todo: generalize some of these stuff for all movements.
 
 // && !(tile.bomb && stage.getTile(this.x, this.y) != tile)
