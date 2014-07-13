@@ -65,9 +65,15 @@ Bomb.prototype.render = function(x, y)
 {
 	var rendering = {};
 	
+	var osc = this.timer % 16;
+	
 	rendering.type = "image";
-	rendering.source = "images/bomb" + this.timer % 16 + ".png";
-	console.log(rendering.source);
+	rendering.sWidth = 38;
+	rendering.sHeight = 38;
+	rendering.sx = (38 + 1) * (osc);
+	rendering.cropFromCenter = false;
+	rendering.sy = 0;
+	rendering.source = "images/bomb.png";
 	
 	rendering.x = x + (SCALE / 2);
 	rendering.y = y + (SCALE / 2);
