@@ -53,8 +53,8 @@ Tile.prototype.render = function(x, y)
 	if(this.type == "wall")
 	{
 		rendering.fillStyle = "#444";
-		//rendering.height += SCALE * 0.25;
-		//rendering.y -= SCALE * 0.25;
+		rendering.height += SCALE * 0.25;
+		rendering.y -= SCALE * 0.25;
 	}
 	else if(this.type == "sidewall")
 	{
@@ -63,17 +63,12 @@ Tile.prototype.render = function(x, y)
 	else if(this.type == "crate")
 	{
 		rendering.fillStyle = "rgb(179, 114, 56)";
-		//rendering.height += SCALE * 0.25;
-		//rendering.y -= SCALE * 0.25;
+		rendering.height += SCALE * 0.25;
+		rendering.y -= SCALE * 0.25;
 	}
 	else if(this.type == "floor")
 	{
 		rendering.fillStyle = "rgb(210, 210, 200)";
-	}
-	
-	if(this.hasBombers())
-	{
-		rendering.fillStyle = "green";
 	}
 	
 	return rendering;

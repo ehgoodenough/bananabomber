@@ -12,7 +12,7 @@ function Bomber(x, y, id)
 	
 	this.radius = SCALE / 2.5;
 	
-	this.speed = 1;
+	this.speed = 1 / 6;
 	this.bombcount = 2;
 	this.bombpower = 2;
 	
@@ -51,7 +51,7 @@ Bomber.prototype.getWestestPosition = function() {return this.x - this.radius;}
 
 Bomber.prototype.moveNorth = function(delta)
 {
-	var step = (this.speed * SCALE) * delta;
+	var step = (this.speed * SCALE);
 	
 	var x1 = pixel2tile(this.getEastestPosition());
 	var x2 = pixel2tile(this.getWestestPosition());
@@ -72,7 +72,7 @@ Bomber.prototype.moveNorth = function(delta)
 
 Bomber.prototype.moveSouth = function(delta)
 {
-	var step = (this.speed * SCALE) * delta;
+	var step = (this.speed * SCALE);
 	
 	var x1 = pixel2tile(this.getEastestPosition());
 	var x2 = pixel2tile(this.getWestestPosition());
@@ -93,7 +93,7 @@ Bomber.prototype.moveSouth = function(delta)
 
 Bomber.prototype.moveEast = function(delta)
 {
-	var step = (this.speed * SCALE) * delta;
+	var step = (this.speed * SCALE);
 	
 	var x = pixel2tile(this.getEastestPosition() + step);
 	var y1 = pixel2tile(this.getNorthestPosition());
@@ -114,7 +114,7 @@ Bomber.prototype.moveEast = function(delta)
 
 Bomber.prototype.moveWest = function(delta)
 {
-	var step = (this.speed * SCALE) * delta;
+	var step = (this.speed * SCALE);
 	
 	var x = pixel2tile(this.getWestestPosition() - step);
 	var y1 = pixel2tile(this.getNorthestPosition());

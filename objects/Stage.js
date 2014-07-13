@@ -78,9 +78,9 @@ Stage.prototype.render = function(camera)
 	camera.tile.max.x = Math.min(camera.tile.min.x + SCREEN_WIDTH + 1, this.WIDTH);
 	camera.tile.max.y = Math.min(camera.tile.min.y + SCREEN_HEIGHT + 1, this.HEIGHT);
 	
-	for(var x = camera.tile.min.x; x < camera.tile.max.x; x++)
+	for(var y = camera.tile.min.y; y < camera.tile.max.y; y++)
 	{
-		for(var y = camera.tile.min.y; y < camera.tile.max.y; y++)
+		for(var x = camera.tile.min.x; x < camera.tile.max.x; x++)
 		{
 			var offset = {};
 			offset.x = tile2pixel(x) - camera.x;
@@ -98,6 +98,14 @@ Stage.prototype.render = function(camera)
 			{
 				var bomb = tile.getBomb();
 				rendering.push(bomb.render(offset.x, offset.y));
+			}
+			
+			if(tile.hasBombers())
+			{
+				for(var i in tile.bombers)
+				{
+					rendering.push(tile.bombers[i].render(camera));
+				}
 			}
 			
 			if(tile.explosion > 0)
