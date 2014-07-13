@@ -29,7 +29,8 @@ Tile.prototype.update = function(delta)
 		if(pixel2tile(bomber.getEastestPosition()) < this.x
 		|| pixel2tile(bomber.getWestestPosition()) > this.x
 		|| pixel2tile(bomber.getSouthestPosition()) < this.y
-		|| pixel2tile(bomber.getNorthestPosition()) > this.y)
+		|| pixel2tile(bomber.getNorthestPosition()) > this.y
+		|| bomber.status == "blownup")
 		{
 			delete this.bombers[i];
 		}
