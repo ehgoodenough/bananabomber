@@ -26,7 +26,7 @@ body
 	right: 0px;
 	bottom: 0px;
 	margin: auto;
-	/*position: fixed;*/
+	position: fixed;
 	position: absolute;
 }
 
@@ -88,17 +88,10 @@ body
 	outline: 2px solid black;
 }
 
-/*#alpha.player.view
+#alpha.player.view
 {
 	bottom: auto;
 	right: auto;
-}*/
-
-#alpha.player.view
-{
-	z-index: 1;
-	width: 100%;
-	height: 100%;
 }
 
 #theta.player.view
