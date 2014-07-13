@@ -7,13 +7,13 @@ function Bomb(x, y, bomber)
 	
 	this.bomber = bomber;
 	
-	this.timer = 3;
+	this.timer = 64;
 	this.intensity = this.bomber.bombpower;
 }
 
 Bomb.prototype.explode = function()
 {
-	console.log("KA-BOOM!!");
+	//console.log("KA-BOOM!!");
 	
 	objedex.bombs.remove(this);
 	stage.tiles[this.x][this.y].bomb = undefined;
@@ -53,8 +53,9 @@ Bomb.prototype.explode = function()
 
 Bomb.prototype.update = function(delta)
 {
-	this.timer -= 1 * delta;
-	console.log(this.timer, delta);
+	this.timer -= 1;
+	//this.timer -= 1 * delta;
+	//console.log(this.timer, delta);
 	
 	if(this.timer <= 0)
 	{

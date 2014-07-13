@@ -1,6 +1,7 @@
 var Game = function()
 {
 	this.delta = Date.now();
+	this.second = 0;
 	this.reloop();
 }
 
@@ -19,8 +20,15 @@ Game.prototype.loop = function()
 {
 	if(this.state)
 	{
-		this.delta = ((Date.now() - this.delta) / 50);
-		this.delta = Math.min(this.delta, 1);
+		this.delta = ((Date.now() - this.delta) / 1000);
+		//this.delta = Math.min(this.delta, 1);
+		
+		this.second += this.delta;
+		if(this.second >= 1)
+		{
+			console.log("second: " + this.second);
+			this.second = 0;
+		}
 		
 		this.state.onUpdate(this.delta);
 		this.state.onRender(this.delta);
