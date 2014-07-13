@@ -94,9 +94,20 @@ Tile.prototype.removeBomber = function(bomber)
 	delete this.bombers[bomber.id];
 }
 
-Tile.prototype.isWalkable = function()
+Tile.prototype.isWalkable = function(bomber)
 {
-	return this.type == "floor";
+	if(this.type != "floor")
+	{
+		return false;
+	}
+	if(this.bomb && !this.bombers[bomber.id])
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 
 Tile.poweruprate = 1;

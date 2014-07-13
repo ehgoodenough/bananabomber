@@ -48,8 +48,8 @@ Bomber.prototype.moveNorth = function(delta)
 	var x2 = pixel2tile(this.getWestestPosition());
 	var y = pixel2tile(this.getNorthestPosition() - step);
 	
-	if(stage.tiles[x1][y].isWalkable()
-	&& stage.tiles[x2][y].isWalkable())
+	if(stage.tiles[x1][y].isWalkable(this)
+	&& stage.tiles[x2][y].isWalkable(this))
 	{
 		this.y -= step;
 		this.reconnectTile();
@@ -64,8 +64,8 @@ Bomber.prototype.moveSouth = function(delta)
 	var x2 = pixel2tile(this.getWestestPosition());
 	var y = pixel2tile(this.getSouthestPosition() + step);
 	
-	if(stage.tiles[x1][y].isWalkable()
-	&& stage.tiles[x2][y].isWalkable())
+	if(stage.tiles[x1][y].isWalkable(this)
+	&& stage.tiles[x2][y].isWalkable(this))
 	{
 		this.y += step;
 		this.reconnectTile();
@@ -80,8 +80,8 @@ Bomber.prototype.moveEast = function(delta)
 	var y1 = pixel2tile(this.getNorthestPosition());
 	var y2 = pixel2tile(this.getSouthestPosition());
 	
-	if(stage.tiles[x][y1].isWalkable()
-	&& stage.tiles[x][y2].isWalkable())
+	if(stage.tiles[x][y1].isWalkable(this)
+	&& stage.tiles[x][y2].isWalkable(this))
 	{
 		this.x += step;
 		this.reconnectTile();
@@ -96,8 +96,8 @@ Bomber.prototype.moveWest = function(delta)
 	var y1 = pixel2tile(this.getNorthestPosition());
 	var y2 = pixel2tile(this.getSouthestPosition());
 	
-	if(stage.tiles[x][y1].isWalkable()
-	&& stage.tiles[x][y2].isWalkable())
+	if(stage.tiles[x][y1].isWalkable(this)
+	&& stage.tiles[x][y2].isWalkable(this))
 	{
 		this.x -= step;
 		this.reconnectTile();
