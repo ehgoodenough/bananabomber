@@ -25,25 +25,29 @@ Tile.prototype.render = function(x, y)
 {
 	var rendering = {};
 	
-	rendering.type = "rectangle";
 	rendering.fromCenter = false;
 	
 	rendering.x = x;
 	rendering.y = y;
-	rendering.width = SCALE;
-	rendering.height = SCALE;
 	
 	if(this.type == "wall")
 	{
-		rendering.fillStyle = "#444";
+		rendering.type = "image";
+		rendering.source = "./images/stone.png";
+		rendering.y -= 70;
 	}
 	else if(this.type == "crate")
 	{
-		rendering.fillStyle = "#F4A460";
+		rendering.type = "image";
+		rendering.source = "./images/wood.png";
+		rendering.y -= 70;
 	}
 	else if(this.type == "floor")
 	{
-		rendering.fillStyle = "#CCC";
+		rendering.type = "image";
+		rendering.source = "./images/plain.png";
+		rendering.y -= 70;
+		rendering.height = 200;
 	}
 	
 	return rendering;

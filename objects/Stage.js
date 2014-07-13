@@ -128,9 +128,9 @@ Stage.prototype.update = function(delta)
 	}
 }
 
-var SCALE = 30; //?
-var SCREEN_WIDTH = 480 / SCALE;
-var SCREEN_HEIGHT = 270 / SCALE;
+var SCALE = 101; //?
+var SCREEN_WIDTH = 1920 / SCALE;
+var SCREEN_HEIGHT = 1080 / SCALE;
 
 function pixel2tile(value)
 {

@@ -6,9 +6,9 @@ function InGameState()
 		this.stage = stage = new Stage();
 		
 		this.stage.addBomber("alpha");
-		this.stage.addBomber("theta");
-		this.stage.addBomber("sigma");
-		this.stage.addBomber("omega");
+		//this.stage.addBomber("theta");
+		//this.stage.addBomber("sigma");
+		//this.stage.addBomber("omega");
 	}
 	
 	this.onUpdate = function(delta)
