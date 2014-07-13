@@ -8,6 +8,14 @@ todo: somehow affiliate bomber with tiles they are standing on.
 //todo: register the bomber with the tiles they are over?
 //todo: generalize some of these stuff for all movements.
 
+// && !(tile.bomb && stage.getTile(this.x, this.y) != tile)
+
+//if(tile.powerup)
+//{
+//	this.apply(tile1.powerup);
+//	tile1.powerup = undefined;
+//}
+
 todo: add a cooldown so you don't accidentally place all bombs.
 todo: place bombs over first available tile that player is over.
 

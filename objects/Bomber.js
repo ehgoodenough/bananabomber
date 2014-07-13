@@ -16,26 +16,23 @@ function Bomber(x, y, id)
 	this.color = Bomber.colors[id];
 }
 
+Bomber.prototype.getNorthestPosition = function() {return this.y - this.radius;}
+Bomber.prototype.getSouthestPosition = function() {return this.y + this.radius;}
+Bomber.prototype.getEastestPosition = function() {return this.x + this.radius;}
+Bomber.prototype.getWestestPosition = function() {return this.x - this.radius;}
+
 Bomber.prototype.moveNorth = function(delta)
 {
 	var step = (this.speed * SCALE) * delta;
 	
-	var x = this.x; //+- this.radius?
-	var y = this.y - step - this.radius;
+	var x1 = pixel2tile(this.getEastestPosition());
+	var x2 = pixel2tile(this.getWestestPosition());
+	var y = pixel2tile(this.getNorthestPosition() - step);
 	
-	var tile = stage.getTile(x, y);
-	
-	if(tile.type == "floor" && !(tile.bomb && stage.getTile(this.x, this.y) != tile))
+	if(stage.tiles[x1][y].isWalkable()
+	&& stage.tiles[x2][y].isWalkable())
 	{
 		this.y -= step;
-		
-		if(tile.powerup)
-		{
-			var powerup = tile.powerup;
-			tile.powerup = undefined;
-			
-			this.apply(powerup);
-		}
 	}
 }
 
@@ -43,45 +40,14 @@ Bomber.prototype.moveSouth = function(delta)
 {
 	var step = (this.speed * SCALE) * delta;
 	
-	var x = this.x; //+- this.radius?
-	var y = this.y + step + this.radius;
+	var x1 = pixel2tile(this.getEastestPosition());
+	var x2 = pixel2tile(this.getWestestPosition());
+	var y = pixel2tile(this.getSouthestPosition() + step);
 	
-	var tile = stage.getTile(x, y);
-	
-	if(tile.type == "floor" && !(tile.bomb && stage.getTile(this.x, this.y) != tile))
+	if(stage.tiles[x1][y].isWalkable()
+	&& stage.tiles[x2][y].isWalkable())
 	{
 		this.y += step;
-		
-		if(tile.powerup)
-		{
-			var powerup = tile.powerup;
-			tile.powerup = undefined;
-			
-			this.apply(powerup);
-		}
-	}
-}
-
-Bomber.prototype.moveWest = function(delta)
-{
-	var step = (this.speed * SCALE) * delta;
-	
-	var x = this.x - step - this.radius;
-	var y = this.y; //+- this.radius?
-	
-	var tile = stage.getTile(x, y);
-	
-	if(tile.type == "floor" && !(tile.bomb && stage.getTile(this.x, this.y) != tile))
-	{
-		this.x -= step;
-		
-		if(tile.powerup)
-		{
-			var powerup = tile.powerup;
-			tile.powerup = undefined;
-			
-			this.apply(powerup);
-		}
 	}
 }
 
@@ -89,22 +55,29 @@ Bomber.prototype.moveEast = function(delta)
 {
 	var step = (this.speed * SCALE) * delta;
 	
-	var x = this.x + step + this.radius;
-	var y = this.y; //+- this.radius?
+	var x = pixel2tile(this.getEastestPosition() + step);
+	var y1 = pixel2tile(this.getNorthestPosition());
+	var y2 = pixel2tile(this.getSouthestPosition());
 	
-	var tile = stage.getTile(x, y);
-	
-	if(tile.type == "floor" && !(tile.bomb && stage.getTile(this.x, this.y) != tile))
+	if(stage.tiles[x][y1].isWalkable()
+	&& stage.tiles[x][y2].isWalkable())
 	{
 		this.x += step;
-		
-		if(tile.powerup)
-		{
-			var powerup = tile.powerup;
-			tile.powerup = undefined;
-			
-			this.apply(powerup);
-		}
+	}
+}
+
+Bomber.prototype.moveWest = function(delta)
+{
+	var step = (this.speed * SCALE) * delta;
+	
+	var x = pixel2tile(this.getWestestPosition() - step);
+	var y1 = pixel2tile(this.getNorthestPosition());
+	var y2 = pixel2tile(this.getSouthestPosition());
+	
+	if(stage.tiles[x][y1].isWalkable()
+	&& stage.tiles[x][y2].isWalkable())
+	{
+		this.x -= step;
 	}
 }
 
@@ -165,7 +138,7 @@ Bomber.prototype.render = function(camera)
 		rendering.width = this.radius * 2;
 		rendering.height = this.radius * 2;
 		rendering.fillStyle = this.color;
-		rendering.cornerRadius = SCALE / 8;
+		rendering.cornerRadius = SCALE / 20;
 	}
 	
 	return rendering;

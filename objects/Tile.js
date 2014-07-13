@@ -58,20 +58,9 @@ Tile.prototype.render = function(x, y)
 	return rendering;
 }
 
-Tile.prototype.isPassable = function()
+Tile.prototype.isWalkable = function()
 {
-	if(this.type != "floor")
-	{
-		return false;
-	}
-	else if(this.bomb)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
+	return this.type == "floor";
 }
 
 Tile.poweruprate = 1;
