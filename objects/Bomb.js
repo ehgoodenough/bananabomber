@@ -7,7 +7,7 @@ function Bomb(x, y, bomber)
 	
 	this.bomber = bomber;
 	
-	this.timer = 100;
+	this.timer = 3;
 	this.intensity = this.bomber.bombpower;
 }
 
@@ -53,7 +53,8 @@ Bomb.prototype.explode = function()
 
 Bomb.prototype.update = function(delta)
 {
-	this.timer -= 1;
+	this.timer -= 1 * delta;
+	console.log(this.timer, delta);
 	
 	if(this.timer <= 0)
 	{
@@ -65,7 +66,7 @@ Bomb.prototype.render = function(x, y)
 {
 	var rendering = {};
 	
-	var osc = this.timer % 16;
+	var osc = Math.floor(this.timer % 16);
 	
 	rendering.type = "image";
 	rendering.sWidth = 38;

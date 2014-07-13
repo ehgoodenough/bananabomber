@@ -19,13 +19,11 @@ Game.prototype.loop = function()
 {
 	if(this.state)
 	{
-		this.delta = ((Date.now() - this.delta) / 1000);
+		this.delta = ((Date.now() - this.delta) / 50);
 		this.delta = Math.min(this.delta, 1);
 		
 		this.state.onUpdate(this.delta);
 		this.state.onRender(this.delta);
-		
-		console.log(this.delta);
 		
 		this.delta = Date.now();
 	}
