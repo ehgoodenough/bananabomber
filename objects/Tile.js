@@ -41,34 +41,39 @@ Tile.prototype.render = function(x, y)
 {
 	var rendering = {};
 	
-	rendering.type = "rectangle";
 	rendering.fromCenter = false;
 	
 	rendering.x = x;
 	rendering.y = y;
 	
-	rendering.width = SCALE;
-	rendering.height = SCALE;
-	
 	if(this.type == "wall")
 	{
-		rendering.fillStyle = "#444";
-		rendering.height += SCALE * 0.25;
-		rendering.y -= SCALE * 0.25;
+		rendering.type = "image";
+		rendering.source = "images/stone.png";
+		
+		rendering.y -= SCALE * 0.70;
 	}
 	else if(this.type == "sidewall")
 	{
-		rendering.fillStyle = "#444";
+		rendering.type = "image";
+		rendering.source = "images/stone.png";
+		rendering.y -= SCALE * 0.60;
+		rendering.height = SCALE * 2.1;
 	}
 	else if(this.type == "crate")
 	{
-		rendering.fillStyle = "rgb(179, 114, 56)";
-		rendering.height += SCALE * 0.25;
-		rendering.y -= SCALE * 0.25;
+		rendering.type = "image";
+		rendering.source = "images/wood.png";
+		
+		rendering.y -= SCALE * 0.7;
 	}
 	else if(this.type == "floor")
 	{
+		rendering.type = "rectangle";
 		rendering.fillStyle = "rgb(210, 210, 200)";
+		
+		rendering.width = SCALE;
+		rendering.height = SCALE;
 	}
 	
 	return rendering;
