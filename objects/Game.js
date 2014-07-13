@@ -1,6 +1,6 @@
 var Game = function()
 {
-	this.delta = this.getDelta();
+	this.delta = Date.now();
 	this.reloop();
 }
 
@@ -19,21 +19,18 @@ Game.prototype.loop = function()
 {
 	if(this.state)
 	{
-		this.delta = ((this.getDelta() - this.delta) / 100) * 2;
+		this.delta = ((Date.now() - this.delta) / 1000);
+		this.delta = Math.min(this.delta, 1);
 		
 		this.state.onUpdate(this.delta);
 		this.state.onRender(this.delta);
 		
-		this.delta = this.getDelta();
+		console.log(this.delta);
+		
+		this.delta = Date.now();
 	}
 	
 	this.reloop();
-}
-
-Game.prototype.getDelta = function()
-{
-	//return window.performance.now();
-	return Date.now();
 }
 
 Game.prototype.reloop = function()

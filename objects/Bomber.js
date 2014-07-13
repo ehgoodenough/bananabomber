@@ -49,6 +49,8 @@ Bomber.prototype.getSouthestPosition = function() {return this.y + this.radius;}
 Bomber.prototype.getEastestPosition = function() {return this.x + this.radius;}
 Bomber.prototype.getWestestPosition = function() {return this.x - this.radius;}
 
+var wallish = 4.7;
+
 Bomber.prototype.moveNorth = function(delta)
 {
 	var step = tile2pixel(this.speed);
@@ -66,7 +68,7 @@ Bomber.prototype.moveNorth = function(delta)
 	}
 	else
 	{
-		this.y = tile2pixel(y+1) + Math.floor(SCALE / 2) - 3;
+		this.y = tile2pixel(y+1) + Math.floor(SCALE / 2) - wallish;
 	}
 }
 
@@ -87,7 +89,7 @@ Bomber.prototype.moveSouth = function(delta)
 	}
 	else
 	{
-		this.y = tile2pixel(y-1) + Math.ceil(SCALE / 2) + 3;
+		this.y = tile2pixel(y-1) + Math.ceil(SCALE / 2) + wallish;
 	}
 }
 
@@ -108,7 +110,7 @@ Bomber.prototype.moveEast = function(delta)
 	}
 	else
 	{
-		this.x = tile2pixel(x-1) + Math.ceil(SCALE / 2) + 3;
+		this.x = tile2pixel(x-1) + Math.ceil(SCALE / 2) + wallish;
 	}
 }
 
@@ -129,7 +131,7 @@ Bomber.prototype.moveWest = function(delta)
 	}
 	else
 	{
-		this.x = tile2pixel(x+1) + Math.floor(SCALE / 2) - 3;
+		this.x = tile2pixel(x+1) + Math.floor(SCALE / 2) - wallish;
 	}
 }
 
