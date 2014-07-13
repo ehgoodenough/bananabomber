@@ -41,39 +41,47 @@ Tile.prototype.render = function(x, y)
 {
 	var rendering = {};
 	
+	rendering.type = "rectangle";
 	rendering.fromCenter = false;
 	
 	rendering.x = x;
 	rendering.y = y;
 	
+	rendering.width = SCALE;
+	rendering.height = SCALE;
+	
 	if(this.type == "wall")
 	{
-		rendering.type = "image";
-		rendering.source = "images/stone.png";
+		//rendering.type = "image";
+		//rendering.source = "images/stone.png";
+		//rendering.y -= SCALE * 0.70;
 		
-		rendering.y -= SCALE * 0.70;
+		rendering.fillStyle = "#444";
+		rendering.y -= SCALE * 0.25;
+		rendering.height += SCALE * 0.25;
 	}
 	else if(this.type == "sidewall")
 	{
-		rendering.type = "image";
-		rendering.source = "images/stone.png";
-		rendering.y -= SCALE * 0.60;
-		rendering.height = SCALE * 2.1;
+		//rendering.type = "image";
+		//rendering.source = "images/stone.png";
+		//rendering.y -= SCALE * 0.60;
+		//rendering.height = SCALE * 2.1;
+		
+		rendering.fillStyle = "#444";
 	}
 	else if(this.type == "crate")
 	{
-		rendering.type = "image";
-		rendering.source = "images/wood.png";
+		//rendering.type = "image";
+		//rendering.source = "images/wood.png";
+		//rendering.y -= SCALE * 0.7;
 		
-		rendering.y -= SCALE * 0.7;
+		rendering.fillStyle = "rgb(179, 114, 56)";
+		rendering.y -= SCALE * 0.25;
+		rendering.height += SCALE * 0.25;
 	}
 	else if(this.type == "floor")
 	{
-		rendering.type = "rectangle";
-		rendering.fillStyle = "rgb(210, 210, 200)";
-		
-		rendering.width = SCALE;
-		rendering.height = SCALE;
+		rendering.fillStyle = "#CCC";
 	}
 	
 	return rendering;
