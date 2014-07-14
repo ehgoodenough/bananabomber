@@ -120,7 +120,7 @@ Tile.prototype.explode = function(direction, intensity, explosion)
 			
 			if(explosion && this.type == "crate")
 			{
-				if(++Tile.poweruprate % 1 == 0)
+				if(++Tile.poweruprate % 5 == 0)
 				{
 					var random = Math.random();
 					
