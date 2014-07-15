@@ -1,87 +1,31 @@
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title>Bannanabomber</title>
 		
-		<link href="game.css" rel="stylesheet" type="text/css"/>
+		<meta charset="UTF-8">
+		<title>{{title}}</title>
+		
 	</head>
 	<body>
+		
 		<div id="game">
-			<div id="alpha" class="player view">
+			<div id="play" class="view">
 				<canvas width="960" height="540"></canvas>
-				<div id="status">
-					<section>
-						<label>Amount: </label>
-						<span id="bombcount"></span>
-					</section>
-					<section>
-						<label>Power: </label>
-						<span id="bombpower"></span>
-					</section>
-				</div>
 			</div>
-			<div id="theta" class="player view">
-				<canvas width="960" height="540"></canvas>
-				<div id="status">
-					<section>
-						<label>Amount: </label>
-						<span id="bombcount"></span>
-					</section>
-					<section>
-						<label>Power: </label>
-						<span id="bombpower"></span>
-					</section>
-				</div>
-			</div>
-			<div id="sigma" class="player view">
-				<canvas width="960" height="540"></canvas>
-				<div id="status">
-					<section>
-						<label>Amount: </label>
-						<span id="bombcount"></span>
-					</section>
-					<section>
-						<label>Power: </label>
-						<span id="bombpower"></span>
-					</section>
-				</div>
-			</div>
-			<div id="omega" class="player view">
-				<canvas width="960" height="540"></canvas>
-				<div id="status">
-					<section>
-						<label>Amount: </label>
-						<span id="bombcount"></span>
-					</section>
-					<section>
-						<label>Power: </label>
-						<span id="bombpower"></span>
-					</section>
-				</div>
-			</div>
-			<div id="win" class="view" style="display: none">
-				<span id="bomber">Red</span>
-				<span>wins!</span>
-			</div>
-			<div id="lose" class="view" style="display: none">
-				<span>Everyone loses!</span>
+			<div id="menu" class="view">
+				<span>Hello World!!</span>
 			</div>
 		</div>
 		
 		<script src="utilities/jquery.js" type="text/javascript"></script>
 		<script src="utilities/jquery.canvas.js" type="text/javascript"></script>
-		<script src="utilities/jquery.keystate.js" type="text/javascript"></script>
+		<script src="utilities/keystate.js" type="text/javascript"></script>
 		
 		<script src="objects/Game.js" type="text/javascript"></script>
-		<script src="objects/InGameState.js" type="text/javascript"></script>
-		<script src="objects/WinGameState.js" type="text/javascript"></script>
-		<script src="objects/Objedex.js" type="text/javascript"></script>
-		<script src="objects/Tile.js" type="text/javascript"></script>
-		<script src="objects/Stage.js" type="text/javascript"></script>
-		<script src="objects/Bomber.js" type="text/javascript"></script>
-		<script src="objects/Bomb.js" type="text/javascript"></script>
-		<script src="objects/Powerup.js" type="text/javascript"></script>
+		
+		<script src="states/PlayGameState.js" type="text/javascript"></script>
+		<script src="states/MenuGameState.js" type="text/javascript"></script>
 		
 		<script src="game.js" type="text/javascript"></script>
+		<link href="game.css" rel="stylesheet" type="text/css"/>
 	</body>
 </html>

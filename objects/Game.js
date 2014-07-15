@@ -1,49 +1,64 @@
-var Game = function()
+Game = function()
 {
+	$(".view").hide();
+	
 	this.delta = Date.now();
 	
-	setInterval(function()
-	{
-		this.reloop();
-	}
-	.bind(this), 17);
+	this.loop();
 }
 
 Game.prototype.load = function(state)
 {
 	if(this.state)
 	{
-		this.state.onTerminate();
+		if(this.state.terminate)
+		{
+			this.state.terminate();
+		}
+		
+		if(this.state.view)
+		{
+			this.state.view.hide();
+		}
+	}
+		
+	this.state = state;
+	
+	if(this.state.initiate)
+	{
+		this.state.initiate();
 	}
 	
-	this.state = state;
-	this.state.onInitiate();
+	if(this.state.view)
+	{
+		this.state.view.show();
+	}
 }
 
-Game.prototype.loop = function()
+Game.prototype.func = function()
 {
 	if(this.state)
 	{
 		this.delta = ((Date.now() - this.delta) / 1000);
-		//this.delta = Math.min(this.delta, 1);
+		this.delta = Math.min(this.delta, 1);
 		
-		/*this.second += this.delta;
-		if(this.second >= 1)
+		if(this.state.update)
 		{
-			console.log("second: " + this.second);
-			this.second = 0;
-		}*/
+			this.state.update(this.delta);
+		}
 		
-		this.state.onUpdate(this.delta);
-		this.state.onRender(this.delta);
+		if(this.state.render)
+		{
+			this.state.render(this.delta);
+		}
 		
 		this.delta = Date.now();
 	}
 	
-	//this.reloop();
+	this.loop();
 }
 
-Game.prototype.reloop = function()
+Game.prototype.loop = function()
 {
-	window.requestAnimationFrame(this.loop.bind(this));
+	window.requestAnimationFrame(this.func.bind(this));
 }

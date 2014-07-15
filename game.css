@@ -5,15 +5,13 @@
 
 html
 {
-	color: #EEE;
+	color: #FFF;
 	font-size: 18px;
-	font-family: calibri;
+	font-family: open-sans, calibri, sans-serif;
 }
 
 body
 {
-	width: 480px;
-	height: 270px;
 	overflow: hidden;
 	
 	background-color: #111;
@@ -26,7 +24,6 @@ body
 	right: 0px;
 	bottom: 0px;
 	margin: auto;
-	position: fixed;
 	position: absolute;
 }
 
@@ -48,7 +45,7 @@ body
 	}
 }
 
-@media(max-width: 480px)
+/*@media(max-width: 480px)
 {
 	#game
 	{
@@ -70,6 +67,12 @@ body
 		top: auto;
 		bottom: auto;
 	}
+}*/
+
+canvas
+{
+	width: 100%;
+	height: 100%;
 }
 
 .view
@@ -81,64 +84,12 @@ body
 	position: absolute;
 }
 
-.player.view
+#play.view
 {
-	width: 50%;
-	height: 50%;
-	outline: 2px solid black;
+	background-color: red;
 }
 
-#alpha.player.view
+#menu.view
 {
-	bottom: auto;
-	right: auto;
-}
-
-#theta.player.view
-{
-	bottom: auto;
-	left: auto;
-}
-
-#sigma.player.view
-{
-	top: auto;
-	right: auto;
-}
-
-#omega.player.view
-{
-	top: auto;
-	left: auto;
-}
-
-canvas
-{
-	width: 100%;
-	height: 100%;
-	background-color: #888;
-}
-
-.player.view > #status
-{
-	top: 1vw;
-	left: 1vw;
-	font-size: 2vw;
-	line-height: 1em;
-	font-weight: bold;
-	position: absolute;
-}
-
-#win.view
-{
-	color: black;
-	font-size: 5rem;
-	text-align: center;
-}
-
-#lose.view
-{
-	font-size: 5rem;
-	text-align: center;
-	background-color: #888;
+	background-color: green;
 }

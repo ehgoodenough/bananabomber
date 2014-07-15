@@ -1,23 +1,6 @@
-todo: refactor SCALE into Game.SCALE? refactor SCREEN_* as well.
-todo: fix where the rendering happens; all jquery happens in gmaesate?
-todo: moduralize the views for each player so it is passed a canvas.
+screen canvas dimensions + scale?
+screen render?
 
-//todo: handle collisions that fail, and compensate to maximum.
-//todo: generalize some of these stuff for all movements.
-
-// && !(tile.bomb && stage.getTile(this.x, this.y) != tile)
-
-//if(tile.powerup)
-//{
-//	this.apply(tile1.powerup);
-//	tile1.powerup = undefined;
-//}
-
-todo: add a cooldown so you don't accidentally place all bombs.
-todo: place bombs over first available tile that player is over.
-
-todo: see current powerups
-
-todo: dead players still move
-todo: dead players have no gui
-todo: better gui
+keystate
+todo: record events, not just states
+todo: extend getStroke to see if "justdown"

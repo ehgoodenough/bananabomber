@@ -1,2 +1,3 @@
-var Bananabomber = new Game();
-Bananabomber.load(new InGameState());
+var game = new Game();
+
+game.load(new MenuGameState());
