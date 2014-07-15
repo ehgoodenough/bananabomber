@@ -5,8 +5,7 @@
 
 html
 {
-	color: #FFF;
-	font-size: 18px;
+	font-size: 3vw;
 	font-family: open-sans, calibri, sans-serif;
 }
 
@@ -75,6 +74,21 @@ canvas
 	height: 100%;
 }
 
+a
+{
+	display: block;
+	
+	color: inherit;
+}
+
+h1
+{
+	margin-bottom: 0.5rem;
+	
+	font-size: 2rem;
+	font-family: dreamofme;
+}
+
 .view
 {
 	top: 0px;
@@ -84,12 +98,14 @@ canvas
 	position: absolute;
 }
 
+#menu.view
+{
+	padding: 1rem;
+	
+	background-color: rgb(181, 230, 29);
+}
+
 #play.view
 {
 	background-color: red;
-}
-
-#menu.view
-{
-	background-color: green;
 }
