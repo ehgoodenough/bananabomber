@@ -1,7 +1,9 @@
 Game = function(state)
 {
 	$(".view").hide();
+	
 	this.delta = Date.now();
+	
 	this.load(state);
 	this.loop();
 }

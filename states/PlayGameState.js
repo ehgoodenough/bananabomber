@@ -1,8 +1,18 @@
+var scene = new PIXI.Stage(0x66FF00);
+var pixi = new PIXI.WebGLRenderer(400, 300);
+$("#play").append(pixi.view);
+
+var texture = PIXI.Texture.fromImage("images/green.png");
+var monkey = new PIXI.Sprite(texture);
+monkey.anchor.x = 0.5;
+monkey.anchor.y = 0.5;
+monkey.position.x = 200;
+monkey.position.y = 150;
+scene.addChild(monkey);
+
 function PlayGameState()
 {
 	this.theta = 0;
-	
-	this.bombers = {};
 	
 	this.initiate = function()
 	{
@@ -14,11 +24,13 @@ function PlayGameState()
 	this.update = function(delta)
 	{
 		console.log(Math.floor(this.theta += delta));
+		
+		monkey.rotation += 0.1;
 	}
 	
 	this.render = function(delta)
 	{
-		//?!
+		pixi.render(scene);
 	}
 	
 	this.terminate = function()
@@ -26,33 +38,3 @@ function PlayGameState()
 		$("#play.view").hide();
 	}
 }
-
-(function($)
-{
-	$.fn.render = function(stuff)
-	{
-		return this.each(function()
-		{
-			if(stuff.render)
-			{
-				var rendering = stuff.render();
-				
-				if(rendering instanceof Array)
-				{
-					for(var s in rendering)
-						this.render(rendering[s]);
-				}
-				else
-				{
-					this.render(rendering)
-				}
-			}
-			else
-			{
-				this.draw(stuff);
-			}
-		}
-		.bind(this));
-	}
-}
-(jQuery));

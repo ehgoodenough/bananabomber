@@ -49,16 +49,6 @@ function Stage()
 			}
 		}
 	}
-	
-	this.$rendering = $("<canvas>");
-	
-	for(var x = 0; x < this.WIDTH; x++)
-	{
-		for(var y = 0; y < this.HEIGHT; y++)
-		{
-			this.$rendering.draw(this.tiles[x][y].render());
-		}
-	}
 }
 
 Stage.prototype.render = function()
