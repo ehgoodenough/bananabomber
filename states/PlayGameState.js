@@ -24,7 +24,8 @@ function PlayGameState()
 	
 	this.render = function(delta)
 	{
-		render(this.stage);
+		$("canvas").render(this.stage);
+		//$("canvas").camera("#red.screen", 10, 10);
 	}
 	
 	this.terminate = function()
@@ -33,24 +34,32 @@ function PlayGameState()
 	}
 }
 
-function render(stuff)
+(function($)
 {
-	if(stuff.render)
+	$.fn.render = function(stuff)
 	{
-		var rendering = stuff.render();
-		
-		if(rendering instanceof Array)
+		return this.each(function()
 		{
-			for(var s in rendering)
-				render(rendering[s]);
+			if(stuff.render)
+			{
+				var rendering = stuff.render();
+				
+				if(rendering instanceof Array)
+				{
+					for(var s in rendering)
+						this.render(rendering[s]);
+				}
+				else
+				{
+					this.render(rendering)
+				}
+			}
+			else
+			{
+				this.draw(stuff);
+			}
 		}
-		else
-		{
-			render(rendering)
-		}
-	}
-	else
-	{
-		$("canvas").draw(stuff);
+		.bind(this));
 	}
 }
+(jQuery));
