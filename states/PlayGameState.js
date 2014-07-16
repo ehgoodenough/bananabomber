@@ -3,18 +3,12 @@ function PlayGameState()
 	this.theta = 0;
 	
 	this.bombers = {};
-	this.stage = {};
 	
 	this.initiate = function()
 	{
 		$("#play.view").show();
 		
 		this.stage = new Stage();
-		
-		//this.stage.addBomber("red");
-		//this.stage.addBomber("blue");
-		//this.stage.addBomber("green");
-		//this.stage.addBomber("purple");
 	}
 	
 	this.update = function(delta)
@@ -24,8 +18,7 @@ function PlayGameState()
 	
 	this.render = function(delta)
 	{
-		$("canvas").render(this.stage);
-		//$("canvas").camera("#red.screen", 10, 10);
+		//?!
 	}
 	
 	this.terminate = function()

@@ -1,7 +1,3 @@
-var game = new Game(new PlayGameState());
-
-
-
 var SCALE = 48;
 
 function pixel2tile(value)
@@ -13,3 +9,6 @@ function tile2pixel(value)
 {
 	return value * SCALE;
 }
+
+
+var game = new Game(new PlayGameState());
