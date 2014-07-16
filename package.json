@@ -1,0 +1,21 @@
+{
+  "name": "bananabomber",
+  "version": "1.0.4",
+  "description": "a clone of melonbomber from gmod.",
+  "author": "Andrew McPherson",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arcym/bananabomber.git"
+  },
+  "dependencies": {
+    "express": "~4.6.1"
+  },
+  "keywords": [
+    "game",
+    "bomberman",
+    "multiplayer",
+    "arcade",
+    "clone"
+  ]
+}
