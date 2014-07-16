@@ -1,9 +1,8 @@
-Game = function()
+Game = function(state)
 {
 	$(".view").hide();
-	
 	this.delta = Date.now();
-	
+	this.load(state);
 	this.loop();
 }
 
@@ -15,11 +14,6 @@ Game.prototype.load = function(state)
 		{
 			this.state.terminate();
 		}
-		
-		if(this.state.view)
-		{
-			this.state.view.hide();
-		}
 	}
 		
 	this.state = state;
@@ -27,11 +21,6 @@ Game.prototype.load = function(state)
 	if(this.state.initiate)
 	{
 		this.state.initiate();
-	}
-	
-	if(this.state.view)
-	{
-		this.state.view.show();
 	}
 }
 

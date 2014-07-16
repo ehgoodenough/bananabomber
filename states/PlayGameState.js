@@ -1,32 +1,56 @@
 function PlayGameState()
 {
-	this.view = $("#play.view");
+	this.theta = 0;
+	
+	this.bombers = {};
+	this.stage = {};
+	
+	this.initiate = function()
+	{
+		$("#play.view").show();
+		
+		this.stage = new Stage();
+		
+		//this.stage.addBomber("red");
+		//this.stage.addBomber("blue");
+		//this.stage.addBomber("green");
+		//this.stage.addBomber("purple");
+	}
 	
 	this.update = function(delta)
 	{
-		console.log(Math.floor(timer += delta));
-		
-		if(Keystate.isStroked("z"))
-		{
-			object.x += 10;
-		}
+		console.log(Math.floor(this.theta += delta));
 	}
 	
 	this.render = function(delta)
 	{
-		$("canvas").clearCanvas();
-		$("canvas").draw(object);
+		render(this.stage);
+	}
+	
+	this.terminate = function()
+	{
+		$("#play.view").hide();
 	}
 }
 
-var timer = 0;
-
-var object = new function()
+function render(stuff)
 {
-	this.x = 100;
-	this.y = 100;
-	this.width = 100;
-	this.height = 100;
-	this.type = "rectangle";
-	this.fillStyle = "orange";
+	if(stuff.render)
+	{
+		var rendering = stuff.render();
+		
+		if(rendering instanceof Array)
+		{
+			for(var s in rendering)
+				render(rendering[s]);
+		}
+		else
+		{
+			render(rendering)
+		}
+	}
+	else
+	{
+		$("canvas").draw(stuff);
+	}
 }

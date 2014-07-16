@@ -9,7 +9,19 @@
 		
 		<div id="game">
 			<div id="play" class="view">
-				<canvas width="960" height="540"></canvas>
+				<div id="red" class="screen">
+					<img width="960" height="540"/>
+				</div>
+				<div id="blue" class="screen">
+					<img width="960" height="540"/>
+				</div>
+				<div id="green" class="screen">
+					<img width="960" height="540"/>
+				</div>
+				<div id="purple" class="screen">
+					<img width="960" height="540"/>
+				</div>
+				<canvas width="1008" height="1008"></canvas>
 			</div>
 			<div id="menu" class="view">
 				<h1>Bananabomber!</h1>
@@ -24,6 +36,8 @@
 		<script src="utilities/keystate.js" type="text/javascript"></script>
 		
 		<script src="objects/Game.js" type="text/javascript"></script>
+		<script src="objects/Stage.js" type="text/javascript"></script>
+		<script src="objects/Tile.js" type="text/javascript"></script>
 		
 		<script src="states/PlayGameState.js" type="text/javascript"></script>
 		<script src="states/MenuGameState.js" type="text/javascript"></script>
