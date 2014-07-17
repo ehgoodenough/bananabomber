@@ -1,8 +1,9 @@
 function Bomber(name)
 {
 	this.name = name;
+	this.status = "okay";
 	
-	var texture = PIXI.Texture.fromImage("images/" + name + ".png")
+	var texture = PIXI.Texture.fromImage(this.getImage())
 	this.supconstructor.call(this, texture);
 	
 	var x = getRandomOddNumber(stage.getSize());
@@ -19,9 +20,83 @@ function Bomber(name)
 
 Bomber.inherits(PIXI.Sprite);
 
+////////////
+//Updater//
+//////////
+
 Bomber.prototype.update = function(delta)
 {
 	this.rotation += 0.1;
+}
+
+////////////////////////
+//Getters and Setters//
+//////////////////////
+
+Bomber.prototype.getImage = function()
+{
+	return Bomber.data[this.name].image;
+}
+
+Bomber.prototype.getControls = function()
+{
+	return Bomber.data[this.name].controls;
+}
+
+/////////
+//Data//
+///////
+
+Bomber.data =
+{
+	"red":
+	{
+		controls:
+		{
+			"move north": "up arrow",
+			"move south": "down arrow",
+			"move west": "left arrow",
+			"move east": "right arrow",
+			"drop bomb": "ctrl"
+		},
+		image: "images/red.png"
+	},
+	"blue":
+	{
+		controls:
+		{
+			"move north": "w",
+			"move south": "s",
+			"move west": "a",
+			"move east": "d",
+			"drop bomb": "e"
+		},
+		image: "images/blue.png"
+	},
+	"green":
+	{
+		controls:
+		{
+			"move north": "i",
+			"move south": "k",
+			"move west": "j",
+			"move east": "l",
+			"drop bomb": "o"
+		},
+		image: "images/green.png"
+	},
+	"purple":
+	{
+		controls:
+		{
+			"move north": "t",
+			"move south": "g",
+			"move west": "f",
+			"move east": "h",
+			"drop bomb": "y"
+		},
+		image: "images/purple.png"
+	},
 }
 
 function getRandomOddNumber(max)

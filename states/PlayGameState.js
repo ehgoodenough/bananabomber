@@ -7,7 +7,7 @@ function PlayGameState()
 	this.theta = 0;
 	
 	this.stage = stage = new Stage(9);
-	this.bomber = bomber = new Bomber("green");
+	this.bomber = bomber = new Bomber("red");
 	
 	this.camera = new PIXI.Stage(0x000000);
 	

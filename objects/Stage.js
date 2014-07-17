@@ -48,6 +48,10 @@ function Stage(size)
 
 Stage.inherits(PIXI.Stage);
 
+////////////////////////
+//Getters and Setters//
+//////////////////////
+
 Stage.prototype.getSize = function()
 {
 	return this.size;

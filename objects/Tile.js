@@ -12,6 +12,10 @@ function Tile(x, y, type)
 
 Tile.inherits(PIXI.Sprite);
 
+/////////////
+//Exploder//
+///////////
+
 Tile.prototype.explode = function(intensity, direction, explosion)
 {
 	direction = direction || "all";
@@ -40,6 +44,15 @@ Tile.prototype.explode = function(intensity, direction, explosion)
 	{
 		this.north.explode(intensity - 1, "north", explosion);
 	}
+}
+
+////////////////////////
+//Getters and Setters//
+//////////////////////
+
+Tile.prototype.getType = function()
+{
+	return this.type;
 }
 
 Tile.prototype.setType = function(type)
