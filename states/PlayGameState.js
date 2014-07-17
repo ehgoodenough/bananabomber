@@ -1,4 +1,4 @@
-function pixel2tile(value) {return Math.floor(value / SCALE);}
+function px2sq(value) {return Math.floor(value / SCALE);}
 function sq2px(value) {return value * SCALE;}
 var SCALE = 64;
 
@@ -24,10 +24,9 @@ function PlayGameState()
 	
 	this.update = function(delta)
 	{
-		//console.log(Math.floor(this.theta += delta));
+		console.log(Math.floor(this.theta += delta));
 		
 		this.bomber.update(delta);
-		//this.stage.update(delta);
 	}
 	
 	this.render = function()

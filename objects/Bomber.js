@@ -15,18 +15,102 @@ function Bomber(name)
 	this.anchor.x = 0.5;
 	this.anchor.y = 0.5;
 	
-	this.speed = SCALE / 6;
+	this.speed = 1.5;
+	
+	this.keyscheme = this.getKeyscheme();
 }
 
 Bomber.inherits(PIXI.Sprite);
 
-////////////
-//Updater//
-//////////
+///////////
+//Update//
+/////////
 
 Bomber.prototype.update = function(delta)
 {
-	this.rotation += 0.1;
+	if(Keystate.isStroked(this.keyscheme["move east"]))
+	{
+		this.moveEast(delta);
+	}
+	else if(Keystate.isStroked(this.keyscheme["move west"]))
+	{
+		this.moveWest(delta);
+	}
+	
+	if(Keystate.isStroked(this.keyscheme["move south"]))
+	{
+		this.moveSouth(delta);
+	}
+	else if(Keystate.isStroked(this.keyscheme["move north"]))
+	{
+		this.moveNorth(delta);
+	}
+	
+	if(Keystate.isStroked(this.keyscheme["drop bomb"]))
+	{
+		this.dropBomb();
+	}
+}
+
+////////////
+//Actions//
+//////////
+
+Bomber.prototype.moveNorth = function(delta)
+{
+	var step = sq2px(this.speed) * delta;
+	
+	var x = px2sq(this.position.x);
+	var y = px2sq(this.position.y - step);
+	
+	if(stage.getTile(x, y).isWalkable())
+	{
+		this.y -= step;
+	}
+}
+
+Bomber.prototype.moveSouth = function(delta)
+{
+	var step = sq2px(this.speed) * delta;
+	
+	var x = px2sq(this.position.x);
+	var y = px2sq(this.position.y + step);
+	
+	if(stage.getTile(x, y).isWalkable())
+	{
+		this.y += step;
+	}
+}
+
+Bomber.prototype.moveEast = function(delta)
+{
+	var step = sq2px(this.speed) * delta;
+	
+	var x = px2sq(this.position.x + step);
+	var y = px2sq(this.position.y);
+	
+	if(stage.getTile(x, y).isWalkable())
+	{
+		this.x += step;
+	}
+}
+
+Bomber.prototype.moveWest = function(delta)
+{
+	var step = sq2px(this.speed) * delta;
+	
+	var x = px2sq(this.position.x - step);
+	var y = px2sq(this.position.y);
+	
+	if(stage.getTile(x, y).isWalkable())
+	{
+		this.x -= step;
+	}
+}
+
+Bomber.prototype.dropBomb = function()
+{
+	console.log("KABOOM!");
 }
 
 ////////////////////////
@@ -38,9 +122,9 @@ Bomber.prototype.getImage = function()
 	return Bomber.data[this.name].image;
 }
 
-Bomber.prototype.getControls = function()
+Bomber.prototype.getKeyscheme = function()
 {
-	return Bomber.data[this.name].controls;
+	return Bomber.data[this.name].keyscheme;
 }
 
 /////////
@@ -51,7 +135,7 @@ Bomber.data =
 {
 	"red":
 	{
-		controls:
+		keyscheme:
 		{
 			"move north": "up arrow",
 			"move south": "down arrow",
@@ -63,7 +147,7 @@ Bomber.data =
 	},
 	"blue":
 	{
-		controls:
+		keyscheme:
 		{
 			"move north": "w",
 			"move south": "s",
@@ -75,7 +159,7 @@ Bomber.data =
 	},
 	"green":
 	{
-		controls:
+		keyscheme:
 		{
 			"move north": "i",
 			"move south": "k",
@@ -87,7 +171,7 @@ Bomber.data =
 	},
 	"purple":
 	{
-		controls:
+		keyscheme:
 		{
 			"move north": "t",
 			"move south": "g",

@@ -12,9 +12,9 @@ function Tile(x, y, type)
 
 Tile.inherits(PIXI.Sprite);
 
-/////////////
-//Exploder//
-///////////
+////////////
+//Actions//
+//////////
 
 Tile.prototype.explode = function(intensity, direction, explosion)
 {
@@ -59,4 +59,9 @@ Tile.prototype.setType = function(type)
 {
 	this.type = type;
 	this.setTexture(PIXI.Texture.fromImage("images/" + this.type + ".png"));
+}
+
+Tile.prototype.isWalkable = function()
+{
+	return this.type == "floor";
 }

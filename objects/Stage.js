@@ -38,10 +38,25 @@ function Stage(size)
 	{
 		for(var y = 0; y < this.size; y++)
 		{
-			if(x > 0) {this.tiles[x][y].west = this.tiles[x-1][y];}
-			if(x < this.size - 1) {this.tiles[x][y].east = this.tiles[x+1][y];}
-			if(y > 0) {this.tiles[x][y].north = this.tiles[x][y-1];}
-			if(y < this.size - 1) {this.tiles[x][y].south = this.tiles[x][y+1];}
+			if(x > 0)
+			{
+				this.tiles[x][y].west = this.tiles[x-1][y];
+			}
+			
+			if(x < this.size - 1)
+			{
+				this.tiles[x][y].east = this.tiles[x+1][y];
+			}
+			
+			if(y > 0)
+			{
+				this.tiles[x][y].north = this.tiles[x][y-1];
+			}
+			
+			if(y < this.size - 1)
+			{
+				this.tiles[x][y].south = this.tiles[x][y+1];
+			}
 		}
 	}
 }
