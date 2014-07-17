@@ -1,6 +1,6 @@
 function Stage(size)
 {
-	this.size = size || 21;
+	this.size = size * 2 + 3;
 	
 	this.supconstructor.call(this, 0xEEE);
 	
@@ -47,3 +47,8 @@ function Stage(size)
 }
 
 Stage.inherits(PIXI.Stage);
+
+Stage.prototype.getSize = function()
+{
+	return this.size;
+}

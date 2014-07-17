@@ -29,10 +29,10 @@ Tile.inherits(PIXI.Sprite);
 	{
 		var bomber = this.bombers[i];
 		
-		if(pixel2tile(bomber.getEastestPosition()) < this.x
-		|| pixel2tile(bomber.getWestestPosition()) > this.x
-		|| pixel2tile(bomber.getSouthestPosition()) < this.y
-		|| pixel2tile(bomber.getNorthestPosition()) > this.y
+		if(px2sq(bomber.getEastestPosition()) < this.x
+		|| px2sq(bomber.getWestestPosition()) > this.x
+		|| px2sq(bomber.getSouthestPosition()) < this.y
+		|| px2sq(bomber.getNorthestPosition()) > this.y
 		|| bomber.status == "blownup")
 		{
 			delete this.bombers[i];

@@ -1,4 +1,4 @@
-function Bomber(x, y, name)
+function Bomber(name)
 {
 	this.name = name;
 	
@@ -7,8 +7,8 @@ function Bomber(x, y, name)
 
 	this.anchor.x = 0.5;
 	this.anchor.y = 0.5;
-	this.position.x = x * SCALE + (SCALE / 2);
-	this.position.y = y * SCALE + (SCALE / 2);
+	this.position.x = sq2px(getRandomOddNumber(stage.getSize()) + 0.5);
+	this.position.y = sq2px(getRandomOddNumber(stage.getSize()) + 0.5);
 	this.speed = SCALE / 6;
 }
 
@@ -17,4 +17,9 @@ Bomber.inherits(PIXI.Sprite);
 Bomber.prototype.update = function(delta)
 {
 	this.rotation += 0.1;
+}
+
+function getRandomOddNumber(max)
+{
+	return Math.floor(Math.random() * Math.floor((max - 1) / 2)) * 2 + 1;
 }

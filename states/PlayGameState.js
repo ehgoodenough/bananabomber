@@ -1,16 +1,18 @@
 function pixel2tile(value) {return Math.floor(value / SCALE);}
-function tile2pixel(value) {return value * SCALE;}
-var SCALE = 64, SIZE = SCALE * 21;
+function sq2px(value) {return value * SCALE;}
+var SCALE = 64;
 
 function PlayGameState()
 {
 	this.theta = 0;
 	
-	this.camera = new PIXI.Stage(0x000000);
-	this.pixi = new PIXI.WebGLRenderer(SIZE, SIZE);
+	this.stage = stage = new Stage(9);
+	this.bomber = bomber = new Bomber("green");
 	
-	this.stage = stage = new Stage(21);
-	this.bomber = bombers = new Bomber(5, 5, "green");
+	this.camera = new PIXI.Stage(0x000000);
+	
+	var size = sq2px(this.stage.getSize());
+	this.pixi = new PIXI.WebGLRenderer(size, size);
 	
 	this.initiate = function()
 	{
@@ -22,9 +24,10 @@ function PlayGameState()
 	
 	this.update = function(delta)
 	{
-		console.log(Math.floor(this.theta += delta));
+		//console.log(Math.floor(this.theta += delta));
 		
 		this.bomber.update(delta);
+		//this.stage.update(delta);
 	}
 	
 	this.render = function()
@@ -34,6 +37,6 @@ function PlayGameState()
 	
 	this.terminate = function()
 	{
-		$("#play.view").hide().empty();
+		$("#play.view").empty().hide();
 	}
 }
