@@ -2,7 +2,7 @@ function Stage(size)
 {
 	this.size = size || 21;
 	
-	this.supconstructor.call(this, 0xCCC);
+	this.supconstructor.call(this, 0xEEE);
 	
 	this.tiles = new Array();
 	

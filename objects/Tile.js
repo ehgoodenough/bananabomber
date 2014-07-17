@@ -5,8 +5,10 @@ function Tile(x, y, type)
 	var texture = PIXI.Texture.fromImage("images/" + type + ".png")
 	this.supconstructor.call(this, texture);
 	
-	this.position.x = x * SCALE;
-	this.position.y = y * SCALE;
+	this.anchor.x = 0.5;
+	this.anchor.y = 0.5;
+	this.position.x = (x + 0.5) * SCALE;
+	this.position.y = (y + 0.5) * SCALE;
 }
 
 Tile.inherits(PIXI.Sprite);
