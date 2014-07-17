@@ -1,41 +1,52 @@
-function Stage()
+function Stage(width, height)
 {
-	this.WIDTH = 21;
-	this.HEIGHT = 21;
+	this.width = width || 21;
+	this.height = height || 21;
+	
+	//this.supconstructor.call(this, 0xCCC);
+	//Stage.inherits(PIXI.Stage);
+	
+	this.dispobj = new PIXI.Stage(0xCCC);
 	
 	this.tiles = new Array();
 	
-	for(var x = 0; x < this.WIDTH; x++)
+	for(var x = 0; x < this.width; x++)
 	{
 		var tiles = new Array();
 		
-		for(var y = 0; y < this.HEIGHT; y++)
+		for(var y = 0; y < this.height; y++)
 		{
 			if((x % 2 == 1 || y % 2 == 1)
-			&& !(y == this.HEIGHT - 1
-			|| x == this.WIDTH - 1
+			&& !(y == this.height - 1
+			|| x == this.width - 1
 			|| x == 0 || y == 0))
 			{
-				tiles.push(new Tile(x, y, "crate"));
+				var tile = new Tile(x, y, "crate");
+				
+				tiles.push(tile);
+				this.dispobj.addChild(tile);
 			}
 			else
 			{
-				tiles.push(new Tile(x, y, "wall"));
+				var tile = new Tile(x, y, "wall");
+				
+				tiles.push(tile);
+				this.dispobj.addChild(tile);
 			}
 		}
 		
 		this.tiles.push(tiles);
 	}
 	
-	for(var x = 0; x < this.WIDTH; x++)
+	for(var x = 0; x < this.width; x++)
 	{
-		for(var y = 0; y < this.HEIGHT; y++)
+		for(var y = 0; y < this.height; y++)
 		{
 			if(x > 0)
 			{
 				this.tiles[x][y].west = this.tiles[x-1][y];
 			}
-			if(x < this.WIDTH - 1)
+			if(x < this.width - 1)
 			{
 				this.tiles[x][y].east = this.tiles[x+1][y];
 			}
@@ -43,31 +54,10 @@ function Stage()
 			{
 				this.tiles[x][y].north = this.tiles[x][y-1];
 			}
-			if(y < this.HEIGHT - 1)
+			if(y < this.height - 1)
 			{
 				this.tiles[x][y].south = this.tiles[x][y+1];
 			}
-		}
-	}
-	
-	this.dispobj = new PIXI.Stage(0xCCC);
-	
-	for(var x = 0; x < this.WIDTH; x++)
-	{
-		for(var y = 0; y < this.HEIGHT; y++)
-		{
-			this.dispobj.addChild(this.tiles[x][y].dispobj);
-		}
-	}
-}
-
-Stage.prototype.update = function(delta)
-{
-	for(var x = 0; x < this.WIDTH; x++)
-	{
-		for(var y = 0; y < this.HEIGHT; y++)
-		{
-			this.tiles[x][y].update(delta);
 		}
 	}
 }
