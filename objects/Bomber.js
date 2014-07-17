@@ -7,8 +7,14 @@ function Bomber(name)
 
 	this.anchor.x = 0.5;
 	this.anchor.y = 0.5;
-	this.position.x = sq2px(getRandomOddNumber(stage.getSize()) + 0.5);
-	this.position.y = sq2px(getRandomOddNumber(stage.getSize()) + 0.5);
+	
+	var x = getRandomOddNumber(stage.getSize());
+	var y = getRandomOddNumber(stage.getSize());
+	this.position.x = sq2px(x + 0.5);
+	this.position.y = sq2px(y + 0.5);
+	
+	stage.getTile(x, y).explode(2);
+	
 	this.speed = SCALE / 6;
 }
 

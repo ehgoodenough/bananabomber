@@ -2,8 +2,7 @@ function Tile(x, y, type)
 {
 	this.type = type;
 	
-	var texture = PIXI.Texture.fromImage("images/" + type + ".png")
-	this.supconstructor.call(this, texture);
+	this.supconstructor.call(this, PIXI.Texture.fromImage("images/" + this.type + ".png"));
 	
 	this.anchor.x = 0.5;
 	this.anchor.y = 0.5;
@@ -13,114 +12,8 @@ function Tile(x, y, type)
 
 Tile.inherits(PIXI.Sprite);
 
-/*Tile.prototype.update = function(delta)
+Tile.prototype.setType = function(type)
 {
-	if(this.explosion > 0)
-	{
-		this.explosion -= 1;
-	}
-	
-	if(this.bomb)
-	{
-		this.bomb.update(delta);
-	}
-	
-	for(var i in this.bombers)
-	{
-		var bomber = this.bombers[i];
-		
-		if(px2sq(bomber.getEastestPosition()) < this.x
-		|| px2sq(bomber.getWestestPosition()) > this.x
-		|| px2sq(bomber.getSouthestPosition()) < this.y
-		|| px2sq(bomber.getNorthestPosition()) > this.y
-		|| bomber.status == "blownup")
-		{
-			delete this.bombers[i];
-		}
-	}
+	this.type = type;
+	this.setTexture(PIXI.Texture.fromImage("images/" + this.type + ".png"));
 }
-
-Tile.prototype.isWalkable = function(bomber)
-{
-	if(this.type != "floor")
-	{
-		return false;
-	}
-	if(this.bomb && !this.bombers[bomber.id])
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
-}
-
-Tile.poweruprate = 0;
-
-Tile.prototype.explode = function(direction, intensity, explosion)
-{
-	if(intensity > 0)
-	{
-		if(this.type != "wall" && this.type != "sidewall")
-		{
-			this.powerup = undefined;
-			
-			if(explosion && this.type == "crate")
-			{
-				if(++Tile.poweruprate % 5 == 0)
-				{
-					var random = Math.random();
-					
-					if(random < 1/2)
-					{
-						this.powerup = new Powerup(this.x, this.y, "power");
-					}
-					else if(random >= 1/2)
-					{
-						this.powerup = new Powerup(this.x, this.y, "amount");
-					}
-				}
-			}
-			
-			this.type = "floor";
-			
-			for(var i in this.bombers)
-			{
-				var bomber = this.bombers[i];
-				bomber.status = "blownup";
-			}
-			
-			if(explosion)
-			{
-				this.explosion = 16;
-			}
-			
-			if(this.bomb)
-			{
-				this.bomb.explode();
-				return;
-			}
-			
-			if(direction == "east" || direction == "all")
-			{
-				this.east.explode("east", intensity - 1, explosion);
-			}
-			
-			if(direction == "west" || direction == "all")
-			{
-				this.west.explode("west", intensity - 1, explosion);
-			}
-			
-			if(direction == "south" || direction == "all")
-			{
-				this.south.explode("south", intensity - 1, explosion);
-			}
-			
-			if(direction == "north" || direction == "all")
-			{
-				this.north.explode("north", intensity - 1, explosion);
-			}
-		}
-	}
-}*/

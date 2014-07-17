@@ -52,3 +52,8 @@ Stage.prototype.getSize = function()
 {
 	return this.size;
 }
+
+Stage.prototype.getTile = function(x, y)
+{
+	return this.tiles[x][y];
+}
