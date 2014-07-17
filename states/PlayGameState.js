@@ -9,16 +9,15 @@ function PlayGameState()
 	this.camera = new PIXI.Stage(0XEEEEEE);
 	this.pixi = new PIXI.WebGLRenderer(SIZE, SIZE);
 	
-	this.stage = new Stage();
-	this.bomber = new Bomber(5, 5, "green");
+	this.stage = stage = new Stage();
+	this.bomber = bombers = new Bomber(5, 5, "green");
 	
 	this.initiate = function()
 	{
-		$("#play.view").show();
-		$("#play.view").append(this.pixi.view);
+		$("#play.view").show().append(this.pixi.view);
 		
 		this.camera.addChild(this.stage.dispobj);
-		this.camera.addChild(this.bomber.dispobj);
+		this.camera.addChild(this.bomber);
 	}
 	
 	this.update = function(delta)
@@ -35,7 +34,6 @@ function PlayGameState()
 	
 	this.terminate = function()
 	{
-		$("#play.view").hide();
-		$(this.pixi.view).remove();
+		$("#play.view").hide().empty();
 	}
 }
