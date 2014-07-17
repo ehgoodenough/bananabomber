@@ -26,47 +26,25 @@ body
 	position: absolute;
 }
 
-@media(min-aspect-ratio: 16/9)
+@media(min-aspect-ratio: 1/1)
 {
 	#game
 	{
+		width: 100vh;
 		height: 100vh;
-		width: 177.77vh;
+		background-color: red;
 	}
 }
 
-@media(max-aspect-ratio: 16/9)
+@media(max-aspect-ratio: 1/1)
 {
 	#game
 	{
 		width: 100vw;
-		height: 56.25vw;
+		height: 100vw;
+		background-color: blue;
 	}
 }
-
-/*@media(max-width: 480px)
-{
-	#game
-	{
-		width: 480px;
-		height: 270px;
-		
-		left: auto;
-		right: auto;
-	}
-}
-
-@media(max-height: 270px)
-{
-	#game
-	{
-		width: 480px;
-		height: 270px;
-		
-		top: auto;
-		bottom: auto;
-	}
-}*/
 
 canvas
 {
@@ -106,43 +84,4 @@ h1
 	padding: 1rem;
 	
 	background-color: rgb(181, 230, 29);
-}
-
-#play > .screen
-{
-	width: 50%;
-	height: 50%;
-	position: absolute;
-}
-
-#play > #red.screen
-{
-	top: 0px;
-	left: 0px;
-	
-	background-color: red;
-}
-
-#play > #blue.screen
-{
-	top: 0px;
-	right: 0px;
-	
-	background-color: blue;
-}
-
-#play > #green.screen
-{
-	left: 0px;
-	bottom: 0px;
-	
-	background-color: green;
-}
-
-#play > #purple.screen
-{
-	right: 0px;
-	bottom: 0px;
-	
-	background-color: purple;
 }
