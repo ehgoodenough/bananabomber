@@ -2,7 +2,7 @@ function Tile(x, y, type)
 {
 	this.type = type;
 	
-	this.supconstructor.call(this, PIXI.Texture.fromImage("images/" + this.type + ".png"));
+	this.supconstructor.call(this, PIXI.Texture.fromImage(this.getImage()));
 	
 	this.anchor.x = 0.5;
 	this.anchor.y = 0.5;
@@ -50,6 +50,11 @@ Tile.prototype.explode = function(intensity, direction, explosion)
 //Getters and Setters//
 //////////////////////
 
+Tile.prototype.getImage = function()
+{
+	return Tile.data[this.type].image;
+}
+
 Tile.prototype.getType = function()
 {
 	return this.type;
@@ -58,10 +63,42 @@ Tile.prototype.getType = function()
 Tile.prototype.setType = function(type)
 {
 	this.type = type;
-	this.setTexture(PIXI.Texture.fromImage("images/" + this.type + ".png"));
+	this.setTexture(PIXI.Texture.fromImage(this.getImage()));
 }
 
 Tile.prototype.isWalkable = function()
 {
 	return this.type == "floor";
+}
+
+Tile.prototype.hasBomb = function()
+{
+	return this.bomb != undefined;
+}
+
+Tile.prototype.addBomb = function(bomb)
+{
+	this.bomb = bomb;
+	this.addChildAt(bomb, 0);
+}
+
+/////////
+//Data//
+///////
+
+Tile.data =
+{
+	"wall":
+	{
+		image: "images/wall.png"
+	},
+	
+	"floor":
+	{
+		image: "images/floor.png"
+	},
+	"crate":
+	{
+		image: "images/crate.png"
+	},
 }

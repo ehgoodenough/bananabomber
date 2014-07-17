@@ -110,7 +110,19 @@ Bomber.prototype.moveWest = function(delta)
 
 Bomber.prototype.dropBomb = function()
 {
-	console.log("KABOOM!");
+	//if(this.hasBombCapacity())
+	{
+		var x = px2sq(this.position.x);
+		var y = px2sq(this.position.y);
+		var tile = stage.getTile(x, y);
+
+		if(!tile.hasBomb())
+		{
+			//this.decreaseBombCapacity();
+			tile.addBomb(new Bomb(x, y, this));
+			console.log("dropped a bomb!");
+		}
+	}
 }
 
 ////////////////////////
@@ -125,6 +137,11 @@ Bomber.prototype.getImage = function()
 Bomber.prototype.getKeyscheme = function()
 {
 	return Bomber.data[this.name].keyscheme;
+}
+
+Bomber.prototype.getBombIntensity = function()
+{
+	return 2;
 }
 
 /////////
