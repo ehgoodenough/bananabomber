@@ -49,21 +49,16 @@ function Stage()
 			}
 		}
 	}
-}
-
-Stage.prototype.render = function()
-{
-	var rendering = new Array();
+	
+	this.dispobj = new PIXI.Stage(0xCCC);
 	
 	for(var x = 0; x < this.WIDTH; x++)
 	{
 		for(var y = 0; y < this.HEIGHT; y++)
 		{
-			rendering.push(this.tiles[x][y]);
+			this.dispobj.addChild(this.tiles[x][y].dispobj);
 		}
 	}
-	
-	return rendering; //this.tiles;
 }
 
 Stage.prototype.update = function(delta)
