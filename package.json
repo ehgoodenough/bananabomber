@@ -8,9 +8,6 @@
     "type": "git",
     "url": "https://github.com/arcym/bananabomber.git"
   },
-  "dependencies": {
-    "express": "~4.6.1"
-  },
   "keywords": [
     "game",
     "bomberman",
