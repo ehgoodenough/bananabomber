@@ -16,7 +16,7 @@ function PlayGameState()
 	{
 		$("#play.view").show().append(this.pixi.view);
 		
-		this.camera.addChild(this.stage.dispobj);
+		this.camera.addChild(this.stage);
 		this.camera.addChild(this.bomber);
 	}
 	
