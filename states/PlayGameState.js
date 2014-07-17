@@ -1,6 +1,8 @@
-var scene = new PIXI.Stage(0x66FF00);
-var pixi = new PIXI.WebGLRenderer(400, 300);
-$("#play").append(pixi.view);
+function pixel2tile(value) {return Math.floor(value / SCALE);}
+function tile2pixel(value) {return value * SCALE;}
+var SCALE = 48;
+
+var scene = new PIXI.Stage(0xEEEEEE);
 
 var texture = PIXI.Texture.fromImage("images/green.png");
 var monkey = new PIXI.Sprite(texture);
@@ -12,14 +14,17 @@ scene.addChild(monkey);
 
 function PlayGameState()
 {
-	this.theta = 0;
+	this.pixi = new PIXI.WebGLRenderer(21 * SCALE, 21 * SCALE);
 	
 	this.initiate = function()
 	{
 		$("#play.view").show();
+		$("#play.view").append(this.pixi.view);
 		
 		this.stage = new Stage();
 	}
+	
+	this.theta = 0;
 	
 	this.update = function(delta)
 	{
@@ -30,11 +35,12 @@ function PlayGameState()
 	
 	this.render = function(delta)
 	{
-		pixi.render(scene);
+		this.pixi.render(scene);
 	}
 	
 	this.terminate = function()
 	{
 		$("#play.view").hide();
+		$(this.pixi.view).remove();
 	}
 }
