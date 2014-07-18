@@ -10,18 +10,14 @@ function Stage(size)
 		
 		for(var y = 0; y < this.size; y++)
 		{
-			if((isOddNumber(x) || isOddNumber(y))
-			&& !this.isEdgeCoordinate(x, y))
+			if(!this.isEdgeCoordinate(x, y)
+			&& (isOddNumber(x) || isOddNumber(y)))
 			{
-				var tile = new Tile(x, y, "crate");
-				objedex.tiles.add(tile);
-				tiles.push(tile);
+				tiles.push(new Tile(x, y, "crate"));
 			}
 			else
 			{
-				var tile = new Tile(x, y, "wall");
-				objedex.tiles.add(tile);
-				tiles.push(tile);
+				tiles.push(new Tile(x, y, "wall"));
 			}
 		}
 		

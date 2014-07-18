@@ -1,11 +1,15 @@
 function Tile(x, y, type)
 {
 	this.type = type;
+	
 	this.supconstructor.call(this, PIXI.Texture.fromImage(this.getImage()));
-	this.position.x = (x + 0.5) * SCALE;
-	this.position.y = (y + 0.5) * SCALE;
+	
+	this.position.x = sq2px(x + 0.5);
+	this.position.y = sq2px(y + 0.5);
 	this.anchor.x = 0.5;
 	this.anchor.y = 0.5;
+	
+	objedex.tiles.add(this);
 }
 
 inherits(Tile, PIXI.Sprite);
@@ -27,6 +31,8 @@ Tile.prototype.explode = function(intensity, direction, explosion)
 	{
 		return this.getBomb().explode();
 	}
+	
+	new Explosion(this.position);
 	
 	if(direction == "east" || direction == "all")
 	{

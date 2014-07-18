@@ -1,11 +1,14 @@
 function Bomb(x, y, bomber)
 {
 	this.supconstructor.call(this, PIXI.Texture.fromImage("images/bomb.png"));
-	this.anchor.x = 0.5;
-	this.anchor.y = 0.5;
+	
 	this.position.x = sq2px(x + 0.5);
 	this.position.y = sq2px(y + 0.5);
+	this.anchor.x = 0.5;
+	this.anchor.y = 0.5;
+	
 	this.bomber = bomber;
+	
 	this.duration = Bomb.getDefaultDuration();
 	this.intensity = this.bomber.getBombIntensity();
 	

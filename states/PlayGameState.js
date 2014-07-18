@@ -13,10 +13,10 @@ function PlayGameState()
 	
 	this.stage = stage = new Stage(9);
 	
-	new Bomber("red");
-	new Bomber("blue");
-	new Bomber("green");
-	new Bomber("purple");
+	this.red = new Bomber("red");
+	this.blue = new Bomber("blue");
+	this.green = new Bomber("green");
+	this.purple = new Bomber("purple");
 	
 	var size = sq2px(this.stage.getSize());
 	this.webgl = new PIXI.WebGLRenderer(size, size);
@@ -30,6 +30,7 @@ function PlayGameState()
 	{
 		console.log(Math.floor(this.theta += delta));
 		
+		this.objedex.explosions.update(delta);
 		this.objedex.bombers.update(delta);
 		this.objedex.bombs.update(delta);
 	}

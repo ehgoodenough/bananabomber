@@ -1,16 +1,18 @@
 function Bomber(name)
 {
 	this.name = name;
-	this.status = "okay";
-	var texture = PIXI.Texture.fromImage(this.getImage())
-	this.supconstructor.call(this, texture);
-	this.anchor.x = 0.5;
-	this.anchor.y = 0.5;
+	
 	var x = getRandomOddNumber(stage.getSize());
 	var y = getRandomOddNumber(stage.getSize());
+	stage.getTile(x, y).explode(2);
+	
+	this.supconstructor.call(this, PIXI.Texture.fromImage(this.getImage()));
+	
 	this.position.x = sq2px(x + 0.5);
 	this.position.y = sq2px(y + 0.5);
-	stage.getTile(x, y).explode(2);
+	this.anchor.x = 0.5;
+	this.anchor.y = 0.5;
+	
 	this.keyscheme = this.getKeyscheme();
 	
 	this.speed = Bomber.getDefaultSpeed();
