@@ -13,10 +13,10 @@ function PlayGameState()
 	
 	this.stage = stage = new Stage(9);
 	
-	this.red = new Bomber("red");
-	this.blue = new Bomber("blue");
-	this.green = new Bomber("green");
-	this.purple = new Bomber("purple");
+	new Bomber("red");
+	new Bomber("blue");
+	new Bomber("green");
+	new Bomber("purple");
 	
 	var size = sq2px(this.stage.getSize());
 	this.webgl = new PIXI.WebGLRenderer(size, size);

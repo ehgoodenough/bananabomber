@@ -34,6 +34,16 @@ Tile.prototype.explode = function(intensity, direction, explosion)
 	
 	new Explosion(this.position);
 	
+	objedex.bombers.foreach(function(bomber)
+	{
+		if(px2sq(this.x) == px2sq(bomber.position.x)
+		&& px2sq(this.y) == px2sq(bomber.position.y))
+		{
+			bomber.explode();
+		}
+	}
+	.bind(this));
+	
 	if(direction == "east" || direction == "all")
 	{
 		this.east.explode(intensity - 1, "east", explosion);

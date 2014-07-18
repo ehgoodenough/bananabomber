@@ -126,6 +126,11 @@ Bomber.prototype.dropBomb = function()
 	}
 }
 
+Bomber.prototype.explode = function()
+{
+	objedex.bombers.remove(this);
+}
+
 ////////////////////////
 //Getters and Setters//
 //////////////////////
