@@ -32,6 +32,12 @@ ObjedexEntry.prototype.remove = function(stuff)
 	this.layer.removeChild(stuff);
 }
 
+ObjedexEntry.prototype.get = function()
+{
+	for(var s in this.stuff)
+		return this.stuff[s];
+}
+
 ObjedexEntry.prototype.size = function()
 {
 	return Object.keys(this.stuff).length;

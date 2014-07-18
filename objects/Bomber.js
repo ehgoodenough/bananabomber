@@ -13,6 +13,7 @@ function Bomber(name)
 	this.anchor.x = 0.5;
 	this.anchor.y = 0.5;
 	
+	this.color = this.getColor();
 	this.keyscheme = this.getKeyscheme();
 	
 	this.speed = Bomber.getDefaultSpeed();
@@ -140,6 +141,11 @@ Bomber.prototype.getImage = function()
 	return Bomber.data[this.name].image;
 }
 
+Bomber.prototype.getColor = function()
+{
+	return Bomber.data[this.name].color;
+}
+
 Bomber.prototype.getKeyscheme = function()
 {
 	return Bomber.data[this.name].keyscheme;
@@ -204,7 +210,8 @@ Bomber.data =
 			"move east": "right arrow",
 			"drop bomb": "ctrl"
 		},
-		image: "images/red.png"
+		image: "images/red.png",
+		color: "rgb(237, 28, 36)"
 	},
 	"blue":
 	{
@@ -216,7 +223,8 @@ Bomber.data =
 			"move east": "d",
 			"drop bomb": "e"
 		},
-		image: "images/blue.png"
+		image: "images/blue.png",
+		color: "rgb(63, 72, 204)"
 	},
 	"green":
 	{
@@ -228,7 +236,8 @@ Bomber.data =
 			"move east": "l",
 			"drop bomb": "o"
 		},
-		image: "images/green.png"
+		image: "images/green.png",
+		color: "rgb(34, 177, 76)"
 	},
 	"purple":
 	{
@@ -240,7 +249,8 @@ Bomber.data =
 			"move east": "h",
 			"drop bomb": "y"
 		},
-		image: "images/purple.png"
+		image: "images/purple.png",
+		color: "rgb(163, 73, 164)"
 	},
 }
 

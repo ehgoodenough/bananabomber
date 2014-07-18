@@ -1,7 +1,5 @@
 Game = function(state)
 {
-	$(".view").hide();
-	
 	this.delta = Date.now();
 	
 	this.load(state);
@@ -40,7 +38,7 @@ Game.prototype.func = function()
 		
 		if(this.state.render)
 		{
-			this.state.render(this.delta);
+			this.state.render();
 		}
 		
 		this.delta = Date.now();

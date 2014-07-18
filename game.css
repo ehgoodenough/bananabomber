@@ -1,3 +1,5 @@
+@import url("fonts/dreamofme.css");
+
 *
 {
 	margin: 0px;
@@ -5,7 +7,6 @@
 
 html
 {
-	font-size: 3vw;
 	font-family: open-sans, calibri, sans-serif;
 }
 
@@ -28,6 +29,11 @@ body
 
 @media(min-aspect-ratio: 1/1)
 {
+	html
+	{
+		font-size: 4vh;
+	}
+	
 	#game
 	{
 		width: 100vh;
@@ -37,6 +43,11 @@ body
 
 @media(max-aspect-ratio: 1/1)
 {
+	html
+	{
+		font-size: 4vw;
+	}
+	
 	#game
 	{
 		width: 100vw;
@@ -60,10 +71,8 @@ a
 	color: inherit;
 }
 
-h1
+h1, h2
 {
-	margin-bottom: 0.5rem;
-	
 	font-size: 2rem;
 	font-family: dreamofme;
 }
@@ -81,5 +90,16 @@ h1
 {
 	padding: 1rem;
 	
+	text-align: center;
+	
 	background-color: rgb(181, 230, 29);
+}
+
+#win.view, #lose.view
+{
+	padding: 1rem;
+	
+	text-align: center;
+	
+	background-color: gray;
 }

@@ -47,6 +47,12 @@ Bomb.prototype.explode = function()
 	tile.explode(this.intensity);
 	
 	this.bomber.increaseBombCapacity();
+	
+	if(objedex.bombers.size() <= 1)
+	{
+		var bomber = objedex.bombers.get();
+		game.load(new EndGameState(bomber));
+	}
 }
 
 ////////////////////////
