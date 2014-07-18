@@ -43,10 +43,17 @@ function PlayGameState(players)
 	this.render = function()
 	{
 		this.webgl.render(this.scene);
+		
+		objedex.bombers.foreach(function(bomber)
+		{
+			bomber.renderStatus();
+		});
 	}
 	
 	this.terminate = function()
 	{
 		$("#play.view").hide().empty();
+		$(".status").find(".stat").empty();
+		$(".status").hide();
 	}
 }

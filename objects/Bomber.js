@@ -20,6 +20,8 @@ function Bomber(name)
 	this.bombcapacity = Bomber.getDefaultBombCapacity();
 	this.bombintensity = Bomber.getDefaultBombIntensity();
 	
+	this.view = $("#" + this.name + ".status").show();
+	
 	objedex.bombers.add(this);
 }
 
@@ -53,6 +55,12 @@ Bomber.prototype.update = function(delta)
 	{
 		this.dropBomb();
 	}
+}
+
+Bomber.prototype.renderStatus = function()
+{
+	this.view.find("#capacity.stat").text(this.getBombCapacity());
+	this.view.find("#intensity.stat").text(this.getBombIntensity());
 }
 
 ////////////

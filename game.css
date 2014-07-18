@@ -103,3 +103,54 @@ h1, h2
 	
 	background-color: gray;
 }
+
+.status
+{
+	z-index: 1;
+	padding: 0.25rem;
+	position: absolute;
+	
+	color: #EEE;
+	line-height: 1em;
+	font-weight: bold;
+}
+
+#red.status
+{
+	top: 0px;
+	left: 0px;
+	
+	text-align: left;
+	border-bottom-right-radius: 0.5rem;
+	background-color: rgba(237, 28, 36, 0.5);
+}
+
+#blue.status
+{
+	top: 0px;
+	right: 0px;
+	
+	text-align: right;
+	border-bottom-left-radius: 0.5rem;
+	background-color: rgba(63, 72, 204, 0.5);
+}
+
+#green.status
+{
+	left: 0px;
+	bottom: 0px;
+	
+	text-align: left;
+	border-top-right-radius: 0.5rem;
+	background-color: rgba(34, 177, 76, 0.5);
+}
+
+#purple.status
+{
+	right: 0px;
+	bottom: 0px;
+	
+	text-align: right;
+	border-top-left-radius: 0.5rem;
+	background-color: rgba(163, 73, 164, 0.5);
+}
