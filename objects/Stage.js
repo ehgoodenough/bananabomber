@@ -2,13 +2,12 @@ function Stage(size)
 {
 	this.size = (size || 9) * 2 + 3;
 	
-	this.supconstructor.call(this, 0xEEE);
-	scene.addChild(this);
-	
 	this.tiles = new Array();
+	
 	for(var x = 0; x < this.size; x++)
 	{
 		var tiles = new Array();
+		
 		for(var y = 0; y < this.size; y++)
 		{
 			if((x % 2 == 1 || y % 2 == 1)
@@ -17,14 +16,14 @@ function Stage(size)
 			|| x == 0 || y == 0))
 			{
 				var tile = new Tile(x, y, "crate");
+				objedex.tiles.add(tile);
 				tiles.push(tile);
-				this.addChild(tile);
 			}
 			else
 			{
 				var tile = new Tile(x, y, "wall");
+				objedex.tiles.add(tile);
 				tiles.push(tile);
-				this.addChild(tile);
 			}
 		}
 		
@@ -57,8 +56,6 @@ function Stage(size)
 		}
 	}
 }
-
-inherits(Stage, PIXI.Stage);
 
 ////////////////////////
 //Getters and Setters//

@@ -2,10 +2,8 @@ function Bomber(name)
 {
 	this.name = name;
 	this.status = "okay";
-	objedex.bombers.add(this);
 	var texture = PIXI.Texture.fromImage(this.getImage())
 	this.supconstructor.call(this, texture);
-	scene.addChild(this);
 	this.anchor.x = 0.5;
 	this.anchor.y = 0.5;
 	var x = getRandomOddNumber(stage.getSize());
@@ -18,6 +16,8 @@ function Bomber(name)
 	this.speed = Bomber.getDefaultSpeed();
 	this.bombcapacity = Bomber.getDefaultBombCapacity();
 	this.bombintensity = Bomber.getDefaultBombIntensity();
+	
+	objedex.bombers.add(this);
 }
 
 inherits(Bomber, PIXI.Sprite);
@@ -171,7 +171,7 @@ Bomber.getDefaultSpeed = function()
 
 Bomber.getDefaultBombCapacity = function()
 {
-	var DEFAULT_CAPACITY = 3;
+	var DEFAULT_CAPACITY = 1;
 	return DEFAULT_CAPACITY;
 }
 

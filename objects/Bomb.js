@@ -1,8 +1,6 @@
 function Bomb(x, y, bomber)
 {
-	objedex.bombs.add(this);
 	this.supconstructor.call(this, PIXI.Texture.fromImage("images/bomb.png"));
-	stage.addChild(this);
 	this.anchor.x = 0.5;
 	this.anchor.y = 0.5;
 	this.position.x = sq2px(x + 0.5);
@@ -10,6 +8,8 @@ function Bomb(x, y, bomber)
 	this.bomber = bomber;
 	this.duration = Bomb.getDefaultDuration();
 	this.intensity = this.bomber.getBombIntensity();
+	
+	objedex.bombs.add(this);
 }
 
 inherits(Bomb, PIXI.Sprite);
@@ -34,7 +34,6 @@ Bomb.prototype.update = function(delta)
 
 Bomb.prototype.explode = function()
 {
-	stage.removeChild(this);
 	objedex.bombs.remove(this);
 	
 	var x = px2sq(this.position.x);

@@ -7,7 +7,9 @@ function PlayGameState()
 	this.theta = 0;
 	
 	this.scene = scene = new PIXI.Stage(0x000000);
-	this.objedex = objedex = new Objedex(["bombers", "bombs"]);
+	
+	var objects = ["tiles", "bombs", "bombers", "explosions"];
+	this.objedex = objedex = new Objedex(objects);
 	
 	this.stage = stage = new Stage(9);
 	

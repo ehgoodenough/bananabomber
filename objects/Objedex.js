@@ -10,6 +10,9 @@ function ObjedexEntry()
 {
 	this.objid = 0;
 	this.stuff = {};
+	
+	this.layer = new PIXI.DisplayObjectContainer();
+	scene.addChild(this.layer);
 }
 
 ObjedexEntry.prototype.add = function(stuff)
@@ -17,12 +20,16 @@ ObjedexEntry.prototype.add = function(stuff)
 	var objid = this.objid++;
 	this.stuff[objid] = stuff;
 	stuff.objid = objid;
+	
+	this.layer.addChild(stuff);
 }
 
 ObjedexEntry.prototype.remove = function(stuff)
 {
 	var objid = stuff.objid;
 	delete this.stuff[objid];
+	
+	this.layer.removeChild(stuff);
 }
 
 ObjedexEntry.prototype.size = function()
