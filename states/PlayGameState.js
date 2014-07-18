@@ -6,7 +6,7 @@ function PlayGameState()
 {
 	this.theta = 0;
 	
-	this.camera = camera = new PIXI.Stage(0x000000);
+	this.scene = scene = new PIXI.Stage(0x000000);
 	this.objedex = objedex = new Objedex(["bombers", "bombs"]);
 	
 	this.stage = stage = new Stage(9);
@@ -26,7 +26,7 @@ function PlayGameState()
 	
 	this.update = function(delta)
 	{
-		console.log(Math.floor(this.theta += delta));
+		//console.log(Math.floor(this.theta += delta));
 		
 		this.objedex.bombers.update(delta);
 		this.objedex.bombs.update(delta);
@@ -34,7 +34,7 @@ function PlayGameState()
 	
 	this.render = function()
 	{
-		this.webgl.render(this.camera);
+		this.webgl.render(this.scene);
 	}
 	
 	this.terminate = function()

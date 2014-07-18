@@ -1,9 +1,7 @@
 function Tile(x, y, type)
 {
 	this.type = type;
-	
 	this.supconstructor.call(this, PIXI.Texture.fromImage(this.getImage()));
-	
 	this.position.x = (x + 0.5) * SCALE;
 	this.position.y = (y + 0.5) * SCALE;
 	this.anchor.x = 0.5;
@@ -24,6 +22,11 @@ Tile.prototype.explode = function(intensity, direction, explosion)
 	if(this.type == "wall") {return;}
 	
 	this.setType("floor");
+	
+	if(this.hasBomb())
+	{
+		return this.getBomb().explode();
+	}
 	
 	if(direction == "east" || direction == "all")
 	{

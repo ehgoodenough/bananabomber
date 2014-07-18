@@ -1,16 +1,13 @@
 function Bomb(x, y, bomber)
 {
+	objedex.bombs.add(this);
 	this.supconstructor.call(this, PIXI.Texture.fromImage("images/bomb.png"));
 	stage.addChild(this);
-	
-	this.position.x = sq2px(x + 0.5);
-	this.position.y = sq2px(y + 0.5);
-
 	this.anchor.x = 0.5;
 	this.anchor.y = 0.5;
-	
+	this.position.x = sq2px(x + 0.5);
+	this.position.y = sq2px(y + 0.5);
 	this.bomber = bomber;
-	
 	this.duration = Bomb.getDefaultDuration();
 	this.intensity = this.bomber.getBombIntensity();
 }
@@ -37,42 +34,17 @@ Bomb.prototype.update = function(delta)
 
 Bomb.prototype.explode = function()
 {
-	console.log("KABOOM");
 	stage.removeChild(this);
+	objedex.bombs.remove(this);
 	
-	/*stage.tiles[this.x][this.y].bomb = undefined;
-	stage.tiles[this.x][this.y].explode("all", this.intensity, true);
+	var x = px2sq(this.position.x);
+	var y = px2sq(this.position.y);
+	var tile = stage.getTile(x, y);
 	
-	this.bomber.bombcount++;
+	tile.removeBomb();
+	tile.explode(this.intensity);
 	
-	var notblownup;
-	var blownupcount = 0;
-	objedex.bombers.foreach(function(bomber)
-	{
-		if(bomber.status == "blownup")
-		{
-			blownupcount++;
-		}
-		else
-		{
-			notblownup = bomber;
-		}
-	});
-	
-	if(blownupcount == 3)
-	{
-		setTimeout(function()
-		{
-			Bananabomber.load(new WinGameState(notblownup.color));
-		}, 3000);
-	}
-	else if(blownupcount == 4)
-	{
-		setTimeout(function()
-		{
-			Bananabomber.load(new WinGameState());
-		}, 3000);
-	}*/
+	//this.bomber.increaseBombCapacity();
 }
 
 ////////////////////////
@@ -81,6 +53,6 @@ Bomb.prototype.explode = function()
 
 Bomb.getDefaultDuration = function()
 {
-	var DEFAULT_DURATION = 100;
+	var DEFAULT_DURATION = 4;
 	return DEFAULT_DURATION;
 }
