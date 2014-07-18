@@ -10,13 +10,12 @@ function Bomber(name)
 	var y = getRandomOddNumber(stage.getSize());
 	this.position.x = sq2px(x + 0.5);
 	this.position.y = sq2px(y + 0.5);
-	stage.getTile(x, y).explode(2);
-
 	this.anchor.x = 0.5;
 	this.anchor.y = 0.5;
 	
-	this.speed = 1.5;
+	stage.getTile(x, y).explode(2);
 	
+	this.speed = Bomber.getDefaultSpeed();
 	this.keyscheme = this.getKeyscheme();
 }
 
@@ -59,11 +58,11 @@ Bomber.prototype.update = function(delta)
 Bomber.prototype.moveNorth = function(delta)
 {
 	var step = sq2px(this.speed) * delta;
-	
 	var x = px2sq(this.position.x);
-	var y = px2sq(this.position.y - step);
+	var y = px2sq(this.position.y);
+	var ny = px2sq(this.position.y - step);
 	
-	if(stage.getTile(x, y).isWalkable())
+	if(y == ny || stage.getTile(x, ny).isWalkable())
 	{
 		this.y -= step;
 	}
@@ -72,11 +71,11 @@ Bomber.prototype.moveNorth = function(delta)
 Bomber.prototype.moveSouth = function(delta)
 {
 	var step = sq2px(this.speed) * delta;
-	
 	var x = px2sq(this.position.x);
-	var y = px2sq(this.position.y + step);
+	var y = px2sq(this.position.y);
+	var ny = px2sq(this.position.y + step);
 	
-	if(stage.getTile(x, y).isWalkable())
+	if(y == ny || stage.getTile(x, ny).isWalkable())
 	{
 		this.y += step;
 	}
@@ -85,11 +84,11 @@ Bomber.prototype.moveSouth = function(delta)
 Bomber.prototype.moveEast = function(delta)
 {
 	var step = sq2px(this.speed) * delta;
-	
-	var x = px2sq(this.position.x + step);
+	var x = px2sq(this.position.x);
 	var y = px2sq(this.position.y);
+	var nx = px2sq(this.position.x + step);
 	
-	if(stage.getTile(x, y).isWalkable())
+	if(x == nx || stage.getTile(nx, y).isWalkable())
 	{
 		this.x += step;
 	}
@@ -98,11 +97,11 @@ Bomber.prototype.moveEast = function(delta)
 Bomber.prototype.moveWest = function(delta)
 {
 	var step = sq2px(this.speed) * delta;
-	
-	var x = px2sq(this.position.x - step);
+	var x = px2sq(this.position.x);
 	var y = px2sq(this.position.y);
+	var nx = px2sq(this.position.x - step);
 	
-	if(stage.getTile(x, y).isWalkable())
+	if(x == nx || stage.getTile(nx, y).isWalkable())
 	{
 		this.x -= step;
 	}
@@ -120,7 +119,6 @@ Bomber.prototype.dropBomb = function()
 		{
 			//this.decreaseBombCapacity();
 			tile.addBomb(new Bomb(x, y, this));
-			console.log("dropped a bomb!");
 		}
 	}
 }
@@ -142,6 +140,12 @@ Bomber.prototype.getKeyscheme = function()
 Bomber.prototype.getBombIntensity = function()
 {
 	return 2;
+}
+
+Bomber.getDefaultSpeed = function()
+{
+	var DEFAULT_SPEED = 1.5;
+	return DEFAULT_SPEED;
 }
 
 /////////

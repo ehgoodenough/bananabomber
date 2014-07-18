@@ -1,6 +1,7 @@
 function Bomb(x, y, bomber)
 {
 	this.supconstructor.call(this, PIXI.Texture.fromImage("images/bomb.png"));
+	stage.addChild(this);
 	
 	this.position.x = sq2px(x + 0.5);
 	this.position.y = sq2px(y + 0.5);
@@ -37,9 +38,9 @@ Bomb.prototype.update = function(delta)
 Bomb.prototype.explode = function()
 {
 	console.log("KABOOM");
+	stage.removeChild(this);
 	
-	/*objedex.bombs.remove(this);
-	stage.tiles[this.x][this.y].bomb = undefined;
+	/*stage.tiles[this.x][this.y].bomb = undefined;
 	stage.tiles[this.x][this.y].explode("all", this.intensity, true);
 	
 	this.bomber.bombcount++;

@@ -4,10 +4,10 @@ function Tile(x, y, type)
 	
 	this.supconstructor.call(this, PIXI.Texture.fromImage(this.getImage()));
 	
-	this.anchor.x = 0.5;
-	this.anchor.y = 0.5;
 	this.position.x = (x + 0.5) * SCALE;
 	this.position.y = (y + 0.5) * SCALE;
+	this.anchor.x = 0.5;
+	this.anchor.y = 0.5;
 }
 
 Tile.inherits(PIXI.Sprite);
@@ -68,7 +68,7 @@ Tile.prototype.setType = function(type)
 
 Tile.prototype.isWalkable = function()
 {
-	return this.type == "floor";
+	return this.type == "floor" && this.bomb == undefined;
 }
 
 Tile.prototype.hasBomb = function()
@@ -76,10 +76,19 @@ Tile.prototype.hasBomb = function()
 	return this.bomb != undefined;
 }
 
+Tile.prototype.getBomb = function()
+{
+	return this.bomb;
+}
+
 Tile.prototype.addBomb = function(bomb)
 {
 	this.bomb = bomb;
-	this.addChildAt(bomb, 0);
+}
+
+Tile.prototype.removeBomb = function()
+{
+	this.bomb = undefined;
 }
 
 /////////
