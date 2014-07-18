@@ -1,7 +1,19 @@
-$("[href=play]").click(function(event)
+$("[href=play2]").click(function(event)
 {
 	event.preventDefault();
-	game.load(new PlayGameState());
+	game.load(new PlayGameState(2));
+});
+
+$("[href=play3]").click(function(event)
+{
+	event.preventDefault();
+	game.load(new PlayGameState(3));
+});
+
+$("[href=play4]").click(function(event)
+{
+	event.preventDefault();
+	game.load(new PlayGameState(4));
 });
 
 $("[href=menu]").click(function(event)
@@ -13,5 +25,4 @@ $("[href=menu]").click(function(event)
 $(".view").hide();
 $(".status").hide();
 
-var game = new Game(new PlayGameState(4));
-//var game = new Game(new MenuGameState());
+var game = new Game(new MenuGameState());
