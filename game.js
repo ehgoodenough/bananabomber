@@ -12,5 +12,5 @@ $("[href=menu]").click(function(event)
 
 $(".view").hide();
 
-var game = new Game(new PlayGameState());
+var game = new Game(new PlayGameState(4));
 //var game = new Game(new MenuGameState());

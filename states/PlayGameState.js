@@ -2,8 +2,12 @@ function px2sq(value) {return Math.floor(value / SCALE);}
 function sq2px(value) {return value * SCALE;}
 var SCALE = 64;
 
-function PlayGameState()
+function PlayGameState(players)
 {
+	players = players || 4;
+	players = Math.min(players, 4);
+	players = Math.max(players, 2);
+	
 	this.theta = 0;
 	
 	this.scene = scene = new PIXI.Stage(0x000000);
@@ -13,10 +17,11 @@ function PlayGameState()
 	
 	this.stage = stage = new Stage(9);
 	
-	new Bomber("red");
-	new Bomber("blue");
-	new Bomber("green");
-	new Bomber("purple");
+	var colors = ["red", "blue", "green", "purple"];
+	for(var index = 0; index < players; index++)
+	{
+		new Bomber(colors[index]);
+	}
 	
 	var size = sq2px(this.stage.getSize());
 	this.webgl = new PIXI.WebGLRenderer(size, size);
