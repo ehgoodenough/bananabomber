@@ -149,8 +149,6 @@ Tile.prototype.removeBanana = function()
 
 Tile.canBanana = function()
 {
-	return true;
-	
 	Tile.bananarate += 1;
 	return Tile.bananarate % 5 == 0;
 }
