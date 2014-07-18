@@ -26,7 +26,7 @@ function PlayGameState()
 	
 	this.update = function(delta)
 	{
-		//console.log(Math.floor(this.theta += delta));
+		console.log(Math.floor(this.theta += delta));
 		
 		this.objedex.bombers.update(delta);
 		this.objedex.bombs.update(delta);

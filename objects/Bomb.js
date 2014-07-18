@@ -44,7 +44,7 @@ Bomb.prototype.explode = function()
 	tile.removeBomb();
 	tile.explode(this.intensity);
 	
-	//this.bomber.increaseBombCapacity();
+	this.bomber.increaseBombCapacity();
 }
 
 ////////////////////////

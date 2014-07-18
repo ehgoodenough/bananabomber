@@ -13,8 +13,11 @@ function Bomber(name)
 	this.position.x = sq2px(x + 0.5);
 	this.position.y = sq2px(y + 0.5);
 	stage.getTile(x, y).explode(2);
-	this.speed = Bomber.getDefaultSpeed();
 	this.keyscheme = this.getKeyscheme();
+	
+	this.speed = Bomber.getDefaultSpeed();
+	this.bombcapacity = Bomber.getDefaultBombCapacity();
+	this.bombintensity = Bomber.getDefaultBombIntensity();
 }
 
 inherits(Bomber, PIXI.Sprite);
@@ -107,7 +110,7 @@ Bomber.prototype.moveWest = function(delta)
 
 Bomber.prototype.dropBomb = function()
 {
-	//if(this.hasBombCapacity())
+	if(this.hasBombCapacity())
 	{
 		var x = px2sq(this.position.x);
 		var y = px2sq(this.position.y);
@@ -115,7 +118,7 @@ Bomber.prototype.dropBomb = function()
 
 		if(!tile.hasBomb())
 		{
-			//this.decreaseBombCapacity();
+			this.decreaseBombCapacity();
 			tile.addBomb(new Bomb(x, y, this));
 		}
 	}
@@ -137,13 +140,45 @@ Bomber.prototype.getKeyscheme = function()
 
 Bomber.prototype.getBombIntensity = function()
 {
-	return 2;
+	return this.bombintensity;
+}
+
+Bomber.prototype.getBombCapacity = function()
+{
+	return this.bombcapacity;
+}
+
+Bomber.prototype.hasBombCapacity = function()
+{
+	return this.bombcapacity > 0;
+}
+
+Bomber.prototype.decreaseBombCapacity = function()
+{
+	this.bombcapacity -= 1;
+}
+
+Bomber.prototype.increaseBombCapacity = function()
+{
+	this.bombcapacity += 1;
 }
 
 Bomber.getDefaultSpeed = function()
 {
 	var DEFAULT_SPEED = 1.5;
 	return DEFAULT_SPEED;
+}
+
+Bomber.getDefaultBombCapacity = function()
+{
+	var DEFAULT_CAPACITY = 3;
+	return DEFAULT_CAPACITY;
+}
+
+Bomber.getDefaultBombIntensity = function()
+{
+	var DEFAULT_CAPACITY = 2;
+	return DEFAULT_CAPACITY;
 }
 
 /////////
