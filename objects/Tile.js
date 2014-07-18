@@ -10,7 +10,7 @@ function Tile(x, y, type)
 	this.anchor.y = 0.5;
 }
 
-Tile.inherits(PIXI.Sprite);
+inherits(Tile, PIXI.Sprite);
 
 ////////////
 //Actions//

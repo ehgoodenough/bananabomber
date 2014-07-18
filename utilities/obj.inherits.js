@@ -1,6 +1,6 @@
-Object.prototype.inherits = function(that)
+inherits = function(subclass, supclass)
 {
-	this.constructor = this;
-	this.prototype = Object.create(that.prototype);
-	this.prototype.supconstructor = that;
+	subclass.constructor = subclass;
+	subclass.prototype = Object.create(supclass.prototype);
+	subclass.prototype.supconstructor = supclass;
 }

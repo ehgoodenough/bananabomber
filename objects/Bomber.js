@@ -5,6 +5,8 @@ function Bomber(name)
 	
 	var texture = PIXI.Texture.fromImage(this.getImage())
 	this.supconstructor.call(this, texture);
+	camera.addChild(this);
+	objedex.bombers.add(this);
 	
 	var x = getRandomOddNumber(stage.getSize());
 	var y = getRandomOddNumber(stage.getSize());
@@ -19,7 +21,7 @@ function Bomber(name)
 	this.keyscheme = this.getKeyscheme();
 }
 
-Bomber.inherits(PIXI.Sprite);
+inherits(Bomber, PIXI.Sprite);
 
 ///////////
 //Update//

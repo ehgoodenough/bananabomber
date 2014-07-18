@@ -3,6 +3,7 @@ function Stage(size)
 	this.size = size * 2 + 3;
 	
 	this.supconstructor.call(this, 0xEEE);
+	camera.addChild(this);
 	
 	this.tiles = new Array();
 	
@@ -61,7 +62,7 @@ function Stage(size)
 	}
 }
 
-Stage.inherits(PIXI.Stage);
+inherits(Stage, PIXI.Stage);
 
 ////////////////////////
 //Getters and Setters//

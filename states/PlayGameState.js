@@ -6,36 +6,39 @@ function PlayGameState()
 {
 	this.theta = 0;
 	
-	this.stage = stage = new Stage(9);
-	this.bomber = new Bomber("red");
+	this.camera = camera = new PIXI.Stage(0x000000);
+	this.objedex = objedex = new Objedex(["bombers", "bombs"]);
 	
-	this.camera = new PIXI.Stage(0x000000);
+	this.stage = stage = new Stage(9);
+	
+	new Bomber("red");
+	new Bomber("blue");
+	new Bomber("green");
+	new Bomber("purple");
 	
 	var size = sq2px(this.stage.getSize());
-	this.pixi = new PIXI.WebGLRenderer(size, size);
+	this.webgl = new PIXI.WebGLRenderer(size, size);
 	
 	this.initiate = function()
 	{
-		$("#play.view").show().append(this.pixi.view);
-		
-		this.camera.addChild(this.stage);
-		this.camera.addChild(this.bomber);
+		$("#play.view").show().append(this.webgl.view);
 	}
 	
 	this.update = function(delta)
 	{
 		console.log(Math.floor(this.theta += delta));
 		
-		this.bomber.update(delta);
+		this.objedex.bombers.update(delta);
+		this.objedex.bombs.update(delta);
 	}
 	
 	this.render = function()
 	{
-		this.pixi.render(this.camera);
+		this.webgl.render(this.camera);
 	}
 	
 	this.terminate = function()
 	{
-		$("#play.view").empty().hide();
+		$("#play.view").hide().empty();
 	}
 }

@@ -15,7 +15,7 @@ function Bomb(x, y, bomber)
 	this.intensity = this.bomber.getBombIntensity();
 }
 
-Bomb.inherits(PIXI.Sprite);
+inherits(Bomb, PIXI.Sprite);
 
 ///////////
 //Update//
