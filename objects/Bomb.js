@@ -44,7 +44,7 @@ Bomb.prototype.explode = function()
 	var tile = stage.getTile(x, y);
 	
 	tile.removeBomb();
-	tile.explode(this.intensity);
+	tile.explode(this.intensity, "all", true);
 	
 	this.bomber.increaseBombCapacity();
 	

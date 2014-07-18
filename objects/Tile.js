@@ -25,14 +25,28 @@ Tile.prototype.explode = function(intensity, direction, explosion)
 	if(intensity <= 0) {return;}
 	if(this.type == "wall") {return;}
 	
-	this.setType("floor");
-	
 	if(this.hasBomb())
 	{
 		return this.getBomb().explode();
 	}
 	
-	new Explosion(this.position);
+	if(this.hasBanana())
+	{
+		this.getBanana().explode();
+		this.removeBanana();
+	}
+	
+	if(explosion)
+	{
+		new Explosion(this.position);
+		
+		if(this.type == "crate")
+		{
+			this.addBanana(new Banana(this.position, "intensity"));
+		}
+	}
+	
+	this.setType("floor");
 	
 	objedex.bombers.foreach(function(bomber)
 	{
@@ -108,6 +122,26 @@ Tile.prototype.addBomb = function(bomb)
 Tile.prototype.removeBomb = function()
 {
 	this.bomb = undefined;
+}
+
+Tile.prototype.hasBanana = function()
+{
+	return this.banana != undefined;
+}
+
+Tile.prototype.getBanana = function()
+{
+	return this.banana;
+}
+
+Tile.prototype.addBanana = function(banana)
+{
+	this.banana = banana;
+}
+
+Tile.prototype.removeBanana = function()
+{
+	this.banana = undefined;
 }
 
 /////////
