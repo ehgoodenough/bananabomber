@@ -65,10 +65,17 @@ Bomber.prototype.moveNorth = function(delta)
 	var x = px2sq(this.position.x);
 	var y = px2sq(this.position.y);
 	var ny = px2sq(this.position.y - step);
+	var tile = stage.getTile(x, ny);
 	
-	if(y == ny || stage.getTile(x, ny).isWalkable())
+	if(y == ny || tile.isWalkable())
 	{
 		this.y -= step;
+		
+		if(tile.hasBanana())
+		{
+			this.eat(tile.getBanana());
+			tile.removeBanana();
+		}
 	}
 }
 
@@ -78,10 +85,17 @@ Bomber.prototype.moveSouth = function(delta)
 	var x = px2sq(this.position.x);
 	var y = px2sq(this.position.y);
 	var ny = px2sq(this.position.y + step);
+	var tile = stage.getTile(x, ny);
 	
-	if(y == ny || stage.getTile(x, ny).isWalkable())
+	if(y == ny || tile.isWalkable())
 	{
 		this.y += step;
+		
+		if(tile.hasBanana())
+		{
+			this.eat(tile.getBanana());
+			tile.removeBanana();
+		}
 	}
 }
 
@@ -91,10 +105,17 @@ Bomber.prototype.moveEast = function(delta)
 	var x = px2sq(this.position.x);
 	var y = px2sq(this.position.y);
 	var nx = px2sq(this.position.x + step);
+	var tile = stage.getTile(nx, y);
 	
-	if(x == nx || stage.getTile(nx, y).isWalkable())
+	if(x == nx || tile.isWalkable())
 	{
 		this.x += step;
+		
+		if(tile.hasBanana())
+		{
+			this.eat(tile.getBanana());
+			tile.removeBanana();
+		}
 	}
 }
 
@@ -104,10 +125,17 @@ Bomber.prototype.moveWest = function(delta)
 	var x = px2sq(this.position.x);
 	var y = px2sq(this.position.y);
 	var nx = px2sq(this.position.x - step);
+	var tile = stage.getTile(nx, y);
 	
-	if(x == nx || stage.getTile(nx, y).isWalkable())
+	if(x == nx || tile.isWalkable())
 	{
 		this.x -= step;
+		
+		if(tile.hasBanana())
+		{
+			this.eat(tile.getBanana());
+			tile.removeBanana();
+		}
 	}
 }
 
@@ -130,6 +158,18 @@ Bomber.prototype.dropBomb = function()
 Bomber.prototype.explode = function()
 {
 	objedex.bombers.remove(this);
+}
+
+Bomber.prototype.eat = function(banana)
+{
+	if(banana.type == "capacity")
+	{
+		this.increaseBombCapacity();
+	}
+	else if(banana.type == "intensity")
+	{
+		this.increaseBombIntensity();
+	}
 }
 
 ////////////////////////
@@ -156,6 +196,14 @@ Bomber.prototype.getBombIntensity = function()
 	return this.bombintensity;
 }
 
+Bomber.prototype.increaseBombIntensity = function()
+{
+	if(this.bombintensity <= Bomber.getMaximumBombIntensity())
+	{
+		this.bombintensity += 1;
+	}
+}
+
 Bomber.prototype.getBombCapacity = function()
 {
 	return this.bombcapacity;
@@ -173,7 +221,10 @@ Bomber.prototype.decreaseBombCapacity = function()
 
 Bomber.prototype.increaseBombCapacity = function()
 {
-	this.bombcapacity += 1;
+	if(this.bombintensity <= Bomber.getMaximumBombCapacity())
+	{
+		this.bombcapacity += 1;
+	}
 }
 
 Bomber.getDefaultSpeed = function()
@@ -192,6 +243,18 @@ Bomber.getDefaultBombIntensity = function()
 {
 	var DEFAULT_CAPACITY = 2;
 	return DEFAULT_CAPACITY;
+}
+
+Bomber.getMaximumBombCapacity = function()
+{
+	var MAXIMUM_CAPACITY = 5;
+	return MAXIMUM_CAPACITY;
+}
+
+Bomber.getMaximumBombIntensity = function()
+{
+	var MAXIMUM_INTENSITY = 5;
+	return MAXIMUM_INTENSITY;
 }
 
 /////////

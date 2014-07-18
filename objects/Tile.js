@@ -32,7 +32,6 @@ Tile.prototype.explode = function(intensity, direction, explosion)
 	
 	if(this.hasBanana())
 	{
-		this.getBanana().explode();
 		this.removeBanana();
 	}
 	
@@ -144,6 +143,7 @@ Tile.prototype.addBanana = function(banana)
 
 Tile.prototype.removeBanana = function()
 {
+	this.banana.remove();
 	this.banana = undefined;
 }
 

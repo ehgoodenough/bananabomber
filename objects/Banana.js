@@ -18,7 +18,7 @@ inherits(Banana, PIXI.Sprite);
 //Actions//
 //////////
 
-Banana.prototype.explode = function()
+Banana.prototype.remove = function()
 {
 	objedex.bananas.remove(this);
 }
