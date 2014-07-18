@@ -42,7 +42,10 @@ Tile.prototype.explode = function(intensity, direction, explosion)
 		
 		if(this.type == "crate")
 		{
-			this.addBanana(new Banana(this.position, "intensity"));
+			if(Tile.canBanana())
+			{
+				this.addBanana(new Banana(this.position));
+			}
 		}
 	}
 	
@@ -143,6 +146,16 @@ Tile.prototype.removeBanana = function()
 {
 	this.banana = undefined;
 }
+
+Tile.canBanana = function()
+{
+	return true;
+	
+	Tile.bananarate += 1;
+	return Tile.bananarate % 5 == 0;
+}
+
+Tile.bananarate = 0;
 
 /////////
 //Data//
