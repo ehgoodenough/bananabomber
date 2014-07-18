@@ -10,10 +10,8 @@ function Stage(size)
 		
 		for(var y = 0; y < this.size; y++)
 		{
-			if((x % 2 == 1 || y % 2 == 1)
-			&& !(y == this.size - 1
-			|| x == this.size - 1
-			|| x == 0 || y == 0))
+			if((isOddNumber(x) || isOddNumber(y))
+			&& !this.isEdgeCoordinate(x, y))
 			{
 				var tile = new Tile(x, y, "crate");
 				objedex.tiles.add(tile);
@@ -69,4 +67,19 @@ Stage.prototype.getSize = function()
 Stage.prototype.getTile = function(x, y)
 {
 	return this.tiles[x][y];
+}
+
+Stage.prototype.isEdgeCoordinate = function(x, y)
+{
+	return y == this.size - 1 || y == 0
+	    || x == this.size - 1 || x == 0;
+}
+
+//////////////
+//Utilities//
+////////////
+
+function isOddNumber(value)
+{
+	return value % 2 == 1;
 }

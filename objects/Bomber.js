@@ -237,7 +237,11 @@ Bomber.data =
 	},
 }
 
-function getRandomOddNumber(max)
+//////////////
+//Utilities//
+////////////
+
+function getRandomOddNumber(value)
 {
-	return Math.floor(Math.random() * Math.floor((max - 1) / 2)) * 2 + 1;
+	return Math.floor(Math.random() * Math.floor((value - 1) / 2)) * 2 + 1;
 }
