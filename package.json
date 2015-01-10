@@ -1,0 +1,12 @@
+{
+  "name": "bananabomber",
+  "version": "4.0.0",
+  "author": {
+    "name": "Andrew McPherson",
+    "email": "andrewmcp333@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arcym/bananabomber.git"
+  }
+}
