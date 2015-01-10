@@ -1,6 +1,0 @@
-screen canvas dimensions + scale?
-screen render?
-
-keystate
-todo: record events, not just states
-todo: extend getStroke to see if "justdown"
