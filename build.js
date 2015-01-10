@@ -1,8 +1,11 @@
 var gulp = require("gulp")
 var gulp_sass = require("gulp-sass")
-var gulp_css_prefixer = require("gulp-autoprefixer")
+var gulp_prefixify_css = require("gulp-autoprefixer")
+var gulp_minify_css = require("gulp-minify-css")
+var gulp_minify_html = require("gulp-minify-html")
 var gulp_json_transform = require("gulp-json-transform")
 var gulp_uglify = require("gulp-uglify")
+var gulp_if = require("gulp-if")
 
 var vinyl_buffer = require("vinyl-buffer")
 var vinyl_source = require("vinyl-source-stream")
@@ -15,6 +18,7 @@ var aliasify = require("aliasify")
 module.exports.markup = function()
 {
     return gulp.src("./source/index.html")
+               .pipe(gulp_if(is_gh_pages(), gulp_minify_html()))
 }
 
 module.exports.scripts = function()
@@ -22,7 +26,7 @@ module.exports.scripts = function()
     return browserify("./source/index.js")
                .transform("reactify")
                .transform(envify({
-                   devmode: true
+                   mode: process.env.mode
                }))
                .transform(aliasify.configure({
                    configDir: __dirname,
@@ -36,16 +40,15 @@ module.exports.scripts = function()
                .bundle()
                .pipe(vinyl_source("index.js"))
                .pipe(vinyl_buffer())
-               .pipe(gulp_uglify())
+               .pipe(gulp_if(is_gh_pages(), gulp_uglify()))
 }
 
 module.exports.styles = function()
 {
     return gulp.src("./source/index.scss")
-               .pipe(gulp_sass({
-                   outputStyle: "compressed"
-               }))
-               .pipe(gulp_css_prefixer())
+               .pipe(gulp_sass())
+               .pipe(gulp_prefixify_css())
+               .pipe(gulp_if(is_gh_pages(), gulp_minify_css()))
 }
 
 module.exports.assets = function()
@@ -62,4 +65,9 @@ module.exports.configs = function()
                    delete data["devDependencies"]
                    return data
                }, 2))
+}
+
+function is_gh_pages()
+{
+    return process.env.mode == "gh_pages"
 }

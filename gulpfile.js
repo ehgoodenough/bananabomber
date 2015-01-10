@@ -4,6 +4,8 @@ var build = require("./build")
 
 gulp.task("default", function()
 {
+    process.env.mode = "development"
+    
     del(["./builds"], function()
     {
         build.markup().pipe(gulp.dest("./builds"))
