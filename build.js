@@ -2,6 +2,7 @@ var gulp = require("gulp")
 var gulp_sass = require("gulp-sass")
 var gulp_css_prefixer = require("gulp-autoprefixer")
 var gulp_json_transform = require("gulp-json-transform")
+var gulp_uglify = require("gulp-uglify")
 
 var vinyl_buffer = require("vinyl-buffer")
 var vinyl_source = require("vinyl-source-stream")
@@ -35,12 +36,15 @@ module.exports.scripts = function()
                .bundle()
                .pipe(vinyl_source("index.js"))
                .pipe(vinyl_buffer())
+               .pipe(gulp_uglify())
 }
 
 module.exports.styles = function()
 {
     return gulp.src("./source/index.scss")
-               .pipe(gulp_sass())
+               .pipe(gulp_sass({
+                   outputStyle: "compressed"
+               }))
                .pipe(gulp_css_prefixer())
 }
 

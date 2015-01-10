@@ -26,6 +26,7 @@
     "through": "~2.3.6",
     "vinyl-buffer": "~1.0.0",
     "vinyl-source-stream": "~1.0.0",
-    "envify": "~3.2.0"
+    "envify": "~3.2.0",
+    "gulp-uglify": "~1.0.2"
   }
 }
