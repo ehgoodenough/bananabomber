@@ -25,6 +25,7 @@
     "reactify": "~0.17.1",
     "through": "~2.3.6",
     "vinyl-buffer": "~1.0.0",
-    "vinyl-source-stream": "~1.0.0"
+    "vinyl-source-stream": "~1.0.0",
+    "envify": "~3.2.0"
   }
 }

@@ -8,6 +8,7 @@ var vinyl_source = require("vinyl-source-stream")
 
 var browserify = require("browserify")
 var reactify = require("reactify")
+var envify = require("envify/custom")
 var aliasify = require("aliasify")
 
 module.exports.markup = function()
@@ -19,14 +20,16 @@ module.exports.scripts = function()
 {
     return browserify("./source/index.js")
                .transform("reactify")
+               .transform(envify({
+                   devmode: true
+               }))
                .transform(aliasify.configure({
                    configDir: __dirname,
                    aliases: {
                        "<source>": "./source",
+                       "<assets>": "./source/assets",
                        "<scripts>": "./source/scripts",
-                       "<stores>": "./source/scripts/stores",
-                       "<actions>": "./source/scripts/actions",
-                       "<components>": "./source/scripts/components"
+                       "<styles>": "./source/styles"
                    }
                }))
                .bundle()
