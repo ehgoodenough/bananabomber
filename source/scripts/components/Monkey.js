@@ -7,8 +7,10 @@ var Monkey = React.createClass({
     },
     renderStyles: function() {
         return {
-            left: this.props.data.position.x + "em",
-            top: this.props.data.position.y + "em"
+            width: this.props.data.radius * 2 + "em",
+            height: this.props.data.radius * 2 + "em",
+            left: this.props.data.position.x - this.props.data.radius + "em",
+            top: this.props.data.position.y - this.props.data.radius + "em"
         }
     },
     renderClasses: function() {
