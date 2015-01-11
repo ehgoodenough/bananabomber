@@ -35,7 +35,9 @@ module.exports.scripts = function()
                        "<assets>": "./source/assets",
                        "<scripts>": "./source/scripts",
                        "<stores>": "./source/scripts/stores",
+                       "<actions>": "./source/scripts/actions",
                        "<components>": "./source/scripts/components",
+                       "<dispatchers>": "./source/scripts/dispatchers",
                        "<styles>": "./source/styles"
                    }
                }))
