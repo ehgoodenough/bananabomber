@@ -3,7 +3,7 @@ var MonkeyStore = Reflux.createStore({
         one: {
             color: "red",
             position: {
-                x: 2,
+                x: 1,
                 y: 2
             }
         },
@@ -11,7 +11,7 @@ var MonkeyStore = Reflux.createStore({
             color: "green",
             position: {
                 x: 4,
-                y: 4
+                y: 3
             }
         }
     },
