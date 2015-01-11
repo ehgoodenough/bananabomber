@@ -1,17 +1,18 @@
 var Monkey = React.createClass({
     render: function() {
         return (
-            <div style={this.renderStyles()}/>
+            <div style={this.renderStyles()}
+                 className={this.renderClasses()}/>
         )
     },
     renderStyles: function() {
         return {
-            position: "absolute",
-            width: "1em", height: "1em",
             left: this.props.data.position.x + "em",
-            top: this.props.data.position.y + "em",
-            backgroundColor: this.props.data.color
+            top: this.props.data.position.y + "em"
         }
+    },
+    renderClasses: function() {
+        return this.props.data.color + " " + "monkey"
     }
 })
 
