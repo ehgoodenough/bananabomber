@@ -26,7 +26,7 @@ module.exports.scripts = function()
     return browserify("./source/index.js")
                .transform("reactify")
                .transform(envify({
-                   mode: process.env.mode
+                   platform: process.env.platform
                }))
                .transform(aliasify.configure({
                    configDir: __dirname,
@@ -71,5 +71,5 @@ module.exports.configs = function()
 
 function is_gh_pages()
 {
-    return process.env.mode == "gh_pages"
+    return process.env.platform == "gh_pages"
 }

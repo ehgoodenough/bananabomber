@@ -4,8 +4,6 @@ var build = require("./build")
 
 gulp.task("default", function()
 {
-    process.env.mode = "development"
-    
     del(["./builds"], function()
     {
         build.markup().pipe(gulp.dest("./builds"))
@@ -14,4 +12,10 @@ gulp.task("default", function()
         build.assets().pipe(gulp.dest("./builds"))
         build.configs().pipe(gulp.dest("./builds"))
     })
+})
+
+gulp.task("gh_pages", function()
+{
+    process.env.platform = "gh_pages"
+    gulp.start("default")
 })
