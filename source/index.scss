@@ -2,3 +2,10 @@
 {
     margin: 0px;
 }
+
+@import "./styles/Colors.scss";
+
+body
+{
+    background-color: $black;
+}
