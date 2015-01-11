@@ -5,10 +5,17 @@
 
 @import "./styles/Colors.scss";
 @import "./styles/Fonts.scss";
+@import "./styles/Sizes.scss";
+
+@import "./styles/GameFrame.scss";
 
 body
 {
-    color: $white;
+    font-family: $fonts;
     background-color: $black;
-    font-family: goldfish, monospace;
+}
+
+#game-frame
+{
+    background-color: pink;
 }

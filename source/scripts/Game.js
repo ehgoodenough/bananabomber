@@ -1,9 +1,11 @@
+var GameFrame = require("<scripts>/GameFrame")
+
 var Game = React.createClass({
     render: function() {
         return (
-            <div>
+            <GameFrame>
                 Hello World!
-            </div>
+            </GameFrame>
         )
     }
 })
