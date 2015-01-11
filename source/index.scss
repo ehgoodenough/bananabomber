@@ -4,8 +4,11 @@
 }
 
 @import "./styles/Colors.scss";
+@import "./styles/Fonts.scss";
 
 body
 {
+    color: $white;
     background-color: $black;
+    font-family: goldfish, monospace;
 }
