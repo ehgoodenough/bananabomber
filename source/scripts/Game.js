@@ -1,5 +1,6 @@
 var GameFrame = require("<scripts>/GameFrame")
-var GameLoopDispatcher = require("<dispatchers>/GameLoopDispatcher")
+var GameLoopStore = require("<stores>/GameLoopStore")
+var GameInputStore = require("<stores>/GameInputStore")
 
 var Monkey = require("<components>/Monkey")
 var WorldTile = require("<components>/WorldTile")
@@ -11,9 +12,6 @@ var Game = React.createClass({
         Reflux.connect(MonkeyStore, "monkeys"),
         Reflux.connect(WorldStore, "world")
     ],
-    componentDidMount: function() {
-        GameLoopDispatcher()
-    },
     render: function() {
         return (
             <GameFrame>

@@ -1,4 +1,6 @@
-var GameLoopActions = require("<actions>/LoopActions")
+var requestAnimationFrame = require("raf")
+
+var GameLoopActions = require("<actions>/GameLoopActions")
 
 var GameLoopStore = Reflux.createStore({
     data: {
@@ -7,8 +9,14 @@ var GameLoopStore = Reflux.createStore({
     getData: function() {
         return this.data
     },
+    init: function() {
+        (function tick(time) {
+            GameLoopActions.LoopTick((Date.now() - time) / 1000)
+            requestAnimationFrame(tick.bind(null, Date.now()))
+        })(Date.now())
+    },
     listenables: [
-        LoopActions
+        GameLoopActions
     ],
     onLoopTick: function(delta) {
         this.data.delta = delta
