@@ -1,12 +1,12 @@
-var GameFrame = require("<scripts>/GameFrame")
-var GameLoopStore = require("<stores>/GameLoopStore")
-var GameInputStore = require("<stores>/GameInputStore")
-var GameInputActions = require("<actions>/GameInputActions")
+var LoopStore = require("<source>/scripts/stores/LoopStore")
+var KeyboardInputStore = require("<source>/scripts/stores/KeyboardInputStore")
 
-var Monkey = require("<components>/Monkey")
-var WorldTile = require("<components>/WorldTile")
-var MonkeyStore = require("<stores>/MonkeyStore")
-var WorldStore = require("<stores>/WorldStore")
+var GameFrame = require("<source>/scripts/components/GameFrame")
+var Monkey = require("<source>/scripts/components/Monkey")
+var WorldTile = require("<source>/scripts/components/WorldTile")
+
+var MonkeyStore = require("<source>/scripts/stores/MonkeyStore")
+var WorldStore = require("<source>/scripts/stores/WorldStore")
 
 var Game = React.createClass({
     mixins: [

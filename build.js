@@ -32,12 +32,9 @@ module.exports.scripts = function()
                    configDir: __dirname,
                    aliases: {
                        "<source>": "./source",
-                       "<assets>": "./source/assets",
+                       "<styles>": "./source/styles",
                        "<scripts>": "./source/scripts",
-                       "<stores>": "./source/scripts/stores",
-                       "<actions>": "./source/scripts/actions",
-                       "<components>": "./source/scripts/components",
-                       "<styles>": "./source/styles"
+                       "<assets>": "./source/assets"
                    }
                }))
                .bundle()
