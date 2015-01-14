@@ -1,6 +1,7 @@
 var GameFrame = require("<scripts>/GameFrame")
 var GameLoopStore = require("<stores>/GameLoopStore")
 var GameInputStore = require("<stores>/GameInputStore")
+var GameInputActions = require("<actions>/GameInputActions")
 
 var Monkey = require("<components>/Monkey")
 var WorldTile = require("<components>/WorldTile")

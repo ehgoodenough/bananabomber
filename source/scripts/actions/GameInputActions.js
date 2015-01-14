@@ -1,5 +1,5 @@
 var GameInputActions = Reflux.createActions([
-	"Input", "Uninput", "InputKey", "UninputKey"
+	"Input", "KeyboardInput"
 ])
 
 module.exports = GameInputActions
