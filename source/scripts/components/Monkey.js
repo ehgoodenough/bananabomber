@@ -1,4 +1,9 @@
+var InputActionsStore = require("<source>/scripts/stores/InputActionsStore")
+
 var Monkey = React.createClass({
+    componentDidMount: function() {
+        InputActionsStore.addAction(this.props.data.inputs["move north"], function() {console.log("hello world")})
+    },
     render: function() {
         return (
             <div style={this.renderStyles()}

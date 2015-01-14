@@ -2,10 +2,6 @@ var LoopActions = require("<source>/scripts/actions/LoopActions")
 var KeyboardInputActions = require("<source>/scripts/actions/KeyboardInputActions")
 
 var KeyboardInputStore = Reflux.createStore({
-    data: {},
-    getData: function() {
-        return this.data
-    },
     init: function() {
         document.addEventListener("keydown", function(event) {
             if(!KeyboardInputStore.hasKeyboardInput(event.keyCode)) {
@@ -15,6 +11,10 @@ var KeyboardInputStore = Reflux.createStore({
         document.addEventListener("keyup", function(event) {
             KeyboardInputActions.StopKeyboardInput(event.keyCode)
         })
+    },
+    data: {},
+    getData: function() {
+        return this.data
     },
     listenables: [
         LoopActions,
