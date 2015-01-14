@@ -1,4 +1,4 @@
-//var GameInputActions = require("<actions>/GameInputActions")
+var GameInputActions = require("<actions>/GameInputActions")
 
 var GameInputStore = Reflux.createStore({
     data: {
@@ -7,6 +7,7 @@ var GameInputStore = Reflux.createStore({
         return this.data
     },
     listenables: [
+        GameInputActions
     ]
 })
 
