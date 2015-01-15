@@ -39,17 +39,21 @@ var MonkeyStore = Reflux.createStore({
     listenables: [
         MonkeyActions
     ],
-    onMonkeyMoveNorth: function(_id) {
-        console.log(_id, "north")
+    onMonkeyMoveNorth: function(_id, tick) {
+        this.data[_id].position.y -= 1.5 * tick
+        this.retrigger()
     },
-    onMonkeyMoveSouth: function(_id) {
-        console.log(_id, "south")
+    onMonkeyMoveSouth: function(_id, tick) {
+        this.data[_id].position.y += 1.5 * tick
+        this.retrigger()
     },
-    onMonkeyMoveEast: function(_id) {
-        console.log(_id, "east")
+    onMonkeyMoveEast: function(_id, tick) {
+        this.data[_id].position.x += 1.5 * tick
+        this.retrigger()
     },
-    onMonkeyMoveWest: function(_id) {
-        console.log(_id, "west")
+    onMonkeyMoveWest: function(_id, tick) {
+        this.data[_id].position.x -= 1.5 * tick
+        this.retrigger()
     }
 })
 
