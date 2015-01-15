@@ -1,4 +1,9 @@
 var MonkeyActions = require("<source>/scripts/actions/MonkeyActions")
+var LoopActions = require("<source>/scripts/actions/LoopActions")
+
+var max_velocity = 3
+var acceleration = 1.5
+var deacceleration = 0.75
 
 var MonkeyStore = Reflux.createStore({
     data: {
@@ -9,6 +14,10 @@ var MonkeyStore = Reflux.createStore({
             position: {
                 x: 1 + 0.45 + (0.5 - 0.45),
                 y: 2 + 0.45 + (0.5 - 0.45)
+            },
+            movement: {
+                vx: 0,
+                vy: 0,
             },
             inputs: {
                 "move north": "up arrow",
@@ -25,6 +34,10 @@ var MonkeyStore = Reflux.createStore({
                 x: 4 + 0.45 + (0.5 - 0.45),
                 y: 3 + 0.45 + (0.5 - 0.45)
             },
+            movement: {
+                vx: 0,
+                vy: 0,
+            },
             inputs: {
                 "move north": "w",
                 "move south": "s",
@@ -37,22 +50,65 @@ var MonkeyStore = Reflux.createStore({
         return this.data
     },
     listenables: [
-        MonkeyActions
+        MonkeyActions,
+        LoopActions
     ],
     onMonkeyMoveNorth: function(_id, tick) {
-        this.data[_id].position.y -= 1.5 * tick
+        this.data[_id].movement.vy -= acceleration * tick
+        if(this.data[_id].movement.vy < -max_velocity) {
+            this.data[_id].movement.vy = -max_velocity
+        }
         this.retrigger()
     },
     onMonkeyMoveSouth: function(_id, tick) {
-        this.data[_id].position.y += 1.5 * tick
+        this.data[_id].movement.vy += acceleration * tick
+        if(this.data[_id].movement.vy > max_velocity) {
+            this.data[_id].movement.vy = max_velocity
+        }
         this.retrigger()
     },
     onMonkeyMoveEast: function(_id, tick) {
-        this.data[_id].position.x += 1.5 * tick
+        this.data[_id].movement.vx += acceleration * tick
+        if(this.data[_id].movement.vx > max_velocity) {
+            this.data[_id].movement.vx = max_velocity
+        }
         this.retrigger()
     },
     onMonkeyMoveWest: function(_id, tick) {
-        this.data[_id].position.x -= 1.5 * tick
+        this.data[_id].movement.vx -= acceleration * tick
+        if(this.data[_id].movement.vx < -max_velocity) {
+            this.data[_id].movement.vx = -max_velocity
+        }
+        this.retrigger()
+    },
+    onTick: function(tick) {
+        for(var _id in this.data) {
+            this.data[_id].position.x += this.data[_id].movement.vx
+            this.data[_id].position.y += this.data[_id].movement.vy
+
+            if(this.data[_id].movement.vx > 0) {
+                this.data[_id].movement.vx -= deacceleration * tick
+                if(this.data[_id].movement.vx < 0) {
+                    this.data[_id].movement.vx = 0
+                }
+            } else if(this.data[_id].movement.vx < 0) {
+                this.data[_id].movement.vx += deacceleration * tick
+                if(this.data[_id].movement.vx > 0) {
+                    this.data[_id].movement.vx = 0
+                }
+            }
+            if(this.data[_id].movement.vy > 0) {
+                this.data[_id].movement.vy -= deacceleration * tick
+                if(this.data[_id].movement.vy < 0) {
+                    this.data[_id].movement.vy = 0
+                }
+            } else if(this.data[_id].movement.vy < 0) {
+                this.data[_id].movement.vy += deacceleration * tick
+                if(this.data[_id].movement.vy > 0) {
+                    this.data[_id].movement.vy = 0
+                }
+            }
+        }
         this.retrigger()
     }
 })
