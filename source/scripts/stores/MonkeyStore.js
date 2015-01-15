@@ -1,6 +1,9 @@
+var MonkeyActions = require("<source>/scripts/actions/MonkeyActions")
+
 var MonkeyStore = Reflux.createStore({
     data: {
         one: {
+            _id: "one",
             color: "red",
             radius: 0.45,
             position: {
@@ -15,6 +18,7 @@ var MonkeyStore = Reflux.createStore({
             }
         },
         two: {
+            _id: "two",
             color: "green",
             radius: 0.45,
             position: {
@@ -31,6 +35,21 @@ var MonkeyStore = Reflux.createStore({
     },
     getData: function() {
         return this.data
+    },
+    listenables: [
+        MonkeyActions
+    ],
+    onMonkeyMoveNorth: function(_id) {
+        console.log(_id, "north")
+    },
+    onMonkeyMoveSouth: function(_id) {
+        console.log(_id, "south")
+    },
+    onMonkeyMoveEast: function(_id) {
+        console.log(_id, "east")
+    },
+    onMonkeyMoveWest: function(_id) {
+        console.log(_id, "west")
     }
 })
 

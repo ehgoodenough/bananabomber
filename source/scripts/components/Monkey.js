@@ -1,8 +1,12 @@
 var InputActionsStore = require("<source>/scripts/stores/InputActionsStore")
+var MonkeyActions = require("<source>/scripts/actions/MonkeyActions")
 
 var Monkey = React.createClass({
     componentDidMount: function() {
-        InputActionsStore.addAction(this.props.data.inputs["move north"], function() {console.log("hello world")})
+        InputActionsStore.addAction(this.props.data.inputs["move north"], MonkeyActions.MonkeyMoveNorth.bind(null, this.props.data._id))
+        InputActionsStore.addAction(this.props.data.inputs["move south"], MonkeyActions.MonkeyMoveSouth.bind(null, this.props.data._id))
+        InputActionsStore.addAction(this.props.data.inputs["move east"], MonkeyActions.MonkeyMoveEast.bind(null, this.props.data._id))
+        InputActionsStore.addAction(this.props.data.inputs["move west"], MonkeyActions.MonkeyMoveWest.bind(null, this.props.data._id))
     },
     render: function() {
         return (

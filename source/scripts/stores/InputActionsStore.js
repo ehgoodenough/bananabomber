@@ -1,7 +1,8 @@
 var KeyboardInputActions = require("<source>/scripts/actions/KeyboardInputActions")
 
 var InputActionsStore = Reflux.createStore({
-    data: {},
+    data: {
+    },
     getData: function() {
         return this.data
     },
@@ -9,10 +10,12 @@ var InputActionsStore = Reflux.createStore({
         KeyboardInputActions
     ],
     addAction: function(keycode, action) {
-        console.log(keycode, action)
+        this.data[keycode] = action
     },
     onTickKeyboardInput: function(keycode, tick) {
-        console.log(keycode, tick)
+        if(this.data[keycode]) {
+            this.data[keycode](tick)
+        }
     }
 })
 
