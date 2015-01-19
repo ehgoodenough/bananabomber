@@ -1,9 +1,9 @@
 var MonkeyActions = require("<source>/scripts/actions/MonkeyActions")
 var LoopActions = require("<source>/scripts/actions/LoopActions")
 
-var max_velocity = 3
-var acceleration = 1.5
-var deacceleration = 0.75
+var max_velocity = 0.1
+var acceleration = 0.5
+var deacceleration = 0.4
 
 var MonkeyStore = Reflux.createStore({
     data: {
@@ -58,6 +58,7 @@ var MonkeyStore = Reflux.createStore({
         if(this.data[_id].movement.vy < -max_velocity) {
             this.data[_id].movement.vy = -max_velocity
         }
+        console.log(this.data[_id].movement.vy)
         this.retrigger()
     },
     onMonkeyMoveSouth: function(_id, tick) {
@@ -65,6 +66,7 @@ var MonkeyStore = Reflux.createStore({
         if(this.data[_id].movement.vy > max_velocity) {
             this.data[_id].movement.vy = max_velocity
         }
+        console.log(this.data[_id].movement.vy)
         this.retrigger()
     },
     onMonkeyMoveEast: function(_id, tick) {
@@ -72,6 +74,7 @@ var MonkeyStore = Reflux.createStore({
         if(this.data[_id].movement.vx > max_velocity) {
             this.data[_id].movement.vx = max_velocity
         }
+        console.log(this.data[_id].movement.vx)
         this.retrigger()
     },
     onMonkeyMoveWest: function(_id, tick) {
@@ -79,6 +82,7 @@ var MonkeyStore = Reflux.createStore({
         if(this.data[_id].movement.vx < -max_velocity) {
             this.data[_id].movement.vx = -max_velocity
         }
+        console.log(this.data[_id].movement.vx)
         this.retrigger()
     },
     onTick: function(tick) {
