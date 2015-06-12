@@ -1,22 +1,14 @@
-*
-{
-    margin: 0px;
-}
-
-@import "./styles/Colors.scss";
 @import "./styles/Fonts.scss";
-@import "./styles/Sizes.scss";
-
+@import "./styles/Defaults.scss";
 @import "./styles/GameFrame.scss";
-@import "./styles/Monkey.scss";
 
-body
+html
 {
-    font-family: $fonts;
-    background-color: $black;
-}
+    font-family: goldfish;
+    background-color: #111;
 
-#game-frame
-{
-    background-color: $game-frame-color;
+    #game-frame
+    {
+    	background-color: #EEE;
+    }
 }

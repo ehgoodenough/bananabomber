@@ -1,8 +1,15 @@
-window.React = require("react/addons")
-window.Reflux = require("reflux")
+window.React = require("react")
 
-Reflux.StoreMethods.getInitialState = function() {return this.getData()}
-Reflux.StoreMethods.retrigger = function() {this.trigger(this.getData())}
+var GameFrame = require("<scripts>/components/GameFrame")
 
-var Game = require("<scripts>/Game")
-React.render(<Game/>, document.body)
+var Bananabomber = React.createClass({
+    render: function() {
+        return (
+            <GameFrame aspect-ratio="4x3">
+                Hiya!
+            </GameFrame>
+        )
+    }
+})
+
+React.render(<Bananabomber/>, document.body)

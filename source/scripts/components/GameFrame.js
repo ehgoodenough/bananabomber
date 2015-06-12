@@ -1,14 +1,13 @@
 var GameFrame = React.createClass({
     getDefaultProps: function() {
         return {
-            ratio: "16x9"
+            "aspect-ratio": "4x3"
         }
     },
     render: function() {
         return (
-            <div id="game-frame" className={"_" + this.props.ratio}>
-                {this.props.children}
-            </div>
+            <div id="game-frame" {...this.props}
+                className={"_" + this.props["aspect-ratio"]}/>
         )
     }
 })
