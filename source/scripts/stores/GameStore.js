@@ -15,8 +15,8 @@ Tile.prototype.hasCollision = function() {
 }
 
 var World = function() {
-    this.width = 17
-    this.height = 9
+    this.width = 19
+    this.height = 13
     
     this.tiles = {}
     for(var x = 0; x < this.width; x++) {
@@ -101,7 +101,9 @@ var Monkey = function(protomonkey) {
         "y": 0.75
     }
     this.girth = 4 / 38
-    this.friction = 0.0005
+    this.friction = 0.000005
+    
+    this.status = "alive"
 }
 
 Monkey.prototype.getStyle = function() {
@@ -115,6 +117,7 @@ Monkey.prototype.getStyle = function() {
         "backgroundPosition": "50% 50%",
         "backgroundRepeat": "no-repeat",
         "backgroundImage": "url(" + this.image + ")",
+        "backgroundColor": this.status == "dead" ? "#111" : null,
     }
 }
 
@@ -270,7 +273,7 @@ Bomb.prototype.getStyle = function() {
     return {
         "position": "absolute",
         "borderRadius": "999%",
-        "backgroundColor": "rgb(" + 255 + ", 0, 0)",
+        "backgroundColor": "#111",
         "width": this.width + "em",
         "height": this.height + "em",
         "left": this.position.x - (this.width / 2) + "em",
@@ -281,20 +284,39 @@ Bomb.prototype.getStyle = function() {
 Bomb.prototype.update = function(tick) {
     this.fuse -= tick
     if(this.fuse <= 0) {
-        var x = Math.floor(this.position.x)
-        var y = Math.floor(this.position.y)
-        delete Game.data.bombs[x + "x" + y]
-        this.explode({
+        this.explode(this.position, {
             "-x": 1,
-            "-y": 1,
             "+x": 1,
-            "+y": 1
+            "-y": 1,
+            "+y": 1,
         })
     }
 }
 
-Bomb.prototype.explode = function(explosion) {
-    console.log(explosion)
+Bomb.prototype.explode = function(position, direction) {
+    var x = Math.floor(position.x)
+    var y = Math.floor(position.y)
+    delete Game.data.bombs[x + "x" + y]
+    
+    console.log(x, y)
+    
+    for(var key in Game.data.monkeys) {
+        var monkey = Game.data.monkeys[key]
+        var positions = monkey.getPositions()
+        if(!!positions[x + "x" + y]) {
+            monkey.status = "dead"
+        }
+    }
+    
+    if(direction["-x"] > 0) {
+        this.explode({"x": x - 1, "y": y}, {"-x": direction["-x"] - 1})
+    } if(direction["+x"] > 0) {
+        this.explode({"x": x + 1, "y": y}, {"+x": direction["+x"] - 1})
+    } if(direction["-y"] > 0) {
+        this.explode({"x": x, "y": y - 1}, {"-y": direction["-y"] - 1})
+    } if(direction["+y"] > 0) {
+        this.explode({"x": x, "y": y + 1}, {"+y": direction["+y"] - 1})
+    }
 }
 
 var GameStore = Phlux.createStore({
@@ -323,7 +345,8 @@ var GameStore = Phlux.createStore({
                 })*/
             },
             world: new World(),
-            bombs: {}
+            bombs: {},
+            explosions: {},
         }
     },
     update: function(tick) {

@@ -18,12 +18,10 @@ var Bananabomber = React.createClass({
     ],
     render: function() {
         return (
-            <GameFrameView aspect-ratio="16x9">
-                <CameraView data={this.state.game}>
-                    <WorldView data={this.state.game.world}/>
-                    {this.renderViews(GameObjectView, this.state.game.bombs)}
-                    {this.renderViews(GameObjectView, this.state.game.monkeys)}
-                </CameraView>
+            <GameFrameView aspect-ratio="19x13">
+                <WorldView data={this.state.game.world}/>
+                {this.renderViews(GameObjectView, this.state.game.bombs)}
+                {this.renderViews(GameObjectView, this.state.game.monkeys)}
             </GameFrameView>
         )
     },
