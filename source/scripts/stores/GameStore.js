@@ -11,7 +11,7 @@ Tile.prototype.getColor = function() {
 }
 
 Tile.prototype.hasCollision = function() {
-    return !!this.wall || !!this.bomb
+    return !!this.wall
 }
 
 var World = function() {
@@ -91,8 +91,8 @@ var Monkey = function(protomonkey) {
     }
     
     this.velocity = {
-        "min": 0.001,
-        "max": 0.075,
+        "minimum": 0.001,
+        "maximum": 0.075,
         "x": 0,
         "y": 0,
     }
@@ -122,61 +122,38 @@ Monkey.prototype.update = function(tick) {
     // keyboard input
     if(Game.input.isDown(this.input["move north"])) {
         this.velocity.y -= this.acceleration * tick
-        this.velocity.y = -this.velocity.max
+        this.velocity.y = -this.velocity.maximum
     } if(Game.input.isDown(this.input["move south"])) {
         this.velocity.y += this.acceleration * tick
-        this.velocity.y = +this.velocity.max
+        this.velocity.y = +this.velocity.maximum
     } if(Game.input.isDown(this.input["move west"])) {
         this.velocity.x -= this.acceleration * tick
-        this.velocity.x = -this.velocity.max
+        this.velocity.x = -this.velocity.maximum
     } if(Game.input.isDown(this.input["move east"])) {
         this.velocity.x += this.acceleration * tick
-        this.velocity.x = +this.velocity.max
+        this.velocity.x = +this.velocity.maximum
     }
     
     // maximum velocity
-    if(this.velocity.y < -this.velocity.max) {
-        this.velocity.y = -this.velocity.max
-    } if(this.velocity.y > +this.velocity.max) {
-        this.velocity.y = +this.velocity.max
-    } if(this.velocity.x < -this.velocity.max) {
-        this.velocity.x = -this.velocity.max
-    } if(this.velocity.x > +this.velocity.max) {
-        this.velocity.x = +this.velocity.max
+    if(this.velocity.y < -this.velocity.maximum) {
+        this.velocity.y = -this.velocity.maximum
+    } if(this.velocity.y > +this.velocity.maximum) {
+        this.velocity.y = +this.velocity.maximum
+    } if(this.velocity.x < -this.velocity.maximum) {
+        this.velocity.x = -this.velocity.maximum
+    } if(this.velocity.x > +this.velocity.maximum) {
+        this.velocity.x = +this.velocity.maximum
     }
     
     // collision with world
-    var tiles = this.store.data.world.getTiles({
-        "x1": this.position.x - this.girth,
-        "y1": this.position.y - this.girth,
-        "x2": this.position.x + this.girth,
-        "y2": this.position.y + this.girth,
-        "dx": this.velocity.x
+    var positions = this.getNewPositions({
+        "y": this.velocity.y
     })
-    for(var index in tiles) {
-        var tile = tiles[index]
-        if(tile.hasCollision()) {
-            if(this.velocity.x > 0) {
-                this.position.x = tile.position.x
-                this.position.x -= this.girth + 0.01
-                this.velocity.x = 0
-            } else if(this.velocity.x < 0) {
-                this.position.x = tile.position.x + 1
-                this.position.x += this.girth + 0.01
-                this.velocity.x = 0
-            }
-        }
-    }
-    var tiles = this.store.data.world.getTiles({
-        "x1": this.position.x - this.girth,
-        "y1": this.position.y - this.girth,
-        "x2": this.position.x + this.girth,
-        "y2": this.position.y + this.girth,
-        "dy": this.velocity.y
-    })
-    for(var index in tiles) {
-        var tile = tiles[index]
-        if(tile.hasCollision()) {
+    for(var coords in positions) {
+        var position = positions[coords]
+        var bomb = Game.data.bombs[coords]
+        var tile = Game.data.world.tiles[coords]
+        if(!!tile && !!tile.wall || !!bomb) {
             if(this.velocity.y > 0) {
                 this.position.y = tile.position.y
                 this.position.y -= this.girth + 0.01
@@ -188,6 +165,25 @@ Monkey.prototype.update = function(tick) {
             }
         }
     }
+    var positions = this.getNewPositions({
+        "x": this.velocity.x
+    })
+    for(var coords in positions) {
+        var position = positions[coords]
+        var bomb = Game.data.bombs[coords]
+        var tile = Game.data.world.tiles[coords]
+        if(!!tile && !!tile.wall || !!bomb) {
+            if(this.velocity.x > 0) {
+                this.position.x = tile.position.x
+                this.position.x -= this.girth + 0.01
+                this.velocity.x = 0
+            } else if(this.velocity.x < 0) {
+                this.position.x = tile.position.x + 1
+                this.position.x += this.girth + 0.01
+                this.velocity.x = 0
+            }
+        }
+    }
     
     // translation
     this.position.x += this.velocity.x
@@ -196,39 +192,71 @@ Monkey.prototype.update = function(tick) {
     // deceleration
     if(this.velocity.y < 0) {
         this.velocity.y *= Math.pow(this.friction, tick)
-        if(this.velocity.y > -this.velocity.min) {
+        if(this.velocity.y > -this.velocity.minimum) {
             this.velocity.y = 0
         }
     } else if(this.velocity.y > 0) {
         this.velocity.y *= Math.pow(this.friction, tick)
-        if(this.velocity.y < +this.velocity.min) {
+        if(this.velocity.y < +this.velocity.minimum) {
             this.velocity.y = 0
         }
     } if(this.velocity.x < 0) {
         this.velocity.x *= Math.pow(this.friction, tick)
-        if(this.velocity.x > -this.velocity.min) {
+        if(this.velocity.x > -this.velocity.minimum) {
             this.velocity.x = 0
         }
     } else if(this.velocity.x > 0) {
         this.velocity.x *= Math.pow(this.friction, tick)
-        if(this.velocity.x < +this.velocity.min) {
+        if(this.velocity.x < +this.velocity.minimum) {
             this.velocity.x = 0
         }
     }
     
     if(Game.input.isJustDown(this.input["drop bomb"])) {
-        var x = Math.floor(this.position.x) + 0.5
-        var y = Math.floor(this.position.y) + 0.5
+        var x = Math.floor(this.position.x)
+        var y = Math.floor(this.position.y)
         Game.data.bombs[x + "x" + y] = new Bomb({
             position: {"x": x, "y": y}
         })
     }
 }
 
+Monkey.prototype.getPositions = function(delta) {
+    delta = delta || {}
+    delta.x = delta.x || 0
+    delta.y = delta.y || 0
+    
+    var x1 = Math.floor(this.position.x - this.girth + delta.x)
+    var y1 = Math.floor(this.position.y - this.girth + delta.y)
+    var x2 = Math.ceil(this.position.x + this.girth + delta.x)
+    var y2 = Math.ceil(this.position.y + this.girth + delta.y)
+    
+    var positions = {}
+    for(var x = x1; x < x2; x++) {
+        for(var y = y1; y < y2; y++) {
+            positions[x + "x" + y] = {
+                "x": x, "y": y
+            }
+        }
+    }
+    return positions
+}
+
+Monkey.prototype.getNewPositions = function(delta) {
+    var newpositions = this.getPositions(delta)
+    var positions = this.getPositions()
+    for(var key in newpositions) {
+        if(!!positions[key]) {
+            delete newpositions[key]
+        }
+    }
+    return newpositions
+}
+
 var Bomb = function(protobomb) {
     this.position = protobomb.position || {}
-    this.position.x = protobomb.position.x || 0
-    this.position.y = protobomb.position.y || 0
+    this.position.x = protobomb.position.x + 0.5 || 1.5
+    this.position.y = protobomb.position.y + 0.5 || 1.5
     
     this.width = 0.8
     this.height = 0.8
@@ -260,7 +288,7 @@ var GameStore = Phlux.createStore({
                     "input": Inputs[0],
                     "store": this
                 }),
-                1: new Monkey({
+                /*1: new Monkey({
                     "position": {
                         "x": 11.5,
                         "y": 5.5
@@ -269,7 +297,7 @@ var GameStore = Phlux.createStore({
                     "image": Assets.images["blue monkey"],
                     "input": Inputs[1],
                     "store": this
-                })
+                })*/
             },
             world: new World(),
             bombs: {}
