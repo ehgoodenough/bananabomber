@@ -6,12 +6,14 @@ var Monkey = function(protomonkey) {
 
 Monkey.prototype.getStyle = function() {
     return {
-        "width": "1em",
-        "height": "1em",
+        "width": 1 + "em",
+        "height": 1 + "em",
         "position": "absolute",
-        "top": this.position.y + "em",
-        "left": this.position.x + "em",
-        "backgroundSize": "1em 1em",
+        "top": this.position.y - 0.5 + "em",
+        "left": this.position.x - 0.5 + "em",
+        "backgroundSize": "99% 99%",
+        "backgroundPosition": "50% 50%",
+        "backgroundRepeat": "no-repeat",
         "backgroundImage": "url(" + this.image + ")",
     }
 }
@@ -56,20 +58,40 @@ var GameStore = Phlux.createStore({
         monkeys: {
             0: new Monkey({
                 "position": {
-                    "x": 1,
-                    "y": 1
+                    "x": 1.5,
+                    "y": 1.5
                 },
-                "image": Assets.images["red-monkey"]
+                "image": Assets.images["red-monkey"],
+                "input": {
+                    "move north": "<w>",
+                    "move south": "<s>",
+                    "move west": "<a",
+                    "move east": "<d>"
+                }
             }),
             1: new Monkey({
                 "position": {
-                    "x": 5,
-                    "y": 6
+                    "x": 11.5,
+                    "y": 5.5
                 },
-                "image": Assets.images["blue-monkey"]
+                "image": Assets.images["blue-monkey"],
+                "input": {
+                    "move north": "<up>",
+                    "move south": "<down>",
+                    "move west": "<left>",
+                    "move east": "<right>"
+                }
             })
         },
         world: new World()
+    },
+    update: function() {
+        for(var key in this.data.monkeys) {
+            var monkey = this.data.monkeys[key]
+            if(Game.input.isDown(monkey.input["move north"])) {
+                monkey.position.x -= 1 * tick
+            }
+        }
     }
 })
 

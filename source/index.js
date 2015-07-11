@@ -1,8 +1,8 @@
 window.React = require("react")
 window.Phlux = require("phlux")
 window.Game = {
-    Loop: require("tickly"),
-    Input: require("keyb")
+    loop: require("tickly").loop,
+    input: require("keyb")
 }
 
 var GameStore = require("<scripts>/stores/GameStore")
@@ -35,6 +35,11 @@ var Bananabomber = React.createClass({
             )
         }
         return views
+    },
+    componentDidMount: function() {
+        Game.loop(function(tick) {
+            GameStore.update(tick)
+        })
     }
 })
 
