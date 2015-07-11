@@ -104,6 +104,11 @@ var Monkey = function(protomonkey) {
     this.friction = 0.000005
     
     this.status = "alive"
+    
+    this.bombs = [
+        "regular",
+        "regular"
+    ]
 }
 
 Monkey.prototype.getStyle = function() {
@@ -216,12 +221,16 @@ Monkey.prototype.update = function(tick) {
     }
     
     if(Game.input.isJustDown(this.input["drop bomb"])) {
-        var x = Math.floor(this.position.x)
-        var y = Math.floor(this.position.y)
-        if(Game.data.bombs[x + "x" + y] == null) {
-            Game.data.bombs[x + "x" + y] = new Bomb({
-                position: {"x": x, "y": y}
-            })
+        if(this.bombs.length > 0) {
+            var x = Math.floor(this.position.x)
+            var y = Math.floor(this.position.y)
+            if(Game.data.bombs[x + "x" + y] == null) {
+                Game.data.bombs[x + "x" + y] = new Bomb({
+                    position: {"x": x, "y": y},
+                    type: this.bombs.pop(),
+                    monkey: this,
+                })
+            }
         }
     }
 }
@@ -272,6 +281,9 @@ var Bomb = function(protobomb) {
     this.position.x = protobomb.position.x + 0.5 || 1.5
     this.position.y = protobomb.position.y + 0.5 || 1.5
     
+    this.type = protobomb.type || "regular",
+    this.monkey = protobomb.monkey || null
+    
     this.width = 0.8
     this.height = 0.8
     
@@ -304,10 +316,14 @@ Bomb.prototype.update = function(tick) {
     }
 }
 
-Bomb.prototype.explode = function(position, direction) {
-    var x = Math.floor(position.x)
-    var y = Math.floor(position.y)
+Bomb.prototype.explode = function() {
+    var x = Math.floor(this.position.x)
+    var y = Math.floor(this.position.y)
     delete Game.data.bombs[x + "x" + y]
+    
+    if(!!this.monkey) {
+        this.monkey.bombs.push(this.type)
+    }
 }
 
 var Explosion = function(protoexplosion) {
@@ -342,7 +358,7 @@ var Explosion = function(protoexplosion) {
         this.direction["+x"] = Math.max(bomb.intensity, this.direction["+x"])
         this.direction["-y"] = Math.max(bomb.intensity, this.direction["-y"])
         this.direction["+y"] = Math.max(bomb.intensity, this.direction["+y"])
-        delete Game.data.bombs[xy]
+        bomb.explode()
     }
     
     for(var key in Game.data.monkeys) {
