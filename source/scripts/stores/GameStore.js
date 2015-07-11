@@ -2,6 +2,11 @@ var Monkey = function(protomonkey) {
     for(var key in protomonkey) {
         this[key] = protomonkey[key]
     }
+    
+    this.velocity = {
+        "x": 0,
+        "y": 0
+    }
 }
 
 Monkey.prototype.getStyle = function() {
@@ -18,22 +23,55 @@ Monkey.prototype.getStyle = function() {
     }
 }
 
+Monkey.prototype.update = function(tick) {
+    if(Game.input.isDown(this.input["move north"])) {
+        this.velocity.y -= this.acceleration * tick
+    } if(Game.input.isDown(this.input["move south"])) {
+        this.velocity.y += this.acceleration * tick
+    } if(Game.input.isDown(this.input["move west"])) {
+        this.velocity.x -= this.acceleration * tick
+    } if(Game.input.isDown(this.input["move east"])) {
+        this.velocity.x += this.acceleration * tick
+    }
+    
+    var tile = this.store.data.world.getTile({
+        "x": this.position.x,
+        "y": this.position.y,
+        "dx": this.velocity.x
+    })
+    if(tile.hasBody == true) {
+        this.velocity.x = 0
+    }
+    var tile = this.store.data.world.getTile({
+        "x": this.position.x,
+        "y": this.position.y,
+        "dy": this.velocity.y
+    })
+    if(tile.hasBody == true) {
+        this.velocity.y = 0
+    }
+    
+    this.position.x += this.velocity.x
+    this.position.y += this.velocity.y
+}
+
 var World = function() {
-    this.width = 17
+    this.width = 19
     this.height = 11
     
     this.tiles = {}
     for(var x = 0; x < this.width; x++) {
         for(var y = 0; y < this.height; y++) {
             var color = "rgb(200, 175, 150)"
-            var isUnpassable = false
-            if(x == 0 || x == this.width - 1
+            var hasBody = false
+            if(x % 2 == 0 && y % 2 == 0
+            || x == 0 || x == this.width - 1
             || y == 0 || y == this.height - 1) {
-                isUnpassable = true
                 color = "rgb(80, 80, 80)"
+                hasBody = true
             }
             this.tiles[x + "x" + y] = {
-                "isUnpassable": isUnpassable,
+                "hasBody": hasBody,
                 "color": color,
                 "position": {
                     "x": x,
@@ -42,6 +80,14 @@ var World = function() {
             }
         }
     }
+}
+
+World.prototype.getTile = function(position) {
+    position.dx = position.dx || 0
+    position.dy = position.dy || 0
+    var x = Math.floor(position.x + position.dx)
+    var y = Math.floor(position.y + position.dy)
+    return this.tiles[x + "x" + y]
 }
 
 var Assets = {
@@ -54,44 +100,48 @@ var Assets = {
 }
 
 var GameStore = Phlux.createStore({
-    data: {
-        monkeys: {
-            0: new Monkey({
-                "position": {
-                    "x": 1.5,
-                    "y": 1.5
-                },
-                "image": Assets.images["red-monkey"],
-                "input": {
-                    "move north": "<w>",
-                    "move south": "<s>",
-                    "move west": "<a",
-                    "move east": "<d>"
-                }
-            }),
-            1: new Monkey({
-                "position": {
-                    "x": 11.5,
-                    "y": 5.5
-                },
-                "image": Assets.images["blue-monkey"],
-                "input": {
-                    "move north": "<up>",
-                    "move south": "<down>",
-                    "move west": "<left>",
-                    "move east": "<right>"
-                }
-            })
-        },
-        world: new World()
-    },
-    update: function() {
-        for(var key in this.data.monkeys) {
-            var monkey = this.data.monkeys[key]
-            if(Game.input.isDown(monkey.input["move north"])) {
-                monkey.position.x -= 1 * tick
-            }
+    initiateStore: function() {
+        this.data = {
+            monkeys: {
+                0: new Monkey({
+                    "position": {
+                        "x": 1.5,
+                        "y": 1.5
+                    },
+                    "acceleration": 2,
+                    "image": Assets.images["red-monkey"],
+                    "input": {
+                        "move north": "W",
+                        "move south": "S",
+                        "move west": "A",
+                        "move east": "D"
+                    },
+                    "store": this
+                }),
+                1: new Monkey({
+                    "position": {
+                        "x": 11.5,
+                        "y": 5.5
+                    },
+                    "acceleration": 2,
+                    "image": Assets.images["blue-monkey"],
+                    "input": {
+                        "move north": "<up>",
+                        "move south": "<down>",
+                        "move west": "<left>",
+                        "move east": "<right>"
+                    },
+                    "store": this
+                })
+            },
+            world: new World()
         }
+    },
+    update: function(tick) {
+        for(var key in this.data.monkeys) {
+            this.data.monkeys[key].update(tick)
+        }
+        this.trigger()
     }
 })
 

@@ -1,4 +1,4 @@
-var px = 64
+var px = 128
 
 var WorldView = React.createClass({
     render: function() {
