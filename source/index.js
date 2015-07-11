@@ -5,9 +5,12 @@ window.Game = {
     Input: require("keyb")
 }
 
-var GameFrame = require("<scripts>/views/GameFrame")
 var GameStore = require("<scripts>/stores/GameStore")
+
+var CameraView = require("<scripts>/views/CameraView")
+var GameFrameView = require("<scripts>/views/GameFrameView")
 var GameObjectView = require("<scripts>/views/GameObjectView")
+var WorldView = require("<scripts>/views/WorldView")
 
 var Bananabomber = React.createClass({
     mixins: [
@@ -15,9 +18,12 @@ var Bananabomber = React.createClass({
     ],
     render: function() {
         return (
-            <GameFrame aspect-ratio="16x9">
-                {this.renderViews(GameObjectView, this.state.game.monkeys)}
-            </GameFrame>
+            <GameFrameView aspect-ratio="16x9">
+                <CameraView data={this.state.game}>
+                    <WorldView data={this.state.game.world}/>
+                    {this.renderViews(GameObjectView, this.state.game.monkeys)}
+                </CameraView>
+            </GameFrameView>
         )
     },
     renderViews: function(Class, data) {
