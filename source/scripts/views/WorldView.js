@@ -21,7 +21,7 @@ var WorldView = React.createClass({
             var tile = this.props.data.tiles[coords]
             var x = tile.position.x * px
             var y = tile.position.y * px
-            canvas.fillStyle = tile.color
+            canvas.fillStyle = tile.getColor()
             canvas.fillRect(x, y, px, px)
         }
     },

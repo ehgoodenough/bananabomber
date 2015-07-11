@@ -11,7 +11,6 @@ var CameraView = React.createClass({
         var zy = 9 / this.props.data.world.height
         var zoom = Math.min(zx, zy)
         return {
-            "left": 0.25 + "em",
             "position": "absolute",
             "fontSize": zoom + "em"
         }
