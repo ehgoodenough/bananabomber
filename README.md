@@ -1,4 +1,4 @@
-# bananabomber #
+# Bananabomber #
 
 A clone of Melonbomber from Garry's Mod.
 
@@ -14,9 +14,5 @@ A clone of Melonbomber from Garry's Mod.
 	$ gulp
 
 ### To recompile while you code ###
-
-	$ gulp watch
-
-### To host a server while you code ###
 
 	$ gulp server
