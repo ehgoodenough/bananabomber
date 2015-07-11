@@ -22,6 +22,7 @@ var Bananabomber = React.createClass({
                 <WorldView data={this.state.game.world}/>
                 {this.renderViews(GameObjectView, this.state.game.bombs)}
                 {this.renderViews(GameObjectView, this.state.game.monkeys)}
+                {this.renderViews(GameObjectView, this.state.game.explosions)}
             </GameFrameView>
         )
     },
