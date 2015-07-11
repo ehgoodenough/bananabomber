@@ -215,9 +215,11 @@ Monkey.prototype.update = function(tick) {
     if(Game.input.isJustDown(this.input["drop bomb"])) {
         var x = Math.floor(this.position.x)
         var y = Math.floor(this.position.y)
-        Game.data.bombs[x + "x" + y] = new Bomb({
-            position: {"x": x, "y": y}
-        })
+        if(Game.data.bombs[x + "x" + y] == null) {
+            Game.data.bombs[x + "x" + y] = new Bomb({
+                position: {"x": x, "y": y}
+            })
+        }
     }
 }
 
@@ -260,18 +262,39 @@ var Bomb = function(protobomb) {
     
     this.width = 0.8
     this.height = 0.8
+    
+    this.fuse = 3
 }
 
 Bomb.prototype.getStyle = function() {
     return {
         "position": "absolute",
         "borderRadius": "999%",
-        "backgroundColor": "#222",
+        "backgroundColor": "rgb(" + 255 + ", 0, 0)",
         "width": this.width + "em",
         "height": this.height + "em",
         "left": this.position.x - (this.width / 2) + "em",
         "top": this.position.y - (this.height / 2) + "em",
     }
+}
+
+Bomb.prototype.update = function(tick) {
+    this.fuse -= tick
+    if(this.fuse <= 0) {
+        var x = Math.floor(this.position.x)
+        var y = Math.floor(this.position.y)
+        delete Game.data.bombs[x + "x" + y]
+        this.explode({
+            "-x": 1,
+            "-y": 1,
+            "+x": 1,
+            "+y": 1
+        })
+    }
+}
+
+Bomb.prototype.explode = function(explosion) {
+    console.log(explosion)
 }
 
 var GameStore = Phlux.createStore({
@@ -305,7 +328,12 @@ var GameStore = Phlux.createStore({
     },
     update: function(tick) {
         for(var key in this.data.monkeys) {
-            this.data.monkeys[key].update(tick)
+            var monkey = this.data.monkeys[key]
+            monkey.update(tick)
+        }
+        for(var key in this.data.bombs) {
+            var bomb = this.data.bombs[key]
+            bomb.update(tick)
         }
         this.trigger()
     }
