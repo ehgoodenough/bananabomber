@@ -37,7 +37,7 @@ Monkey.prototype.getStyle = function() {
         "backgroundSize": "99% 99%",
         "backgroundPosition": "50% 50%",
         "backgroundRepeat": "no-repeat",
-        "backgroundImage": "url(" + this.image + ")",
+        "backgroundImage": "url(" + this.images["monkey"] + ")",
         "backgroundColor": this.isDead ? "#111" : null,
     }
 }

@@ -14,7 +14,10 @@ var GameStore = Phlux.createStore({
                         "x": 1.5,
                         "y": 1.5
                     },
-                    "image": Assets.images["red monkey"],
+                    "images": {
+                        "monkey": Assets.images["red monkey"],
+                        "ghost monkey": Assets.images["red ghost monkey"],
+                    },
                     "input": Inputs[0]
                 }),
                 1: new Monkey({
@@ -22,7 +25,10 @@ var GameStore = Phlux.createStore({
                         "x": 17.5,
                         "y": 1.5
                     },
-                    "image": Assets.images["blue monkey"],
+                    "images": {
+                        "monkey": Assets.images["blue monkey"],
+                        "ghost monkey": Assets.images["blue ghost monkey"],
+                    },
                     "input": Inputs[1]
                 }),
                 2: new Monkey({
@@ -30,7 +36,10 @@ var GameStore = Phlux.createStore({
                         "x": 1.5,
                         "y": 11.5
                     },
-                    "image": Assets.images["green monkey"],
+                    "images": {
+                        "monkey": Assets.images["green monkey"],
+                        "ghost monkey": Assets.images["green ghost monkey"],
+                    },
                     "input": Inputs[2]
                 }),
                 3: new Monkey({
@@ -38,7 +47,10 @@ var GameStore = Phlux.createStore({
                         "x": 17.5,
                         "y": 11.5
                     },
-                    "image": Assets.images["purple monkey"],
+                    "images": {
+                        "monkey": Assets.images["purple monkey"],
+                        "ghost monkey": Assets.images["purple ghost monkey"],
+                    },
                     "input": Inputs[3]
                 })
             },

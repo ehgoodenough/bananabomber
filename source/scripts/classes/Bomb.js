@@ -16,21 +16,34 @@ var Bomb = function(protobomb) {
     this.intensity = protobomb.intensity || 1
 }
 
+Bomb.prototype.getWidth = function() {
+    return Math.abs(Math.sin(this.fuse * 3)) * 0.6 + 0.2
+}
+
+Bomb.prototype.getHeight = function() {
+    return Math.abs(Math.cos(this.fuse * 3)) * 0.6 + 0.2
+}
+
+Bomb.prototype.getColor = function() {
+    var r = Math.floor(255 / Math.floor(this.fuse + 1))
+    return "rgb(" + r + ", 0, 0)"
+}
+
 Bomb.prototype.getStyle = function() {
     return {
         "position": "absolute",
         "borderRadius": "999%",
-        "backgroundColor": "#111",
-        "width": this.width + "em",
-        "height": this.height + "em",
-        "left": this.position.x - (this.width / 2) + "em",
-        "top": this.position.y - (this.height / 2) + "em",
+        "width": this.getWidth() + "em",
+        "height": this.getHeight() + "em",
+        "backgroundColor": this.getColor(),
+        "left": this.position.x - (this.getWidth() / 2) + "em",
+        "top": this.position.y - (this.getHeight() / 2) + "em",
     }
 }
 
 Bomb.prototype.update = function(tick) {
     this.fuse -= tick
-    if(this.fuse <= 0) {
+    if(this.fuse <= -1) {
         new Explosion({
             "position": {
                 "x": Math.floor(this.position.x),
