@@ -1,54 +1,40 @@
-var Explosion = require("<scripts>/classes/Explosion")
-
 var Bomb = function(protobomb) {
     this.position = protobomb.position || {}
-    this.position.x = protobomb.position.x + 0.5 || 1.5
-    this.position.y = protobomb.position.y + 0.5 || 1.5
+    this.position.x = protobomb.position.x + 0.5 || 0.5
+    this.position.y = protobomb.position.y + 0.5 || 0.5
     
-    this.type = protobomb.type || "regular",
-    this.monkey = protobomb.monkey || null
-    
-    this.width = 0.8
-    this.height = 0.8
-    
-    this.fuse = protobomb.duration || 3
+    this.type = protobomb.type || "regular"
+    this.monkey = protobomb.monkey || undefined
+    this.maxfuse = this.fuse = protobomb.fuse || 3
     
     this.intensity = protobomb.intensity || 1
 }
 
-Bomb.prototype.getWidth = function() {
-    return Math.abs(Math.sin(this.fuse * 3)) * 0.6 + 0.2
-}
-
-Bomb.prototype.getHeight = function() {
-    return Math.abs(Math.cos(this.fuse * 3)) * 0.6 + 0.2
-}
-
-Bomb.prototype.getColor = function() {
-    var r = Math.floor(255 / Math.floor(this.fuse + 1))
-    return "rgb(" + r + ", 0, 0)"
-}
-
 Bomb.prototype.getStyle = function() {
+    var red = Math.floor(255 * (1 - (this.fuse / this.maxfuse)))
+    var width = Math.abs(Math.sin(Math.pow(this.fuse, 2))) * 0.4 + 0.5
+    var height = Math.abs(Math.cos(Math.pow(this.fuse, 3))) * 0.4 + 0.5
+    var x = this.position.x - (width / 2)
+    var y = this.position.y - (height / 2)
+    var z = Math.round(this.position.y * 100)
     return {
+        "zIndex": z,
+        "top": y + "em",
+        "left": x + "em",
+        "width": width + "em",
+        "height": height + "em",
+        "backgroundColor": "rgb(" + red + ", 0, 0)",
+        "borderRadius": "99999%",
         "position": "absolute",
-        "borderRadius": "999%",
-        "width": this.getWidth() + "em",
-        "height": this.getHeight() + "em",
-        "backgroundColor": this.getColor(),
-        "left": this.position.x - (this.getWidth() / 2) + "em",
-        "top": this.position.y - (this.getHeight() / 2) + "em",
     }
 }
 
 Bomb.prototype.update = function(tick) {
     this.fuse -= tick
     if(this.fuse <= -1) {
-        new Explosion({
-            "position": {
-                "x": Math.floor(this.position.x),
-                "y": Math.floor(this.position.y)
-            }
+        var explosion = new Explosion({
+            "intensity": this.intensity,
+            "position": this.position,
         })
     }
 }
@@ -58,8 +44,8 @@ Bomb.prototype.explode = function() {
     var y = Math.floor(this.position.y)
     delete Game.data.bombs[x + "x" + y]
     
-    if(!!this.monkey) {
-        this.monkey.bombs.push(this.type)
+    if(this.monkey != undefined) {
+        this.monkey.bombqueue.push(this.type)
     }
 }
 

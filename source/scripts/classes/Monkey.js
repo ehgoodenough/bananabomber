@@ -21,41 +21,55 @@ var Monkey = function(protomonkey) {
     
     this.status = "alive"
     
-    this.bombs = [
+    this.bombqueue = [
         "regular",
         "regular"
     ]
 }
 
 Monkey.prototype.getStyle = function() {
+    var opacity = 1
+    var image = this.images.regular
+    var x = this.position.x - this.anchor.x + "em"
+    var y = this.position.y - this.anchor.y + "em"
+    var z = Math.round((this.position.y - this.anchor.y) * 100)
+    if(this.isDead) {
+        var z = 9999999
+        var opacity = 0.75
+        var image = this.images.ghost
+    }
+    var transform = "scaleX(1)"
+    if(this.direction == "east") {
+        transform = "scaleX(-1)"
+    }
     return {
-        "width": 1 + "em",
-        "height": 1 + "em",
+        "top": y,
+        "left": x,
+        "zIndex": z,
+        "width": "1em",
+        "height": "1em",
+        "opacity": opacity,
+        "transform": transform,
         "position": "absolute",
-        "top": this.position.y - this.anchor.y + "em",
-        "left": this.position.x - this.anchor.x + "em",
         "backgroundSize": "99% 99%",
         "backgroundPosition": "50% 50%",
         "backgroundRepeat": "no-repeat",
-        "backgroundImage": "url(" + this.images["monkey"] + ")",
-        "backgroundColor": this.isDead ? "#111" : null,
+        "backgroundImage": "url(" + image + ")"
     }
 }
 
 Monkey.prototype.update = function(tick) {
     // keyboard input
-    if(Game.input.isDown(this.input["move north"])) {
-        this.velocity.y -= this.acceleration * tick
+    if(Game.input.isDown(this.inputs["move north"])) {
         this.velocity.y = -this.velocity.maximum
-    } if(Game.input.isDown(this.input["move south"])) {
-        this.velocity.y += this.acceleration * tick
+    } if(Game.input.isDown(this.inputs["move south"])) {
         this.velocity.y = +this.velocity.maximum
-    } if(Game.input.isDown(this.input["move west"])) {
-        this.velocity.x -= this.acceleration * tick
+    } if(Game.input.isDown(this.inputs["move west"])) {
         this.velocity.x = -this.velocity.maximum
-    } if(Game.input.isDown(this.input["move east"])) {
-        this.velocity.x += this.acceleration * tick
+        this.direction = "west"
+    } if(Game.input.isDown(this.inputs["move east"])) {
         this.velocity.x = +this.velocity.maximum
+        this.direction = "east"
     }
     
     // maximum velocity
@@ -70,41 +84,44 @@ Monkey.prototype.update = function(tick) {
     }
     
     // collision with world
-    var positions = this.getNewPositions({
-        "y": this.velocity.y
-    })
-    for(var coords in positions) {
-        var position = positions[coords]
-        var bomb = Game.data.bombs[coords]
-        var tile = Game.data.world.tiles[coords]
-        if(!!tile && !!tile.wall || !!bomb) {
-            if(this.velocity.y > 0) {
-                this.position.y = tile.position.y
-                this.position.y -= this.girth + 0.01
-                this.velocity.y = 0
-            } else if(this.velocity.y < 0) {
-                this.position.y = tile.position.y + 1
-                this.position.y += this.girth + 0.01
-                this.velocity.y = 0
+    if(!this.isDead) {
+        var positions = this.getNewPositions({
+            "x": this.velocity.x
+        })
+        for(var coords in positions) {
+            var position = positions[coords]
+            var bomb = Game.data.bombs[coords]
+            var tile = Game.data.world.tiles[coords]
+            if(!!tile && !!tile.wall || !!bomb) {
+                if(this.velocity.x > 0) {
+                    this.position.x = tile.position.x
+                    this.position.x -= this.girth + 0.01
+                    this.velocity.x = 0
+                } else if(this.velocity.x < 0) {
+                    this.position.x = tile.position.x + 1
+                    this.position.x += this.girth + 0.01
+                    this.velocity.x = 0
+                }
             }
         }
-    }
-    var positions = this.getNewPositions({
-        "x": this.velocity.x
-    })
-    for(var coords in positions) {
-        var position = positions[coords]
-        var bomb = Game.data.bombs[coords]
-        var tile = Game.data.world.tiles[coords]
-        if(!!tile && !!tile.wall || !!bomb) {
-            if(this.velocity.x > 0) {
-                this.position.x = tile.position.x
-                this.position.x -= this.girth + 0.01
-                this.velocity.x = 0
-            } else if(this.velocity.x < 0) {
-                this.position.x = tile.position.x + 1
-                this.position.x += this.girth + 0.01
-                this.velocity.x = 0
+        var positions = this.getNewPositions({
+            "x": this.velocity.x,
+            "y": this.velocity.y
+        })
+        for(var coords in positions) {
+            var position = positions[coords]
+            var bomb = Game.data.bombs[coords]
+            var tile = Game.data.world.tiles[coords]
+            if(!!tile && !!tile.wall || !!bomb) {
+                if(this.velocity.y > 0) {
+                    this.position.y = tile.position.y
+                    this.position.y -= this.girth + 0.01
+                    this.velocity.y = 0
+                } else if(this.velocity.y < 0) {
+                    this.position.y = tile.position.y + 1
+                    this.position.y += this.girth + 0.01
+                    this.velocity.y = 0
+                }
             }
         }
     }
@@ -114,38 +131,44 @@ Monkey.prototype.update = function(tick) {
     this.position.y += this.velocity.y
     
     // deceleration
+    var friction = this.friction
+    if(this.isDead) {
+        friction *= 10000
+    }
     if(this.velocity.y < 0) {
-        this.velocity.y *= Math.pow(this.friction, tick)
+        this.velocity.y *= Math.pow(friction, tick)
         if(this.velocity.y > -this.velocity.minimum) {
             this.velocity.y = 0
         }
     } else if(this.velocity.y > 0) {
-        this.velocity.y *= Math.pow(this.friction, tick)
+        this.velocity.y *= Math.pow(friction, tick)
         if(this.velocity.y < +this.velocity.minimum) {
             this.velocity.y = 0
         }
     } if(this.velocity.x < 0) {
-        this.velocity.x *= Math.pow(this.friction, tick)
+        this.velocity.x *= Math.pow(friction, tick)
         if(this.velocity.x > -this.velocity.minimum) {
             this.velocity.x = 0
         }
     } else if(this.velocity.x > 0) {
-        this.velocity.x *= Math.pow(this.friction, tick)
+        this.velocity.x *= Math.pow(friction, tick)
         if(this.velocity.x < +this.velocity.minimum) {
             this.velocity.x = 0
         }
     }
     
-    if(Game.input.isJustDown(this.input["drop bomb"])) {
-        if(this.bombs.length > 0) {
-            var x = Math.floor(this.position.x)
-            var y = Math.floor(this.position.y)
-            if(Game.data.bombs[x + "x" + y] == null) {
-                Game.data.bombs[x + "x" + y] = new Bomb({
-                    position: {"x": x, "y": y},
-                    type: this.bombs.pop(),
-                    monkey: this,
-                })
+    if(!this.isDead) {
+        if(Game.input.isJustDown(this.inputs["drop bomb"])) {
+            if(this.bombqueue.length > 0) {
+                var x = Math.floor(this.position.x)
+                var y = Math.floor(this.position.y)
+                if(Game.data.bombs[x + "x" + y] == null) {
+                    Game.data.bombs[x + "x" + y] = new Bomb({
+                        position: {"x": x, "y": y},
+                        type: this.bombqueue.pop(),
+                        monkey: this,
+                    })
+                }
             }
         }
     }

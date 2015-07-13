@@ -1,16 +1,20 @@
 var Explosion = function(protoexplosion) {
-    protoexplosion.position = protoexplosion.position || {}
-    protoexplosion.direction = protoexplosion.direction || {}
     
-    this.position = {
-        "x": protoexplosion.position.x || 0,
-        "y": protoexplosion.position.y || 0
-    }
-    this.direction = {
-        "-x": protoexplosion.direction["-x"] || 0,
-        "+x": protoexplosion.direction["+x"] || 0,
-        "-y": protoexplosion.direction["-y"] || 0,
-        "+y": protoexplosion.direction["+y"] || 0
+    this.position = {}
+    this.position.x = protoexplosion.position.x || 0.5
+    this.position.y = protoexplosion.position.y || 0.5
+    
+    this.intensity = {}
+    if(typeof protoexplosion.intensity == "number") {
+        this.intensity.north = protoexplosion.intensity
+        this.intensity.south = protoexplosion.intensity
+        this.intensity.west = protoexplosion.intensity
+        this.intensity.east = protoexplosion.intensity
+    } else if(typeof protoexplosion.intensity == "object") {
+        this.intensity.north = protoexplosion.intensity.north || 0
+        this.intensity.south = protoexplosion.intensity.south || 0
+        this.intensity.west = protoexplosion.intensity.west || 0
+        this.intensity.east = protoexplosion.intensity.east || 0
     }
     
     var x = Math.floor(this.position.x)
@@ -20,16 +24,16 @@ var Explosion = function(protoexplosion) {
     if(Game.data.world.tiles[xy]
     && Game.data.world.tiles[xy].wall) {
         return
+    } else {
+        Game.data.explosions[xy] = this
     }
-    
-    Game.data.explosions[xy] = this
     
     if(!!Game.data.bombs[xy]) {
         var bomb = Game.data.bombs[xy]
-        this.direction["-x"] = Math.max(bomb.intensity, this.direction["-x"])
-        this.direction["+x"] = Math.max(bomb.intensity, this.direction["+x"])
-        this.direction["-y"] = Math.max(bomb.intensity, this.direction["-y"])
-        this.direction["+y"] = Math.max(bomb.intensity, this.direction["+y"])
+        this.intensity.north = Math.max(bomb.intensity, this.intensity.north)
+        this.intensity.south = Math.max(bomb.intensity, this.intensity.south)
+        this.intensity.west = Math.max(bomb.intensity, this.intensity.west)
+        this.intensity.east = Math.max(bomb.intensity, this.intensity.east)
         bomb.explode()
     }
     
@@ -40,45 +44,48 @@ var Explosion = function(protoexplosion) {
         }
     }
     
-    if(!!this.direction["-x"]) {
+    if(!!this.intensity.north) {
         var explosion = new Explosion({
+            "intensity": {"north": this.intensity.north - 1},
             "position": {"x": this.position.x - 1, "y": this.position.y},
-            "direction": {"-x": this.direction["-x"] - 1}
         })
-    } if(!!this.direction["+x"]) {
+    } if(!!this.intensity.south) {
         var explosion = new Explosion({
+            "intensity": {"south": this.intensity.south - 1},
             "position": {"x": this.position.x + 1, "y": this.position.y},
-            "direction": {"+x": this.direction["+x"] - 1}
         })
-    } if(!!this.direction["-y"]) {
+    } if(!!this.intensity.west) {
         var explosion = new Explosion({
+            "intensity": {"west": this.intensity.west - 1},
             "position": {"x": this.position.x, "y": this.position.y - 1},
-            "direction": {"-y": this.direction["-y"] - 1}
         })
-    } if(!!this.direction["+y"]) {
+    } if(!!this.intensity.east) {
         var explosion = new Explosion({
+            "intensity": {"east": this.intensity.east - 1},
             "position": {"x": this.position.x, "y": this.position.y + 1},
-            "direction": {"+y": this.direction["+y"] - 1}
         })
     }
     
-    this.burntime = 0.5
+    this.flash = 0.25
 }
 
 Explosion.prototype.getStyle = function() {
+    var x = Math.floor(this.position.x)
+    var y = Math.floor(this.position.y)
     return {
+        zIndex: y,
         width: "1em",
         height: "1em",
+        top: y + "em",
+        left: x + "em",
         position: "absolute",
-        top: this.position.y + "em",
-        left: this.position.x + "em",
         backgroundColor: "#C00",
     }
 }
 
 Explosion.prototype.update = function(tick) {
-    this.burntime -= tick
-    if(this.burntime <= 0) {
+    this.flash -= tick
+    if(this.flash <= 0) {
         var x = Math.floor(this.position.x)
         var y = Math.floor(this.position.y)
         delete Game.data.explosions[x + "x" + y]
