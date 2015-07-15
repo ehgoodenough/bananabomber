@@ -23,6 +23,12 @@ var Monkey = function(protomonkey) {
     
     this.bombqueue = [
         "regular",
+        "regular",
+        "regular",
+        "regular",
+        "regular",
+        "regular",
+        "regular",
         "regular"
     ]
 }

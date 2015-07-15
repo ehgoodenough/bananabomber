@@ -65,14 +65,30 @@ var Explosion = function(protoexplosion) {
         })
     }
     
-    this.flash = 0.25
+    this.flash = 0.1
+    
+    
+    
+    var maxspeed = 0.05
+    for(var i = 0; i < 8; i++) {
+        new ExplosionSmoke({
+            "position": {
+                "x": this.position.x - (Math.random() - 0.5),
+                "y": this.position.y - (Math.random() - 0.5),
+            },
+            "intensity": {
+                "x": Math.random() * maxspeed * (Math.random() < 0.5 ? -1 : +1),
+                "y": Math.random() * maxspeed * (Math.random() < 0.5 ? -1 : +1),
+            }
+        })
+    }
 }
 
 Explosion.prototype.getStyle = function() {
     var x = Math.floor(this.position.x)
     var y = Math.floor(this.position.y)
     return {
-        zIndex: y,
+        zIndex: y * 100,
         width: "1em",
         height: "1em",
         top: y + "em",
@@ -88,49 +104,6 @@ Explosion.prototype.update = function(tick) {
         var x = Math.floor(this.position.x)
         var y = Math.floor(this.position.y)
         delete Game.data.explosions[x + "x" + y]
-        
-        var speed = 0.05
-        
-        new ExplosionSmoke({
-            "position": {
-                "x": this.position.x - 0.25,
-                "y": this.position.y - 0.25,
-            },
-            "intensity": {
-                "x": -speed,
-                "y": -speed,
-            }
-        })
-        new ExplosionSmoke({
-            "position": {
-                "x": this.position.x + 0.25,
-                "y": this.position.y - 0.25,
-            },
-            "intensity": {
-                "x": +speed,
-                "y": -speed,
-            }
-        })
-        new ExplosionSmoke({
-            "position": {
-                "x": this.position.x - 0.25,
-                "y": this.position.y + 0.25,
-            },
-            "intensity": {
-                "x": -speed,
-                "y": +speed,
-            }
-        })
-        new ExplosionSmoke({
-            "position": {
-                "x": this.position.x + 0.25,
-                "y": this.position.y + 0.25,
-            },
-            "intensity": {
-                "x": +speed,
-                "y": +speed,
-            }
-        })
     }
 }
 
@@ -170,7 +143,6 @@ ExplosionSmoke.prototype.getStyle = function() {
         position: "absolute",
         width: width + "em",
         height: height + "em",
-        zIndex: (this.position.y) * 100,
         left: this.position.x - (width / 2) + "em",
         top: this.position.y - (height / 2) + "em",
         backgroundColor: "#888",
