@@ -16,7 +16,7 @@ Bomb.prototype.getStyle = function() {
     
     var red = Math.floor(255 * ease)
     var width = Math.abs(Math.sin(Math.pow(this.fuse, 2.5))) * 0.4 + 0.5
-    var height = Math.abs(Math.cos(Math.pow(this.fuse, 2.45))) * 0.4 + 0.5
+    var height = Math.abs(Math.cos(Math.pow(this.fuse, 2.5))) * 0.4 + 0.5
     var x = this.position.x - (width / 2)
     var y = this.position.y - (height / 2)
     var z = Math.round((this.position.y - 0.5) * 100)
@@ -35,6 +35,7 @@ Bomb.prototype.getStyle = function() {
 Bomb.prototype.update = function(tick) {
     this.fuse -= tick
     if(this.fuse <= 0) {
+        Game.data.camera.shake += 0.5
         var explosion = new Explosion({
             "intensity": this.intensity,
             "position": this.position,

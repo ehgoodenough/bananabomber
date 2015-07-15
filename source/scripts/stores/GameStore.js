@@ -2,6 +2,7 @@ window.World = require("<scripts>/classes/World")
 window.Monkey = require("<scripts>/classes/Monkey")
 window.Bomb = require("<scripts>/classes/Bomb")
 window.Explosion = require("<scripts>/classes/Explosion")
+window.Camera = require("<scripts>/classes/Camera")
 
 var Assets = require("<scripts>/data/Assets")
 var Inputs = require("<scripts>/data/Inputs")
@@ -45,6 +46,7 @@ window.Game.data = {
     bombs: {},
     explosions: {},
     explosionsmoke: {},
+    camera: new Camera()
 }
 
 window.GameStore = Phlux.createStore({
@@ -68,6 +70,8 @@ window.GameStore = Phlux.createStore({
             var explosionsmoke = this.data.explosionsmoke[key]
             explosionsmoke.update(tick)
         }
+        
+        this.data.camera.update(tick)
         this.trigger()
     }
 })
