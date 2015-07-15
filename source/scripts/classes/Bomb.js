@@ -11,12 +11,15 @@ var Bomb = function(protobomb) {
 }
 
 Bomb.prototype.getStyle = function() {
-    var red = Math.floor(255 * (1 - (this.fuse / this.maxfuse)))
-    var width = Math.abs(Math.sin(Math.pow(this.fuse, 2))) * 0.4 + 0.5
-    var height = Math.abs(Math.cos(Math.pow(this.fuse, 3))) * 0.4 + 0.5
+    var easeInOutQuint = function (t) { return t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t }
+    var ease = easeInOutQuint(1 - (this.fuse / this.maxfuse))
+    
+    var red = Math.floor(255 * ease)
+    var width = Math.abs(Math.sin(Math.pow(this.fuse, 2.5))) * 0.4 + 0.5
+    var height = Math.abs(Math.cos(Math.pow(this.fuse, 2.45))) * 0.4 + 0.5
     var x = this.position.x - (width / 2)
     var y = this.position.y - (height / 2)
-    var z = Math.round(this.position.y * 100)
+    var z = Math.round((this.position.y - 0.5) * 100)
     return {
         "zIndex": z,
         "top": y + "em",
@@ -31,7 +34,7 @@ Bomb.prototype.getStyle = function() {
 
 Bomb.prototype.update = function(tick) {
     this.fuse -= tick
-    if(this.fuse <= -1) {
+    if(this.fuse <= 0) {
         var explosion = new Explosion({
             "intensity": this.intensity,
             "position": this.position,

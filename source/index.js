@@ -7,7 +7,6 @@ window.Game = {
 
 var GameStore = require("<scripts>/stores/GameStore")
 
-var CameraView = require("<scripts>/views/CameraView")
 var GameFrameView = require("<scripts>/views/GameFrameView")
 var GameObjectView = require("<scripts>/views/GameObjectView")
 var WorldView = require("<scripts>/views/WorldView")

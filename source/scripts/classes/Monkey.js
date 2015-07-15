@@ -91,14 +91,14 @@ Monkey.prototype.update = function(tick) {
         for(var coords in positions) {
             var position = positions[coords]
             var bomb = Game.data.bombs[coords]
-            var tile = Game.data.world.tiles[coords]
-            if(!!tile && !!tile.wall || !!bomb) {
+            var wall = Game.data.world.walls[coords]
+            if(!!wall || !!bomb) {
                 if(this.velocity.x > 0) {
-                    this.position.x = tile.position.x
+                    this.position.x = position.x
                     this.position.x -= this.girth + 0.01
                     this.velocity.x = 0
                 } else if(this.velocity.x < 0) {
-                    this.position.x = tile.position.x + 1
+                    this.position.x = position.x + 1
                     this.position.x += this.girth + 0.01
                     this.velocity.x = 0
                 }
@@ -111,14 +111,14 @@ Monkey.prototype.update = function(tick) {
         for(var coords in positions) {
             var position = positions[coords]
             var bomb = Game.data.bombs[coords]
-            var tile = Game.data.world.tiles[coords]
-            if(!!tile && !!tile.wall || !!bomb) {
+            var wall = Game.data.world.walls[coords]
+            if(!!wall || !!bomb) {
                 if(this.velocity.y > 0) {
-                    this.position.y = tile.position.y
+                    this.position.y = position.y
                     this.position.y -= this.girth + 0.01
                     this.velocity.y = 0
                 } else if(this.velocity.y < 0) {
-                    this.position.y = tile.position.y + 1
+                    this.position.y = position.y + 1
                     this.position.y += this.girth + 0.01
                     this.velocity.y = 0
                 }

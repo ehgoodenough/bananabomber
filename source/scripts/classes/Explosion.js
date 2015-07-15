@@ -21,8 +21,7 @@ var Explosion = function(protoexplosion) {
     var y = Math.floor(this.position.y)
     var xy = x + "x" + y
     
-    if(Game.data.world.tiles[xy]
-    && Game.data.world.tiles[xy].wall) {
+    if(!!Game.data.world.walls[xy]) {
         return
     } else {
         Game.data.explosions[xy] = this

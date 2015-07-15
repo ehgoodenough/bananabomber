@@ -3,39 +3,47 @@ var px = 128
 var WorldView = React.createClass({
     render: function() {
         return (
-            <canvas ref="canvas"
-                style={this.renderStyles()}
-                width={this.props.data.width * px}
-                height={this.props.data.height * px}/>
+            <div style={this.renderStyle()}>
+                {this.renderWalls()}
+            </div>
         )
     },
-    renderStyles: function() {
+    renderStyle: function() {
+        var world = this.props.data
         return {
-            width: this.props.data.width + "em",
-            height: this.props.data.height + "em"
+            width: world.width + "em",
+            height: world.height + "em",
+            backgroundColor: world.color
         }
     },
-    renderTiles: function() {
-        var canvas = this.getCanvas()
-        for(var coords in this.props.data.tiles) {
-            var tile = this.props.data.tiles[coords]
-            var x = tile.position.x * px
-            var y = tile.position.y * px
-            canvas.fillStyle = tile.getColor()
-            canvas.fillRect(x, y, px, px)
+    renderWalls: function() {
+        var renderings = new Array()
+        for(var coords in this.props.data.walls) {
+            var wall = this.props.data.walls[coords]
+            renderings.push(
+                <WorldTileView key={coords} data={wall}/>
+            )
         }
+        return renderings
+    }
+})
+
+var WorldTileView = React.createClass({
+    render: function() {
+        return (
+            <div style={this.renderStyle()}/>
+        )
     },
-    componentDidMount: function() {
-        this.renderTiles()
-    },
-    shouldComponentUpdate: function(props) {
-        return props.data.tiles != this.props.data.tiles
-    },
-    componentDidUpdate: function() {
-        this.renderTiles()
-    },
-    getCanvas: function() {
-        return this.refs.canvas.getDOMNode().getContext("2d")
+    renderStyle: function() {
+        var wall = this.props.data
+        return {
+            width: "1em",
+            height: "1em",
+            position: "absolute",
+            top: wall.position.y + "em",
+            left: wall.position.x + "em",
+            backgroundColor: wall.color,
+        }
     }
 })
 
