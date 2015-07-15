@@ -44,6 +44,7 @@ window.Game.data = {
     world: new World(),
     bombs: {},
     explosions: {},
+    explosionsmoke: {},
 }
 
 window.GameStore = Phlux.createStore({
@@ -62,6 +63,10 @@ window.GameStore = Phlux.createStore({
         for(var key in this.data.explosions) {
             var explosion = this.data.explosions[key]
             explosion.update(tick)
+        }
+        for(var key in this.data.explosionsmoke) {
+            var explosionsmoke = this.data.explosionsmoke[key]
+            explosionsmoke.update(tick)
         }
         this.trigger()
     }

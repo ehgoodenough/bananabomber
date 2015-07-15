@@ -4,19 +4,6 @@ var Explosion = function(protoexplosion) {
     this.position.x = protoexplosion.position.x || 0.5
     this.position.y = protoexplosion.position.y || 0.5
     
-    this.intensity = {}
-    if(typeof protoexplosion.intensity == "number") {
-        this.intensity.north = protoexplosion.intensity
-        this.intensity.south = protoexplosion.intensity
-        this.intensity.west = protoexplosion.intensity
-        this.intensity.east = protoexplosion.intensity
-    } else if(typeof protoexplosion.intensity == "object") {
-        this.intensity.north = protoexplosion.intensity.north || 0
-        this.intensity.south = protoexplosion.intensity.south || 0
-        this.intensity.west = protoexplosion.intensity.west || 0
-        this.intensity.east = protoexplosion.intensity.east || 0
-    }
-    
     var x = Math.floor(this.position.x)
     var y = Math.floor(this.position.y)
     var xy = x + "x" + y
@@ -25,6 +12,19 @@ var Explosion = function(protoexplosion) {
         return
     } else {
         Game.data.explosions[xy] = this
+    }
+    
+    this.intensity = {}
+    if(typeof protoexplosion.intensity == "number") {
+        this.intensity.north = protoexplosion.intensity || 0
+        this.intensity.south = protoexplosion.intensity || 0
+        this.intensity.west = protoexplosion.intensity || 0
+        this.intensity.east = protoexplosion.intensity || 0
+    } else if(typeof protoexplosion.intensity == "object") {
+        this.intensity.north = protoexplosion.intensity.north || 0
+        this.intensity.south = protoexplosion.intensity.south || 0
+        this.intensity.west = protoexplosion.intensity.west || 0
+        this.intensity.east = protoexplosion.intensity.east || 0
     }
     
     if(!!Game.data.bombs[xy]) {
@@ -88,6 +88,93 @@ Explosion.prototype.update = function(tick) {
         var x = Math.floor(this.position.x)
         var y = Math.floor(this.position.y)
         delete Game.data.explosions[x + "x" + y]
+        
+        var speed = 0.05
+        
+        new ExplosionSmoke({
+            "position": {
+                "x": this.position.x - 0.25,
+                "y": this.position.y - 0.25,
+            },
+            "intensity": {
+                "x": -speed,
+                "y": -speed,
+            }
+        })
+        new ExplosionSmoke({
+            "position": {
+                "x": this.position.x + 0.25,
+                "y": this.position.y - 0.25,
+            },
+            "intensity": {
+                "x": +speed,
+                "y": -speed,
+            }
+        })
+        new ExplosionSmoke({
+            "position": {
+                "x": this.position.x - 0.25,
+                "y": this.position.y + 0.25,
+            },
+            "intensity": {
+                "x": -speed,
+                "y": +speed,
+            }
+        })
+        new ExplosionSmoke({
+            "position": {
+                "x": this.position.x + 0.25,
+                "y": this.position.y + 0.25,
+            },
+            "intensity": {
+                "x": +speed,
+                "y": +speed,
+            }
+        })
+    }
+}
+
+var ExplosionSmoke = function(protosmoke) {
+    this.position = {}
+    this.position.x = protosmoke.position.x || 0.5
+    this.position.y = protosmoke.position.y || 0.5
+    
+    this.intensity = {}
+    this.intensity.x = protosmoke.intensity.x || 0.5
+    this.intensity.y = protosmoke.intensity.y || 0.5
+    
+    this.width = protosmoke.width || 0.5
+    this.height = protosmoke.height || 0.5
+    
+    this.key = ShortID.generate()
+    Game.data.explosionsmoke[this.key] = this
+    
+    this.time = this.maxtime = 1.5 * 2
+}
+
+ExplosionSmoke.prototype.update = function(tick) {
+    this.position.x += this.intensity.x * tick
+    this.position.y += this.intensity.y * tick
+    this.time -= tick
+    if(this.time <= 0) {
+        delete Game.data.explosionsmoke[this.key]
+    }
+}
+
+ExplosionSmoke.prototype.getStyle = function() {
+    var MAX_OPACITY = 0.8
+    var opacity = MAX_OPACITY * (this.time / this.maxtime)
+    var width = this.width
+    var height = this.height
+    return {
+        position: "absolute",
+        width: width + "em",
+        height: height + "em",
+        zIndex: (this.position.y) * 100,
+        left: this.position.x - (width / 2) + "em",
+        top: this.position.y - (height / 2) + "em",
+        backgroundColor: "#888",
+        opacity: opacity
     }
 }
 

@@ -1,5 +1,6 @@
 window.React = require("react")
 window.Phlux = require("phlux")
+window.ShortID = require("shortid")
 window.Game = {
     loop: require("tickly").loop,
     input: require("keyb")
@@ -21,6 +22,7 @@ var Bananabomber = React.createClass({
                 <WorldView data={this.state.game.world}/>
                 {this.renderViews(GameObjectView, this.state.game.bombs)}
                 {this.renderViews(GameObjectView, this.state.game.monkeys)}
+                {this.renderViews(GameObjectView, this.state.game.explosionsmoke)}
                 {this.renderViews(GameObjectView, this.state.game.explosions)}
             </GameFrameView>
         )
