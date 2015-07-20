@@ -35,7 +35,7 @@ Bomb.prototype.getStyle = function() {
 Bomb.prototype.update = function(tick) {
     this.fuse -= tick
     if(this.fuse <= 0) {
-        Game.data.camera.shake += 0.5
+        Game.camera.shake += 0.5
         var explosion = new Explosion({
             "intensity": this.intensity,
             "position": this.position,
@@ -46,7 +46,7 @@ Bomb.prototype.update = function(tick) {
 Bomb.prototype.explode = function() {
     var x = Math.floor(this.position.x)
     var y = Math.floor(this.position.y)
-    delete Game.data.bombs[x + "x" + y]
+    delete Game.bombs[x + "x" + y]
     
     if(this.monkey != undefined) {
         this.monkey.bombqueue.push(this.type)

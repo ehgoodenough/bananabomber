@@ -8,10 +8,10 @@ var Explosion = function(protoexplosion) {
     var y = Math.floor(this.position.y)
     var xy = x + "x" + y
     
-    if(!!Game.data.world.walls[xy]) {
+    if(!!Game.world.walls[xy]) {
         return
     } else {
-        Game.data.explosions[xy] = this
+        Game.explosions[xy] = this
     }
     
     this.intensity = {}
@@ -27,8 +27,8 @@ var Explosion = function(protoexplosion) {
         this.intensity.east = protoexplosion.intensity.east || 0
     }
     
-    if(!!Game.data.bombs[xy]) {
-        var bomb = Game.data.bombs[xy]
+    if(!!Game.bombs[xy]) {
+        var bomb = Game.bombs[xy]
         this.intensity.north = Math.max(bomb.intensity, this.intensity.north)
         this.intensity.south = Math.max(bomb.intensity, this.intensity.south)
         this.intensity.west = Math.max(bomb.intensity, this.intensity.west)
@@ -36,8 +36,8 @@ var Explosion = function(protoexplosion) {
         bomb.explode()
     }
     
-    for(var key in Game.data.monkeys) {
-        var monkey = Game.data.monkeys[key]
+    for(var key in Game.monkeys) {
+        var monkey = Game.monkeys[key]
         if(monkey.hasPosition(x + "x" + y)) {
             monkey.explode()
         }
@@ -103,7 +103,7 @@ Explosion.prototype.update = function(tick) {
     if(this.flash <= 0) {
         var x = Math.floor(this.position.x)
         var y = Math.floor(this.position.y)
-        delete Game.data.explosions[x + "x" + y]
+        delete Game.explosions[x + "x" + y]
     }
 }
 
@@ -120,7 +120,7 @@ var ExplosionSmoke = function(protosmoke) {
     this.height = protosmoke.height || 0.5
     
     this.key = ShortID.generate()
-    Game.data.explosionsmoke[this.key] = this
+    Game.explosionsmoke[this.key] = this
     
     this.time = this.maxtime = 1.5 * 2
 }
@@ -130,7 +130,7 @@ ExplosionSmoke.prototype.update = function(tick) {
     this.position.y += this.intensity.y * tick
     this.time -= tick
     if(this.time <= 0) {
-        delete Game.data.explosionsmoke[this.key]
+        delete Game.explosionsmoke[this.key]
     }
 }
 

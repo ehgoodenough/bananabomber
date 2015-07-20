@@ -1,5 +1,3 @@
-var Bomb = require("<scripts>/classes/Bomb")
-
 var Monkey = function(protomonkey) {
     for(var key in protomonkey) {
         this[key] = protomonkey[key]
@@ -66,14 +64,14 @@ Monkey.prototype.getStyle = function() {
 
 Monkey.prototype.update = function(tick) {
     // keyboard input
-    if(Game.input.isDown(this.inputs["move north"])) {
+    if(Input.isDown(this.inputs["move north"])) {
         this.velocity.y = -this.velocity.maximum
-    } if(Game.input.isDown(this.inputs["move south"])) {
+    } if(Input.isDown(this.inputs["move south"])) {
         this.velocity.y = +this.velocity.maximum
-    } if(Game.input.isDown(this.inputs["move west"])) {
+    } if(Input.isDown(this.inputs["move west"])) {
         this.velocity.x = -this.velocity.maximum
         this.direction = "west"
-    } if(Game.input.isDown(this.inputs["move east"])) {
+    } if(Input.isDown(this.inputs["move east"])) {
         this.velocity.x = +this.velocity.maximum
         this.direction = "east"
     }
@@ -96,8 +94,8 @@ Monkey.prototype.update = function(tick) {
         })
         for(var coords in positions) {
             var position = positions[coords]
-            var bomb = Game.data.bombs[coords]
-            var wall = Game.data.world.walls[coords]
+            var bomb = Game.bombs[coords]
+            var wall = Game.world.walls[coords]
             if(!!wall || !!bomb) {
                 if(this.velocity.x > 0) {
                     this.position.x = position.x
@@ -116,8 +114,8 @@ Monkey.prototype.update = function(tick) {
         })
         for(var coords in positions) {
             var position = positions[coords]
-            var bomb = Game.data.bombs[coords]
-            var wall = Game.data.world.walls[coords]
+            var bomb = Game.bombs[coords]
+            var wall = Game.world.walls[coords]
             if(!!wall || !!bomb) {
                 if(this.velocity.y > 0) {
                     this.position.y = position.y
@@ -164,12 +162,12 @@ Monkey.prototype.update = function(tick) {
     }
     
     if(!this.isDead) {
-        if(Game.input.isJustDown(this.inputs["drop bomb"])) {
+        if(Input.isJustDown(this.inputs["drop bomb"])) {
             if(this.bombqueue.length > 0) {
                 var x = Math.floor(this.position.x)
                 var y = Math.floor(this.position.y)
-                if(Game.data.bombs[x + "x" + y] == null) {
-                    Game.data.bombs[x + "x" + y] = new Bomb({
+                if(Game.bombs[x + "x" + y] == null) {
+                    Game.bombs[x + "x" + y] = new Bomb({
                         position: {"x": x, "y": y},
                         type: this.bombqueue.pop(),
                         monkey: this,
