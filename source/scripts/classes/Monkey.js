@@ -1,4 +1,7 @@
 var Monkey = function(protomonkey) {
+    this.id = Id.generate()
+    Game.monkeys[this.id] = this
+    
     for(var key in protomonkey) {
         this[key] = protomonkey[key]
     }
@@ -23,11 +26,6 @@ var Monkey = function(protomonkey) {
         "regular",
         "regular",
         "regular",
-        "regular",
-        "regular",
-        "regular",
-        "regular",
-        "regular"
     ]
 }
 

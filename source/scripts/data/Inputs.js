@@ -18,7 +18,7 @@ var Inputs = {
         "move south": "<down>",
         "move west": "<left>",
         "move east": "<right>",
-        "drop bomb": "<shift>"
+        "drop bomb": "<insert>"
     },
     "purple monkey": {
         "move north": "T",

@@ -11,7 +11,7 @@ var Bomb = function(protobomb) {
 }
 
 Bomb.prototype.getStyle = function() {
-    var easeInOutQuint = function (t) { return t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t }
+    var easeInOutQuint = function (t) {return t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t}
     var ease = easeInOutQuint(1 - (this.fuse / this.maxfuse))
     
     var red = Math.floor(255 * ease)

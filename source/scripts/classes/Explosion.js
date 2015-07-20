@@ -71,7 +71,7 @@ var Explosion = function(protoexplosion) {
     
     var maxspeed = 0.05
     for(var i = 0; i < 8; i++) {
-        new ExplosionSmoke({
+        new Particle({
             "position": {
                 "x": this.position.x - (Math.random() - 0.5),
                 "y": this.position.y - (Math.random() - 0.5),
@@ -107,7 +107,7 @@ Explosion.prototype.update = function(tick) {
     }
 }
 
-var ExplosionSmoke = function(protosmoke) {
+var Particle = function(protosmoke) {
     this.position = {}
     this.position.x = protosmoke.position.x || 0.5
     this.position.y = protosmoke.position.y || 0.5
@@ -119,22 +119,22 @@ var ExplosionSmoke = function(protosmoke) {
     this.width = protosmoke.width || 0.5
     this.height = protosmoke.height || 0.5
     
-    this.key = ShortID.generate()
-    Game.explosionsmoke[this.key] = this
+    this.key = Id.generate()
+    Game.particles[this.key] = this
     
     this.time = this.maxtime = 1.5 * 2
 }
 
-ExplosionSmoke.prototype.update = function(tick) {
+Particle.prototype.update = function(tick) {
     this.position.x += this.intensity.x * tick
     this.position.y += this.intensity.y * tick
     this.time -= tick
     if(this.time <= 0) {
-        delete Game.explosionsmoke[this.key]
+        delete Game.particles[this.key]
     }
 }
 
-ExplosionSmoke.prototype.getStyle = function() {
+Particle.prototype.getStyle = function() {
     var MAX_OPACITY = 0.8
     var opacity = MAX_OPACITY * (this.time / this.maxtime)
     var width = this.width
