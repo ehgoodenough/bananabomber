@@ -30,17 +30,17 @@ new Monkey({
 new Monkey({
     "position": {"x": 17.5, "y": 1.5},
     "inputs": Inputs["green monkey"],
-    "images": Images["red monkey"],
+    "images": Images["green monkey"],
 })
 new Monkey({
     "position": {"x": 1.5, "y": 11.5},
     "inputs": Inputs["blue monkey"],
-    "images": Images["red monkey"],
+    "images": Images["blue monkey"],
 })
 new Monkey({
     "position": {"x": 17.5, "y": 11.5},
     "inputs": Inputs["purple monkey"],
-    "images": Images["red monkey"],
+    "images": Images["purple monkey"],
 })
 
 var CameraView = require("<scripts>/views/CameraView")
