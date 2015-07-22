@@ -19,6 +19,7 @@ var Monkey = function(protomonkey) {
     this.girth = 4 / 38
     this.friction = 0.000005
     this.acceleration = 0.75 // ?!
+    this.direction = {}
     
     this.status = "alive"
     
@@ -64,14 +65,16 @@ Monkey.prototype.update = function(tick) {
     // keyboard input
     if(Input.isDown(this.inputs["move north"])) {
         this.velocity.y = -this.velocity.maximum
+        this.direction.y = -1
     } if(Input.isDown(this.inputs["move south"])) {
         this.velocity.y = +this.velocity.maximum
+        this.direction.y = +1
     } if(Input.isDown(this.inputs["move west"])) {
         this.velocity.x = -this.velocity.maximum
-        this.direction = "west"
+        this.direction.x = -1
     } if(Input.isDown(this.inputs["move east"])) {
         this.velocity.x = +this.velocity.maximum
-        this.direction = "east"
+        this.direction.x = +1
     }
     
     // maximum velocity
