@@ -1,8 +1,9 @@
 window.React = require("react")
 window.Phlux = require("phlux")
 window.Id = require("shortid")
-window.Loop = require("tickly").loop
-window.Input = require("keyb")
+
+window.Loop = require("<scripts>/utilities/Loop")
+window.Input = require("<scripts>/utilities/Input")
 
 window.Bomb = require("<scripts>/classes/Bomb")
 window.World = require("<scripts>/classes/World")

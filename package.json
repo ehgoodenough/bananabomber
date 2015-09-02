@@ -7,11 +7,11 @@
     "url": "https://github.com/ehgoodenough/bananabomber.git"
   },
   "dependencies": {
-    "keyb": "^1.0.4",
     "phlux": "^1.0.2",
+    "raf": "^3.1.0",
     "react": "~0.12.2",
     "shortid": "^2.2.2",
-    "tickly": "^1.0.1"
+    "vkey": "^1.0.0"
   },
   "devDependencies": {
     "aliasify": "~1.7.2",
