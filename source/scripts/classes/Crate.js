@@ -16,6 +16,10 @@ var Crate = function(protocrate) {
     Game.crates[this.position.x + "x" + this.position.y] = this
 }
 
+Crate.prototype.explode = function() {
+    delete Game.crates[this.position.x + "x" + this.position.y]
+}
+
 Crate.prototype.getStyle = function() {
     var x = this.position.x + 0.075
     var y = this.position.y + 0.075

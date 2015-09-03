@@ -35,6 +35,11 @@ var Explosion = function(protoexplosion) {
         bomb.explode()
     }
 
+    if(!!Game.crates[xy]) {
+        var crate = Game.crates[xy]
+        crate.explode()
+    }
+
     for(var key in Game.monkeys) {
         var monkey = Game.monkeys[key]
         if(monkey.hasPosition(x + "x" + y)) {
