@@ -3,23 +3,35 @@ var Crate = function(protocrate) {
     this.position.x = protocrate.position.x
     this.position.y = protocrate.position.y
 
+    this.rotation = Math.random() * 8 - (8 / 2)
+
+    var colors = [
+		"rgb(204, 119, 34)",
+		"rgb(184, 115, 51)",
+		"rgb(205, 127, 50)",
+    ]
+    this.color = colors[Math.floor(Math.random() * colors.length)]
+
     this.id = Id.generate()
     Game.crates[this.id] = this
 }
 
 Crate.prototype.getStyle = function() {
-    var x = this.position.x
-    var y = this.position.y
+    var x = this.position.x + 0.075
+    var y = this.position.y + 0.075
     var z = Math.round(this.position.y * 100)
-    var width = 1
-    var height = 1
+    var r = this.rotation
+    var color = this.color
+    var width = 1 - 0.15
+    var height = 1 - 0.15
     return {
         "zIndex": z,
         "top": y + "em",
         "left": x + "em",
         "width": width + "em",
         "height": height + "em",
-        "backgroundColor": "brown",
+        "backgroundColor": color,
+        "transform": "rotate(" + r + "deg)",
         "position": "absolute",
     }
 }
