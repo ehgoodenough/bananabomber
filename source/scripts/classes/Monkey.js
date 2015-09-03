@@ -137,6 +137,18 @@ Monkey.prototype.update = function(tick) {
     this.position.x += this.velocity.x
     this.position.y += this.velocity.y
 
+    // collect bananas
+    var x = Math.floor(this.position.x)
+    var y = Math.floor(this.position.y)
+    var xy = x + "x" + y
+    if(!!Game.bananas[xy]) {
+        var banana = Game.bananas[xy]
+        if(banana.powerup == "more_speed") {
+            this.velocity.maximum += 0.025
+        }
+        banana.remove()
+    }
+
     // deceleration
     var friction = this.friction
     if(this.isDead) {

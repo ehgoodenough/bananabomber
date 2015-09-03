@@ -22,7 +22,8 @@ Crate.prototype.explode = function() {
         "position": {
             "x": this.position.x,
             "y": this.position.y
-        }
+        },
+        "powerup": "more_speed"
     })
 }
 

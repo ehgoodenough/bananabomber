@@ -35,6 +35,11 @@ var Explosion = function(protoexplosion) {
         bomb.explode()
     }
 
+    if(!!Game.bananas[xy]) {
+        var banana = Game.bananas[xy]
+        banana.explode()
+    }
+
     if(!!Game.crates[xy]) {
         var crate = Game.crates[xy]
         crate.explode()

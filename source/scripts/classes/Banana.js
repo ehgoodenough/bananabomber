@@ -3,7 +3,22 @@ var Banana = function(protobanana) {
     this.position.x = protobanana.position.x
     this.position.y = protobanana.position.y
 
+    this.powerup = protobanana.powerup
+    if(this.powerup == "more_speed") {
+        this.color = "yellow"
+    } else if(this.powerup == "more_bombs") {
+        this.color = "red"
+    }
+
     Game.bananas[this.position.x + "x" + this.position.y] = this
+}
+
+Banana.prototype.explode = function() {
+    delete Game.bananas[this.position.x + "x" + this.position.y]
+}
+
+Banana.prototype.remove = function() {
+    delete Game.bananas[this.position.x + "x" + this.position.y]
 }
 
 Banana.prototype.getStyle = function() {
@@ -18,7 +33,7 @@ Banana.prototype.getStyle = function() {
         "left": x + "em",
         "width": width + "em",
         "height": height + "em",
-        "backgroundColor": "yellow",
+        "backgroundColor": this.color,
         "position": "absolute",
     }
 }
