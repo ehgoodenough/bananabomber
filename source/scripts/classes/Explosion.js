@@ -1,19 +1,18 @@
 var Explosion = function(protoexplosion) {
-    
     this.position = {}
     this.position.x = protoexplosion.position.x || 0.5
     this.position.y = protoexplosion.position.y || 0.5
-    
+
     var x = Math.floor(this.position.x)
     var y = Math.floor(this.position.y)
     var xy = x + "x" + y
-    
+
     if(!!Game.world.walls[xy]) {
         return
     } else {
         Game.explosions[xy] = this
     }
-    
+
     this.intensity = {}
     if(typeof protoexplosion.intensity == "number") {
         this.intensity.north = protoexplosion.intensity || 0
@@ -26,7 +25,7 @@ var Explosion = function(protoexplosion) {
         this.intensity.west = protoexplosion.intensity.west || 0
         this.intensity.east = protoexplosion.intensity.east || 0
     }
-    
+
     if(!!Game.bombs[xy]) {
         var bomb = Game.bombs[xy]
         this.intensity.north = Math.max(bomb.intensity, this.intensity.north)
@@ -35,14 +34,14 @@ var Explosion = function(protoexplosion) {
         this.intensity.east = Math.max(bomb.intensity, this.intensity.east)
         bomb.explode()
     }
-    
+
     for(var key in Game.monkeys) {
         var monkey = Game.monkeys[key]
         if(monkey.hasPosition(x + "x" + y)) {
             monkey.explode()
         }
     }
-    
+
     if(!!this.intensity.north) {
         var explosion = new Explosion({
             "intensity": {"north": this.intensity.north - 1},
@@ -64,11 +63,11 @@ var Explosion = function(protoexplosion) {
             "position": {"x": this.position.x, "y": this.position.y + 1},
         })
     }
-    
+
     this.flash = 0.1
-    
-    
-    
+
+
+
     var maxspeed = 0.05
     for(var i = 0; i < 8; i++) {
         new Particle({
@@ -111,17 +110,17 @@ var Particle = function(protosmoke) {
     this.position = {}
     this.position.x = protosmoke.position.x || 0.5
     this.position.y = protosmoke.position.y || 0.5
-    
+
     this.intensity = {}
     this.intensity.x = protosmoke.intensity.x || 0.5
     this.intensity.y = protosmoke.intensity.y || 0.5
-    
+
     this.width = protosmoke.width || 0.5
     this.height = protosmoke.height || 0.5
-    
+
     this.key = Id.generate()
     Game.particles[this.key] = this
-    
+
     this.time = this.maxtime = 1.5 * 2
 }
 

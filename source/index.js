@@ -6,6 +6,7 @@ window.Loop = require("<scripts>/utilities/Loop")
 window.Input = require("<scripts>/utilities/Input")
 
 window.Bomb = require("<scripts>/classes/Bomb")
+window.Crate = require("<scripts>/classes/Crate")
 window.World = require("<scripts>/classes/World")
 window.Monkey = require("<scripts>/classes/Monkey")
 window.Explosion = require("<scripts>/classes/Explosion")
@@ -14,35 +15,67 @@ window.Camera = require("<scripts>/classes/Camera")
 window.Inputs = require("<scripts>/data/Inputs")
 window.Images = require("<scripts>/data/Images")
 
-window.Game = {
-    bombs: {},
-    monkeys: {},
-    explosions: {},
-    particles: {},
-    camera: new Camera(),
-    world: new World(),
-}
+window.Start = function() {
+    window.Game = {
+        bombs: {},
+        crates: {},
+        monkeys: {},
+        explosions: {},
+        particles: {},
+        camera: new Camera(),
+        world: new World(),
+    }
 
-new Monkey({
-    "position": {"x": 1.5, "y": 1.5},
-    "inputs": Inputs["red monkey"],
-    "images": Images["red monkey"],
-})
-new Monkey({
-    "position": {"x": 17.5, "y": 1.5},
-    "inputs": Inputs["green monkey"],
-    "images": Images["green monkey"],
-})
-new Monkey({
-    "position": {"x": 1.5, "y": 11.5},
-    "inputs": Inputs["blue monkey"],
-    "images": Images["blue monkey"],
-})
-new Monkey({
-    "position": {"x": 17.5, "y": 11.5},
-    "inputs": Inputs["purple monkey"],
-    "images": Images["purple monkey"],
-})
+    new Monkey({
+        "color": "red",
+        "position": {"x": 1.5, "y": 1.5},
+        "inputs": Inputs["red monkey"],
+        "images": Images["red monkey"],
+    })
+    new Monkey({
+        "color": "green",
+        "position": {"x": 17.5, "y": 1.5},
+        "inputs": Inputs["green monkey"],
+        "images": Images["green monkey"],
+    })
+    new Monkey({
+        "color": "blue",
+        "position": {"x": 1.5, "y": 11.5},
+        "inputs": Inputs["blue monkey"],
+        "images": Images["blue monkey"],
+    })
+    new Monkey({
+        "color": "purple",
+        "position": {"x": 17.5, "y": 11.5},
+        "inputs": Inputs["purple monkey"],
+        "images": Images["purple monkey"],
+    })
+
+    for(var x = 0; x < Game.world.width; x++) {
+        for(var y = 0; y < Game.world.height; y++) {
+            if(!!Game.world.walls[x + "x" + y]) {
+                continue
+            }
+            var isNearMonkey = false
+            for(var id in Game.monkeys) {
+                var monkey = Game.monkeys[id]
+                if(Math.abs(Math.floor(monkey.position.x) - x) <= 1
+                && Math.abs(Math.floor(monkey.position.y) - y) <= 1) {
+                    isNearMonkey = true
+                    break
+                }
+            }
+            if(!!isNearMonkey) {
+                continue
+            }
+            new Crate({
+                "position": {
+                    "x": x, "y": y
+                }
+            })
+        }
+    }
+}
 
 var CameraView = require("<scripts>/views/CameraView")
 var GameFrameView = require("<scripts>/views/GameFrameView")
@@ -61,6 +94,7 @@ var Bananabomber = React.createClass({
                         <WorldView data={this.state.world}/>
                         <ForEachView data={this.state.bombs} view={BombView}/>
                         <ForEachView data={this.state.monkeys} view={MonkeyView}/>
+                        <ForEachView data={this.state.crates} view={GameObjectView}/>
                         <ForEachView data={this.state.particles} view={GameObjectView}/>
                         <ForEachView data={this.state.explosions} view={GameObjectView}/>
                     </CameraView>
@@ -74,6 +108,7 @@ var Bananabomber = React.createClass({
         }
     },
     componentDidMount: function() {
+        Start()
         Loop(function(tick) {
             for(var key in Game.monkeys)
                 Game.monkeys[key].update(tick)
