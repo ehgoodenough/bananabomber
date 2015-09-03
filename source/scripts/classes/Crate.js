@@ -18,6 +18,12 @@ var Crate = function(protocrate) {
 
 Crate.prototype.explode = function() {
     delete Game.crates[this.position.x + "x" + this.position.y]
+    new Banana({
+        "position": {
+            "x": this.position.x,
+            "y": this.position.y
+        }
+    })
 }
 
 Crate.prototype.getStyle = function() {

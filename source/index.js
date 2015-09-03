@@ -9,6 +9,7 @@ window.Bomb = require("<scripts>/classes/Bomb")
 window.Crate = require("<scripts>/classes/Crate")
 window.World = require("<scripts>/classes/World")
 window.Monkey = require("<scripts>/classes/Monkey")
+window.Banana = require("<scripts>/classes/Banana")
 window.Explosion = require("<scripts>/classes/Explosion")
 window.Camera = require("<scripts>/classes/Camera")
 
@@ -20,6 +21,7 @@ window.Start = function() {
         bombs: {},
         crates: {},
         monkeys: {},
+        bananas: {},
         explosions: {},
         particles: {},
         camera: new Camera(),
@@ -95,6 +97,7 @@ var Bananabomber = React.createClass({
                         <ForEachView data={this.state.bombs} view={BombView}/>
                         <ForEachView data={this.state.monkeys} view={MonkeyView}/>
                         <ForEachView data={this.state.crates} view={GameObjectView}/>
+                        <ForEachView data={this.state.bananas} view={GameObjectView}/>
                         <ForEachView data={this.state.particles} view={GameObjectView}/>
                         <ForEachView data={this.state.explosions} view={GameObjectView}/>
                     </CameraView>
