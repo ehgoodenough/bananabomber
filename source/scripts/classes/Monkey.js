@@ -1,11 +1,11 @@
 var Monkey = function(protomonkey) {
     this.id = Id.generate()
     Game.monkeys[this.id] = this
-    
+
     for(var key in protomonkey) {
         this[key] = protomonkey[key]
     }
-    
+
     this.velocity = {
         "minimum": 0.001,
         "maximum": 0.075,
@@ -20,9 +20,9 @@ var Monkey = function(protomonkey) {
     this.friction = 0.000005
     this.acceleration = 0.75 // ?!
     this.direction = {}
-    
+
     this.status = "alive"
-    
+
     this.bombqueue = [
         "regular",
         "regular",
@@ -76,7 +76,7 @@ Monkey.prototype.update = function(tick) {
         this.velocity.x = +this.velocity.maximum
         this.direction.x = +1
     }
-    
+
     // maximum velocity
     if(this.velocity.y < -this.velocity.maximum) {
         this.velocity.y = -this.velocity.maximum
@@ -87,7 +87,7 @@ Monkey.prototype.update = function(tick) {
     } if(this.velocity.x > +this.velocity.maximum) {
         this.velocity.x = +this.velocity.maximum
     }
-    
+
     // collision with world
     if(!this.isDead) {
         var positions = this.getNewPositions({
@@ -97,7 +97,8 @@ Monkey.prototype.update = function(tick) {
             var position = positions[coords]
             var bomb = Game.bombs[coords]
             var wall = Game.world.walls[coords]
-            if(!!wall || !!bomb) {
+            var crate = Game.crates[coords]
+            if(!!wall || !!bomb || !!crate) {
                 if(this.velocity.x > 0) {
                     this.position.x = position.x
                     this.position.x -= this.girth + 0.01
@@ -117,7 +118,8 @@ Monkey.prototype.update = function(tick) {
             var position = positions[coords]
             var bomb = Game.bombs[coords]
             var wall = Game.world.walls[coords]
-            if(!!wall || !!bomb) {
+            var crate = Game.crates[coords]
+            if(!!wall || !!bomb || !!crate) {
                 if(this.velocity.y > 0) {
                     this.position.y = position.y
                     this.position.y -= this.girth + 0.01
@@ -130,11 +132,11 @@ Monkey.prototype.update = function(tick) {
             }
         }
     }
-    
+
     // translation
     this.position.x += this.velocity.x
     this.position.y += this.velocity.y
-    
+
     // deceleration
     var friction = this.friction
     if(this.isDead) {
@@ -161,7 +163,7 @@ Monkey.prototype.update = function(tick) {
             this.velocity.x = 0
         }
     }
-    
+
     if(!this.isDead) {
         if(Input.isJustDown(this.inputs["drop bomb"])) {
             if(this.bombqueue.length > 0) {
@@ -183,12 +185,12 @@ Monkey.prototype.getPositions = function(delta) {
     delta = delta || {}
     delta.x = delta.x || 0
     delta.y = delta.y || 0
-    
+
     var x1 = Math.floor(this.position.x - this.girth + delta.x)
     var y1 = Math.floor(this.position.y - this.girth + delta.y)
     var x2 = Math.ceil(this.position.x + this.girth + delta.x)
     var y2 = Math.ceil(this.position.y + this.girth + delta.y)
-    
+
     var positions = {}
     for(var x = x1; x < x2; x++) {
         for(var y = y1; y < y2; y++) {

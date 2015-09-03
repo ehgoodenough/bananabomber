@@ -13,7 +13,7 @@ var Crate = function(protocrate) {
     this.color = colors[Math.floor(Math.random() * colors.length)]
 
     this.id = Id.generate()
-    Game.crates[this.id] = this
+    Game.crates[this.position.x + "x" + this.position.y] = this
 }
 
 Crate.prototype.getStyle = function() {
