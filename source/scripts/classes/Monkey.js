@@ -30,6 +30,8 @@ var Monkey = function(protomonkey) {
         "regular",
         "regular",
     ]
+
+    this.bananas = []
 }
 
 Monkey.prototype.getStyle = function() {
@@ -151,7 +153,8 @@ Monkey.prototype.update = function(tick) {
             } else if(banana.powerup == "more intensity") {
                 this.intensity += 1
             }
-            banana.remove()
+            this.bananas.push(banana)
+            delete Game.bananas[xy]
         }
     }
 
@@ -239,6 +242,17 @@ Monkey.prototype.getNewPositions = function(delta) {
 
 Monkey.prototype.explode = function() {
     this.isDead = true
+
+    for(var index in this.bananas) {
+        var banana = this.bananas[index]
+        var xy = banana.position.x + "x" + banana.position.y
+        console.log("1")
+        if(!Game.bananas[xy]) { //in case somehow a banana is already there??
+            console.log("!")
+            Game.bananas[xy] = banana
+        }
+    }
+    this.bananas = []
 }
 
 module.exports = Monkey

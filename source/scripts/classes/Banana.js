@@ -17,10 +17,6 @@ Banana.prototype.explode = function() {
     delete Game.bananas[this.position.x + "x" + this.position.y]
 }
 
-Banana.prototype.remove = function() {
-    delete Game.bananas[this.position.x + "x" + this.position.y]
-}
-
 Banana.prototype.getStyle = function() {
     var x = this.position.x + 0.25
     var y = this.position.y + 0.25
