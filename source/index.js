@@ -29,25 +29,29 @@ window.Start = function() {
     }
 
     new Monkey({
-        "color": "red",
+        "name": "red",
+        "color": "#C00",
         "position": {"x": 1.5, "y": 1.5},
         "inputs": Inputs["red monkey"],
         "images": Images["red monkey"],
     })
     new Monkey({
-        "color": "green",
+        "name": "green",
+        "color": "#0C0",
         "position": {"x": 17.5, "y": 1.5},
         "inputs": Inputs["green monkey"],
         "images": Images["green monkey"],
     })
     new Monkey({
-        "color": "blue",
+        "name": "blue",
+        "color": "#00C",
         "position": {"x": 1.5, "y": 11.5},
         "inputs": Inputs["blue monkey"],
         "images": Images["blue monkey"],
     })
     new Monkey({
-        "color": "purple",
+        "name": "purple",
+        "color": "#C0C",
         "position": {"x": 17.5, "y": 11.5},
         "inputs": Inputs["purple monkey"],
         "images": Images["purple monkey"],

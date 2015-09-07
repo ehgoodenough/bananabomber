@@ -7,6 +7,8 @@ var Explosion = function(protoexplosion) {
     var y = Math.floor(this.position.y)
     var xy = x + "x" + y
 
+    this.color = protoexplosion.color
+
     if(!!Game.world.walls[xy]) {
         return
     } else {
@@ -56,21 +58,25 @@ var Explosion = function(protoexplosion) {
         var explosion = new Explosion({
             "intensity": {"north": this.intensity.north - 1},
             "position": {"x": this.position.x - 1, "y": this.position.y},
+            "color": this.color,
         })
     } if(!!this.intensity.south) {
         var explosion = new Explosion({
             "intensity": {"south": this.intensity.south - 1},
             "position": {"x": this.position.x + 1, "y": this.position.y},
+            "color": this.color,
         })
     } if(!!this.intensity.west) {
         var explosion = new Explosion({
             "intensity": {"west": this.intensity.west - 1},
             "position": {"x": this.position.x, "y": this.position.y - 1},
+            "color": this.color,
         })
     } if(!!this.intensity.east) {
         var explosion = new Explosion({
             "intensity": {"east": this.intensity.east - 1},
             "position": {"x": this.position.x, "y": this.position.y + 1},
+            "color": this.color,
         })
     }
 
@@ -103,7 +109,7 @@ Explosion.prototype.getStyle = function() {
         top: y + "em",
         left: x + "em",
         position: "absolute",
-        backgroundColor: "#C00",
+        backgroundColor: this.color,
     }
 }
 

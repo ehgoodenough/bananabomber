@@ -39,6 +39,7 @@ Bomb.prototype.update = function(tick) {
         new Explosion({
             "intensity": this.intensity,
             "position": this.position,
+            "color": this.monkey.color,
         })
 
         var count = 0
@@ -51,7 +52,7 @@ Bomb.prototype.update = function(tick) {
             }
         }
         if(count == 1) {
-            console.log(last_monkey.color + " wins")
+            console.log(last_monkey.name + " wins")
             Start()
         } else if(count == 0) {
             console.log("nobody wins")
