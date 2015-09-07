@@ -6,7 +6,7 @@ var MonkeyStatusView = React.createClass({
         return (
             <div style={this.renderStyle()}>
                 <div style={style}>
-                    {this.props.data.intensity}x
+                    {this.props.data.bomb.intensity}x
                 </div>
             </div>
         )

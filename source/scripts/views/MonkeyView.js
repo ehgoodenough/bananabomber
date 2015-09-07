@@ -8,13 +8,16 @@ var MonkeyView = React.createClass({
         )
     },
     renderMonkey: function() {
+        var y = this.props.data.position.y - this.props.data.anchor.y
+        var x = this.props.data.position.x - this.props.data.anchor.x
+        var z = this.props.data.isDead ? 9999999 : Math.round((this.props.data.position.y - this.props.data.anchor.y) * 100)
         return {
             "width": "1em",
             "height": "1em",
             "position": "absolute",
-            "top": this.props.data.position.y - this.props.data.anchor.y + "em",
-            "left": this.props.data.position.x - this.props.data.anchor.x + "em",
-            "zIndex": this.props.data.isDead ? 9999999 : Math.round((this.props.data.position.y - this.props.data.anchor.y) * 100),
+            "top": y.toFixed(2) + "em",
+            "left": x.toFixed(2) + "em",
+            "zIndex": z,
             "opacity": this.props.data.isDead ? 0.75 : 1,
         }
     },
@@ -25,8 +28,8 @@ var MonkeyView = React.createClass({
         }
         return {
             "position": "absolute",
-            "width": (38 / 38) + "em",
-            "height": (23 / 38) + "em",
+            "width": (38 / 38).toFixed(1) + "em",
+            "height": (23 / 38).toFixed(1) + "em",
             "backgroundSize": "contain",
             "backgroundRepeat": "no-repeat",
             "backgroundImage": "url(" + image + ")",
@@ -47,10 +50,10 @@ var MonkeyView = React.createClass({
         }
         return {
             "position": "absolute",
-            "top": (22 / 38) + "em",
-            "left": (13 / 38) + "em",
-            "width": (19 / 38) + "em",
-            "height": (14 / 38) + "em",
+            "top": (22 / 38).toFixed(1) + "em",
+            "left": (13 / 38).toFixed(1) + "em",
+            "width": (19 / 38).toFixed(1) + "em",
+            "height": (14 / 38).toFixed(1) + "em",
             "transform": transform,
             "transformOrigin": "27%",
             "backgroundSize": "contain",

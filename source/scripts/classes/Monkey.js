@@ -1,10 +1,11 @@
 var Monkey = function(protomonkey) {
+    var monkey = this
+    for(var key in protomonkey) {
+        monkey[key] = protomonkey[key]
+    }
+
     this.id = Id.generate()
     Game.monkeys[this.id] = this
-
-    for(var key in protomonkey) {
-        this[key] = protomonkey[key]
-    }
 
     this.velocity = {
         "minimum": 0.001,
@@ -18,20 +19,27 @@ var Monkey = function(protomonkey) {
     }
     this.girth = 4 / 38
     this.friction = 0.000005
-    this.acceleration = 0.75 // ?!
-    this.direction = {}
+    this.direction = {
+        x: 0,
+        y: 0
+    }
 
-    this.status = "alive"
+    this.isDead = false
 
-    this.intensity = 1
+    this.bomb = {
+        intensity: 1,
+        queue: [
+            "classic",
+            "classic",
+            "classic",
+        ]
+    }
 
-    this.bombqueue = [
-        "regular",
-        "regular",
-        "regular",
-    ]
-
-    this.bananas = []
+    this.banana = {
+        queue: [
+            //empty
+        ]
+    }
 }
 
 Monkey.prototype.getStyle = function() {
@@ -66,22 +74,20 @@ Monkey.prototype.getStyle = function() {
 }
 
 Monkey.prototype.update = function(tick) {
-    // keyboard input
     if(Input.isDown(this.inputs["move north"])) {
-        this.velocity.y = -this.velocity.maximum
+        this.velocity.y = -1 * this.velocity.maximum
         this.direction.y = -1
     } if(Input.isDown(this.inputs["move south"])) {
-        this.velocity.y = +this.velocity.maximum
+        this.velocity.y = +1 * this.velocity.maximum
         this.direction.y = +1
     } if(Input.isDown(this.inputs["move west"])) {
-        this.velocity.x = -this.velocity.maximum
+        this.velocity.x = -1 * this.velocity.maximum
         this.direction.x = -1
     } if(Input.isDown(this.inputs["move east"])) {
-        this.velocity.x = +this.velocity.maximum
+        this.velocity.x = +1 * this.velocity.maximum
         this.direction.x = +1
     }
 
-    // maximum velocity
     if(this.velocity.y < -this.velocity.maximum) {
         this.velocity.y = -this.velocity.maximum
     } if(this.velocity.y > +this.velocity.maximum) {
@@ -92,8 +98,7 @@ Monkey.prototype.update = function(tick) {
         this.velocity.x = +this.velocity.maximum
     }
 
-    // collision with world
-    if(!this.isDead) {
+    if(this.isDead == false) {
         var positions = this.getNewPositions({
             "x": this.velocity.x
         })
@@ -137,12 +142,10 @@ Monkey.prototype.update = function(tick) {
         }
     }
 
-    // translation
     this.position.x += this.velocity.x
     this.position.y += this.velocity.y
 
-    // collect bananas
-    if(!this.isDead) {
+    if(this.isDead == false) {
         var x = Math.floor(this.position.x)
         var y = Math.floor(this.position.y)
         var xy = x + "x" + y
@@ -151,16 +154,15 @@ Monkey.prototype.update = function(tick) {
             if(banana.powerup == "more speed") {
                 this.velocity.maximum += 0.025
             } else if(banana.powerup == "more intensity") {
-                this.intensity += 1
+                this.bomb.intensity += 1
             }
-            this.bananas.push(banana)
+            this.banana.queue.push(banana)
             delete Game.bananas[xy]
         }
     }
 
-    // deceleration
     var friction = this.friction
-    if(this.isDead) {
+    if(this.isDead == true) {
         friction *= 10000
     }
     if(this.velocity.y < 0) {
@@ -185,16 +187,16 @@ Monkey.prototype.update = function(tick) {
         }
     }
 
-    if(!this.isDead) {
+    if(this.isDead == false) {
         if(Input.isJustDown(this.inputs["drop bomb"])) {
-            if(this.bombqueue.length > 0) {
+            if(this.bomb.queue.length > 0) {
                 var x = Math.floor(this.position.x)
                 var y = Math.floor(this.position.y)
                 if(Game.bombs[x + "x" + y] == null) {
                     Game.bombs[x + "x" + y] = new Bomb({
                         position: {"x": x, "y": y},
-                        type: this.bombqueue.pop(),
-                        intensity: this.intensity,
+                        type: this.bomb.queue.pop(),
+                        intensity: this.bomb.intensity,
                         monkey: this,
                     })
                 }
@@ -243,8 +245,8 @@ Monkey.prototype.getNewPositions = function(delta) {
 Monkey.prototype.explode = function() {
     this.isDead = true
 
-    for(var index in this.bananas) {
-        var banana = this.bananas[index]
+    for(var index in this.banana.queue) {
+        var banana = this.banana.queue[index]
         var xy = banana.position.x + "x" + banana.position.y
         console.log("1")
         if(!Game.bananas[xy]) { //in case somehow a banana is already there??
@@ -252,7 +254,7 @@ Monkey.prototype.explode = function() {
             Game.bananas[xy] = banana
         }
     }
-    this.bananas = []
+    this.banana.queue = []
 }
 
 module.exports = Monkey

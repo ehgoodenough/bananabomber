@@ -21,10 +21,10 @@ window.Start = function() {
         crates: {},
         monkeys: {},
         bananas: {},
-        explosions: {},
         particles: {},
-        camera: new Camera(),
+        explosions: {},
         world: new World(),
+        camera: new Camera(),
     }
 
     new Monkey({
@@ -97,7 +97,21 @@ var BombView = require("<scripts>/views/BombView")
 
 var Bananabomber = React.createClass({
     render: function() {
-        if(!!this.state) {
+        if(!this.state) {
+            return <div/>
+        } else {
+            /*var renderings = []
+            for(var type in Game) {
+                for(var id in Game[type]) {
+                    var object = Game[type][id]
+                    renderings.push(object.render())
+                }
+            }
+            return (
+                <FrameView aspect-ratio="19x13">
+                    {renderings}
+                </FrameView>
+            )*/
             return (
                 <FrameView aspect-ratio="19x13">
                     <CameraView data={this.state.camera}>
@@ -112,25 +126,17 @@ var Bananabomber = React.createClass({
                     </CameraView>
                 </FrameView>
             )
-        } else {
-            return (
-                <div>
-                </div>
-            )
         }
     },
     componentDidMount: function() {
         Start()
         Loop(function(tick) {
-            for(var key in Game.monkeys)
-                Game.monkeys[key].update(tick)
-            for(var key in Game.bombs)
-                Game.bombs[key].update(tick)
-            for(var key in Game.explosions)
-                Game.explosions[key].update(tick)
-            for(var key in Game.particles)
-                Game.particles[key].update(tick)
-            Game.camera.update(tick)
+            for(var type in Game) {
+                for(var id in Game[type]) {
+                    if(!!Game[type][id].update)
+                        Game[type][id].update(tick)
+                }
+            }
             this.setState(Game)
         }.bind(this))
     }

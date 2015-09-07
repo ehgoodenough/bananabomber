@@ -67,7 +67,7 @@ Bomb.prototype.explode = function() {
     delete Game.bombs[x + "x" + y]
 
     if(this.monkey != undefined) {
-        this.monkey.bombqueue.push(this.type)
+        this.monkey.bomb.queue.push(this.type)
     }
 }
 
