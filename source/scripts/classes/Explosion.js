@@ -45,6 +45,9 @@ var Explosion = function(protoexplosion) {
     if(!!Game.crates[xy]) {
         var crate = Game.crates[xy]
         crate.explode()
+        for(var direction in this.intensity) {
+            this.intensity[direction] = 0
+        }
     }
 
     for(var key in Game.monkeys) {

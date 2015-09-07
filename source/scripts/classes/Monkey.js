@@ -23,6 +23,8 @@ var Monkey = function(protomonkey) {
 
     this.status = "alive"
 
+    this.intensity = 1
+
     this.bombqueue = [
         "regular",
         "regular",
@@ -138,15 +140,19 @@ Monkey.prototype.update = function(tick) {
     this.position.y += this.velocity.y
 
     // collect bananas
-    var x = Math.floor(this.position.x)
-    var y = Math.floor(this.position.y)
-    var xy = x + "x" + y
-    if(!!Game.bananas[xy]) {
-        var banana = Game.bananas[xy]
-        if(banana.powerup == "more_speed") {
-            this.velocity.maximum += 0.025
+    if(!this.isDead) {
+        var x = Math.floor(this.position.x)
+        var y = Math.floor(this.position.y)
+        var xy = x + "x" + y
+        if(!!Game.bananas[xy]) {
+            var banana = Game.bananas[xy]
+            if(banana.powerup == "more speed") {
+                this.velocity.maximum += 0.025
+            } else if(banana.powerup == "more intensity") {
+                this.intensity += 1
+            }
+            banana.remove()
         }
-        banana.remove()
     }
 
     // deceleration
@@ -185,6 +191,7 @@ Monkey.prototype.update = function(tick) {
                     Game.bombs[x + "x" + y] = new Bomb({
                         position: {"x": x, "y": y},
                         type: this.bombqueue.pop(),
+                        intensity: this.intensity,
                         monkey: this,
                     })
                 }

@@ -4,9 +4,9 @@ var Banana = function(protobanana) {
     this.position.y = protobanana.position.y
 
     this.powerup = protobanana.powerup
-    if(this.powerup == "more_speed") {
+    if(this.powerup == "more speed") {
         this.color = "yellow"
-    } else if(this.powerup == "more_bombs") {
+    } else if(this.powerup == "more intensity") {
         this.color = "red"
     }
 

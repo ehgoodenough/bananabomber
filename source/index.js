@@ -29,6 +29,7 @@ window.Start = function() {
     }
 
     new Monkey({
+        "number": 1,
         "name": "red",
         "color": "#C00",
         "position": {"x": 1.5, "y": 1.5},
@@ -36,6 +37,7 @@ window.Start = function() {
         "images": Images["red monkey"],
     })
     new Monkey({
+        "number": 2,
         "name": "green",
         "color": "#0C0",
         "position": {"x": 17.5, "y": 1.5},
@@ -43,6 +45,7 @@ window.Start = function() {
         "images": Images["green monkey"],
     })
     new Monkey({
+        "number": 3,
         "name": "blue",
         "color": "#00C",
         "position": {"x": 1.5, "y": 11.5},
@@ -50,6 +53,7 @@ window.Start = function() {
         "images": Images["blue monkey"],
     })
     new Monkey({
+        "number": 4,
         "name": "purple",
         "color": "#C0C",
         "position": {"x": 17.5, "y": 11.5},
@@ -86,6 +90,7 @@ window.Start = function() {
 var CameraView = require("<scripts>/views/CameraView")
 var GameFrameView = require("<scripts>/views/GameFrameView")
 var GameObjectView = require("<scripts>/views/GameObjectView")
+var MonkeyStatusView = require("<scripts>/views/MonkeyStatusView")
 var ForEachView = require("<scripts>/views/ForEachView")
 var MonkeyView = require("<scripts>/views/MonkeyView")
 var WorldView = require("<scripts>/views/WorldView")
@@ -104,6 +109,7 @@ var Bananabomber = React.createClass({
                         <ForEachView data={this.state.bananas} view={GameObjectView}/>
                         <ForEachView data={this.state.particles} view={GameObjectView}/>
                         <ForEachView data={this.state.explosions} view={GameObjectView}/>
+                        <ForEachView data={this.state.monkeys} view={MonkeyStatusView}/>
                     </CameraView>
                 </GameFrameView>
             )
