@@ -87,8 +87,8 @@ window.Start = function() {
     }
 }
 
+var FrameView = require("<scripts>/views/FrameView")
 var CameraView = require("<scripts>/views/CameraView")
-var GameFrameView = require("<scripts>/views/GameFrameView")
 var GameObjectView = require("<scripts>/views/GameObjectView")
 var MonkeyStatusView = require("<scripts>/views/MonkeyStatusView")
 var ForEachView = require("<scripts>/views/ForEachView")
@@ -100,7 +100,7 @@ var Bananabomber = React.createClass({
     render: function() {
         if(!!this.state) {
             return (
-                <GameFrameView aspect-ratio="19x13">
+                <FrameView aspect-ratio="19x13">
                     <CameraView data={this.state.camera}>
                         <WorldView data={this.state.world}/>
                         <ForEachView data={this.state.bombs} view={BombView}/>
@@ -111,7 +111,7 @@ var Bananabomber = React.createClass({
                         <ForEachView data={this.state.explosions} view={GameObjectView}/>
                         <ForEachView data={this.state.monkeys} view={MonkeyStatusView}/>
                     </CameraView>
-                </GameFrameView>
+                </FrameView>
             )
         } else {
             return (
