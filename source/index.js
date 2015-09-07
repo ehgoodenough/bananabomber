@@ -1,5 +1,4 @@
 window.React = require("react")
-window.Phlux = require("phlux")
 window.Id = require("shortid")
 
 window.Loop = require("<scripts>/utilities/Loop")
