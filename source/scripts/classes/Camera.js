@@ -43,18 +43,26 @@ Camera.prototype.update = function(tick) {
             y1 = monkey.position.y
         }
     }
-    this.position.x = x0
-    this.position.y = y0
 
-    var frame_width = 640
-    var camera_framing_width = x1 - x0
-    var frame_height = 480
-    var camera_framing_height = y1 - y0
+    var xdiff = x1 - x0
+    var ydiff = y1 - y0
 
-    var xzoom = frame_width / camera_framing_width
-    var yzoom = frame_height / camera_framing_height
+    var xzoom = FRAME_WIDTH / xdiff
+    var yzoom = FRAME_HEIGHT / ydiff
 
-    this.zoom = Math.min(xzoom, yzoom)
+    if(xzoom < yzoom) {
+        this.zoom = xzoom
+        this.position.x = x0
+
+        var new_height = FRAME_HEIGHT / xzoom
+        this.position.y = y0 - (Math.abs(new_height - ydiff) / 2)
+    } else {
+        this.zoom = yzoom
+        this.position.y = y0
+
+        var new_width = FRAME_WIDTH / yzoom
+        this.position.x = x0 - (Math.abs(new_width - xdiff) / 2)
+    }
 
     /*if(this.shake > 0) {
         this.shake -= tick

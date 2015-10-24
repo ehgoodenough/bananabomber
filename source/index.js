@@ -2,6 +2,8 @@ window.React = require("react")
 window.Id = require("shortid")
 
 window.TILE = 48
+window.FRAME_WIDTH = 640
+window.FRAME_HEIGHT = 360
 
 window.Loop = require("<scripts>/utilities/Loop")
 window.Input = require("<scripts>/utilities/Input")
@@ -41,7 +43,7 @@ window.Start = function() {
         "number": 2,
         "name": "green",
         "color": "#0C0",
-        "position": {"x": 15.5 * TILE, "y": 1.5 * TILE},
+        "position": {"x": 17.5 * TILE, "y": 1.5 * TILE},
         "inputs": Inputs["green monkey"],
         "images": Images["green monkey"],
     })
@@ -49,7 +51,7 @@ window.Start = function() {
         "number": 3,
         "name": "blue",
         "color": "#00C",
-        "position": {"x": 1.5 * TILE, "y": 14.5 * TILE},
+        "position": {"x": 1.5 * TILE, "y": 11.5 * TILE},
         "inputs": Inputs["blue monkey"],
         "images": Images["blue monkey"],
     })
@@ -57,7 +59,7 @@ window.Start = function() {
         "number": 4,
         "name": "purple",
         "color": "#C0C",
-        "position": {"x": 15.5 * TILE, "y": 14.5 * TILE},
+        "position": {"x": 17.5 * TILE, "y": 11.5 * TILE},
         "inputs": Inputs["purple monkey"],
         "images": Images["purple monkey"],
     })
@@ -115,7 +117,7 @@ var Bananabomber = React.createClass({
                 </FrameView>
             )*/
             return (
-                <FrameView aspect-ratio="640x480">
+                <FrameView aspect-ratio={FRAME_WIDTH + "x" + FRAME_HEIGHT}>
                     <CameraView data={this.state.camera}>
                         <WorldView data={this.state.world}/>
                         <ForEachView data={this.state.bombs} view={BombView}/>
@@ -124,7 +126,6 @@ var Bananabomber = React.createClass({
                         <ForEachView data={this.state.bananas} view={GameObjectView}/>
                         <ForEachView data={this.state.particles} view={GameObjectView}/>
                         <ForEachView data={this.state.explosions} view={GameObjectView}/>
-                        <ForEachView data={this.state.monkeys} view={MonkeyStatusView}/>
                     </CameraView>
                 </FrameView>
             )
@@ -132,8 +133,6 @@ var Bananabomber = React.createClass({
     },
     componentDidMount: function() {
         Start()
-        //Game.camera.update(1)
-        //this.setState(Game)
         Loop(function(tick) {
             for(var type in Game) {
                 for(var id in Game[type]) {
