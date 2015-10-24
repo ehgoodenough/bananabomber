@@ -2,8 +2,6 @@ var MonkeyView = React.createClass({
     render: function() {
         return (
             <div style={this.renderMonkey()}>
-                <div style={this.renderHead()}/>
-                <div style={this.renderBody()}/>
             </div>
         )
     },

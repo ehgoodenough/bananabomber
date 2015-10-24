@@ -33,7 +33,7 @@ window.Start = function() {
         "number": 1,
         "name": "red",
         "color": "#C00",
-        "position": {"x": 1.5 * TILE, "y": 1.75 * TILE},
+        "position": {"x": 1.5 * TILE, "y": 1.5 * TILE},
         "inputs": Inputs["red monkey"],
         "images": Images["red monkey"],
     })
@@ -41,7 +41,7 @@ window.Start = function() {
         "number": 2,
         "name": "green",
         "color": "#0C0",
-        "position": {"x": 17.5 * TILE, "y": 1.5 * TILE},
+        "position": {"x": 15.5 * TILE, "y": 1.5 * TILE},
         "inputs": Inputs["green monkey"],
         "images": Images["green monkey"],
     })
@@ -49,7 +49,7 @@ window.Start = function() {
         "number": 3,
         "name": "blue",
         "color": "#00C",
-        "position": {"x": 1.5 * TILE, "y": 11.5 * TILE},
+        "position": {"x": 1.5 * TILE, "y": 14.5 * TILE},
         "inputs": Inputs["blue monkey"],
         "images": Images["blue monkey"],
     })
@@ -57,7 +57,7 @@ window.Start = function() {
         "number": 4,
         "name": "purple",
         "color": "#C0C",
-        "position": {"x": 17.5 * TILE, "y": 11.5 * TILE},
+        "position": {"x": 15.5 * TILE, "y": 14.5 * TILE},
         "inputs": Inputs["purple monkey"],
         "images": Images["purple monkey"],
     })
@@ -132,6 +132,8 @@ var Bananabomber = React.createClass({
     },
     componentDidMount: function() {
         Start()
+        //Game.camera.update(1)
+        //this.setState(Game)
         Loop(function(tick) {
             for(var type in Game) {
                 for(var id in Game[type]) {
@@ -139,6 +141,7 @@ var Bananabomber = React.createClass({
                         Game[type][id].update(tick)
                 }
             }
+            Game.camera.update(tick)
             this.setState(Game)
         }.bind(this))
     }

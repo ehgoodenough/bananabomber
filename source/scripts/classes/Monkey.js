@@ -15,7 +15,7 @@ var Monkey = function(protomonkey) {
     }
     this.anchor = {
         "x": 0.5 * TILE,
-        "y": 0.75 * TILE
+        "y": 0.5 * TILE
     }
     this.girth = 4 / 38
     this.friction = 0.000005
