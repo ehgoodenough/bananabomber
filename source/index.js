@@ -1,6 +1,8 @@
 window.React = require("react")
 window.Id = require("shortid")
 
+window.TILE = 48
+
 window.Loop = require("<scripts>/utilities/Loop")
 window.Input = require("<scripts>/utilities/Input")
 
@@ -31,7 +33,7 @@ window.Start = function() {
         "number": 1,
         "name": "red",
         "color": "#C00",
-        "position": {"x": 1.5, "y": 1.5},
+        "position": {"x": 1.5 * TILE, "y": 1.75 * TILE},
         "inputs": Inputs["red monkey"],
         "images": Images["red monkey"],
     })
@@ -39,7 +41,7 @@ window.Start = function() {
         "number": 2,
         "name": "green",
         "color": "#0C0",
-        "position": {"x": 17.5, "y": 1.5},
+        "position": {"x": 17.5 * TILE, "y": 1.5 * TILE},
         "inputs": Inputs["green monkey"],
         "images": Images["green monkey"],
     })
@@ -47,7 +49,7 @@ window.Start = function() {
         "number": 3,
         "name": "blue",
         "color": "#00C",
-        "position": {"x": 1.5, "y": 11.5},
+        "position": {"x": 1.5 * TILE, "y": 11.5 * TILE},
         "inputs": Inputs["blue monkey"],
         "images": Images["blue monkey"],
     })
@@ -55,7 +57,7 @@ window.Start = function() {
         "number": 4,
         "name": "purple",
         "color": "#C0C",
-        "position": {"x": 17.5, "y": 11.5},
+        "position": {"x": 17.5 * TILE, "y": 11.5 * TILE},
         "inputs": Inputs["purple monkey"],
         "images": Images["purple monkey"],
     })
@@ -68,8 +70,8 @@ window.Start = function() {
             var isNearMonkey = false
             for(var id in Game.monkeys) {
                 var monkey = Game.monkeys[id]
-                if(Math.abs(Math.floor(monkey.position.x) - x) <= 1
-                && Math.abs(Math.floor(monkey.position.y) - y) <= 1) {
+                if(Math.abs(Math.floor(monkey.position.x) - x * TILE) <= TILE
+                && Math.abs(Math.floor(monkey.position.y) - y * TILE) <= TILE) {
                     isNearMonkey = true
                     break
                 }
@@ -113,7 +115,7 @@ var Bananabomber = React.createClass({
                 </FrameView>
             )*/
             return (
-                <FrameView aspect-ratio="19x13">
+                <FrameView aspect-ratio="640x480">
                     <CameraView data={this.state.camera}>
                         <WorldView data={this.state.world}/>
                         <ForEachView data={this.state.bombs} view={BombView}/>

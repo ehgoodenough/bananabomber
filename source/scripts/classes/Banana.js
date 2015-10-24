@@ -18,17 +18,15 @@ Banana.prototype.explode = function() {
 }
 
 Banana.prototype.getStyle = function() {
-    var x = this.position.x + 0.25
-    var y = this.position.y + 0.25
+    var x = this.position.x
+    var y = this.position.y
     var z = Math.round(this.position.y * 100)
-    var width = 1 - (0.25 * 2)
-    var height = 1 - (0.25 * 2)
     return {
         "zIndex": z,
-        "top": y + "em",
-        "left": x + "em",
-        "width": width + "em",
-        "height": height + "em",
+        "top": y * TILE + "em",
+        "left": x * TILE + "em",
+        "width": TILE + "em",
+        "height": TILE + "em",
         "backgroundColor": this.color,
         "position": "absolute",
     }

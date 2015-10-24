@@ -1,10 +1,7 @@
 node_modules
-bower_components
 
 ._*
 *.log
 .DS_Store
 
 build
-nw-apps
-gh-pages

@@ -8,14 +8,14 @@ var Monkey = function(protomonkey) {
     Game.monkeys[this.id] = this
 
     this.velocity = {
-        "minimum": 0.001,
-        "maximum": 0.075,
+        "minimum": 0.001 * TILE,
+        "maximum": 0.075 * TILE,
         "x": 0,
         "y": 0,
     }
     this.anchor = {
-        "x": 0.5,
-        "y": 0.75
+        "x": 0.5 * TILE,
+        "y": 0.75 * TILE
     }
     this.girth = 4 / 38
     this.friction = 0.000005

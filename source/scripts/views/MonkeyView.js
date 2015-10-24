@@ -12,12 +12,13 @@ var MonkeyView = React.createClass({
         var x = this.props.data.position.x - this.props.data.anchor.x
         var z = this.props.data.isDead ? 9999999 : Math.round((this.props.data.position.y - this.props.data.anchor.y) * 100)
         return {
-            "width": "1em",
-            "height": "1em",
+            "width": TILE + "em",
+            "height": TILE + "em",
             "position": "absolute",
-            "top": y.toFixed(2) + "em",
-            "left": x.toFixed(2) + "em",
+            "top": y + "em",
+            "left": x + "em",
             "zIndex": z,
+            backgroundColor: "blue",
             "opacity": this.props.data.isDead ? 0.75 : 1,
         }
     },

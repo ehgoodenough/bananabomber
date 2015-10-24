@@ -2,7 +2,7 @@ var World = function() {
     this.width = 19
     this.height = 13
     this.color = "rgb(200, 175, 150)"
-    
+
     this.walls = new Array()
     for(var x = 0; x < this.width; x++) {
         for(var y = 0; y < this.height; y++) {

@@ -28,19 +28,17 @@ Crate.prototype.explode = function() {
 }
 
 Crate.prototype.getStyle = function() {
-    var x = this.position.x + 0.075
-    var y = this.position.y + 0.075
+    var x = this.position.x
+    var y = this.position.y
     var z = Math.round(this.position.y * 100)
     var r = this.rotation
     var color = this.color
-    var width = 1 - 0.15
-    var height = 1 - 0.15
     return {
         "zIndex": z,
-        "top": y + "em",
-        "left": x + "em",
-        "width": width + "em",
-        "height": height + "em",
+        "top": y * TILE + "em",
+        "left": x * TILE + "em",
+        "width": TILE + "em",
+        "height": TILE + "em",
         "backgroundColor": color,
         "transform": "rotate(" + r + "deg)",
         "position": "absolute",

@@ -2,7 +2,7 @@ var Camera = function() {
     this.position = {
         x: 0, y: 0
     }
-    
+
     this.shake = 0
     this.direction = +10
 }

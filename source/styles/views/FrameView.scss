@@ -9,27 +9,27 @@
     overflow: hidden;
 }
 
-@mixin frame-view-aspect-ratio($awidth, $aheight, $twidth, $theight)
+@mixin frame-view-aspect-ratio($width, $height, $width, $height)
 {
-    @media(min-aspect-ratio: #{$awidth + "/" + $aheight})
+    @media(min-aspect-ratio: #{$width + "/" + $height})
     {
-        #frame-view._#{$awidth + "x" + $aheight}
+        #frame-view._#{$width + "x" + $height}
         {
             height: 100vh;
-            width: ($awidth/$aheight)*100vh;
-            font-size: (($awidth/$aheight)*100vh)/$twidth;
+            width: ($width/$height)*100vh;
+            font-size: (($width/$height)*100vh)/$width;
         }
     }
 
-    @media(max-aspect-ratio: #{$awidth + "/" + $aheight})
+    @media(max-aspect-ratio: #{$width + "/" + $height})
     {
-        #frame-view._#{$awidth + "x" + $aheight}
+        #frame-view._#{$width + "x" + $height}
         {
             width: 100vw;
-            height: ($aheight/$awidth)*100vw;
-            font-size: (($aheight/$awidth)*100vw)/$theight;
+            height: ($height/$width)*100vw;
+            font-size: (($height/$width)*100vw)/$height;
         }
     }
 }
 
-@include frame-view-aspect-ratio(19, 13, 19, 13);
+@include frame-view-aspect-ratio(640, 480);

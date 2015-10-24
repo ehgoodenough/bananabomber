@@ -17,8 +17,10 @@ Bomb.prototype.getStyle = function() {
     var red = Math.floor(255 * ease)
     var width = Math.abs(Math.sin(Math.pow(this.fuse, 2.5))) * 0.4 + 0.5
     var height = Math.abs(Math.cos(Math.pow(this.fuse, 2.5))) * 0.4 + 0.5
-    var x = this.position.x - (width / 2)
-    var y = this.position.y - (height / 2)
+    width = TILE
+    height = TILE
+    var x = (this.position.x - (1 / 2)) * TILE
+    var y = (this.position.y - (1 / 2)) * TILE
     var z = Math.round((this.position.y - 0.5) * 100)
     return {
         "zIndex": z,

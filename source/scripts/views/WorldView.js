@@ -1,5 +1,3 @@
-var px = 128
-
 var WorldView = React.createClass({
     render: function() {
         return (
@@ -11,8 +9,8 @@ var WorldView = React.createClass({
     renderStyle: function() {
         var world = this.props.data
         return {
-            width: world.width + "em",
-            height: world.height + "em",
+            width: world.width * TILE + "em",
+            height: world.height * TILE + "em",
             backgroundColor: world.color
         }
     },
@@ -37,11 +35,11 @@ var WorldTileView = React.createClass({
     renderStyle: function() {
         var wall = this.props.data
         return {
-            width: "1em",
-            height: "1em",
+            width: TILE + "em",
+            height: TILE + "em",
             position: "absolute",
-            top: wall.position.y + "em",
-            left: wall.position.x + "em",
+            top: wall.position.y * TILE + "em",
+            left: wall.position.x * TILE + "em",
             backgroundColor: wall.color,
         }
     }

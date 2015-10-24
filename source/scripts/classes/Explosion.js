@@ -107,10 +107,10 @@ Explosion.prototype.getStyle = function() {
     var y = Math.floor(this.position.y)
     return {
         zIndex: y * 100,
-        width: "1em",
-        height: "1em",
-        top: y + "em",
-        left: x + "em",
+        width: TILE + "em",
+        height: TILE + "em",
+        top: y * TILE + "em",
+        left: x * TILE + "em",
         position: "absolute",
         backgroundColor: this.color,
     }
