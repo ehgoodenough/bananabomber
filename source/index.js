@@ -35,7 +35,7 @@ window.Start = function() {
         "number": 1,
         "name": "red",
         "color": "#C00",
-        "position": {"x": 1.5 * TILE, "y": 1.5 * TILE},
+        "position": {"x": 1.5 * TILE, "y": -11.5 * TILE},
         "inputs": Inputs["red monkey"],
         "images": Images["red monkey"],
     })

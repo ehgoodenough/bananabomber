@@ -4,12 +4,34 @@ var Camera = function() {
     }
 
     this.shake = 0
+    this.speed = 10
     this.direction = +10
 }
 
 Camera.prototype.update = function(tick) {
-    // get a list of all monkeys alive
-    // to frame in the camera.
+    var monkeys = this.getActiveMonkeys()
+    var field = this.getField(monkeys, {
+        padding: TILE
+    })
+
+    var zoom = {
+        x: FRAME_WIDTH / field.width,
+        y: FRAME_HEIGHT / field.height
+    }
+
+    var target = {}
+    target.zoom = Math.min(zoom.x, zoom.y)
+    target.width = FRAME_WIDTH / target.zoom
+    target.height = FRAME_HEIGHT / target.zoom
+    target.x = field.x - (Math.abs(target.width - field.width) / 2)
+    target.y = field.y - (Math.abs(target.height - field.height) / 2)
+
+    this.position.x = target.x
+    this.position.y = target.y
+    this.zoom = target.zoom
+}
+
+Camera.prototype.getActiveMonkeys = function() {
     var monkeys = []
     for(var key in Game.monkeys) {
         var monkey = Game.monkeys[key]
@@ -17,8 +39,10 @@ Camera.prototype.update = function(tick) {
             monkeys.push(monkey)
         }
     }
-    // in case no monkeys are alive,
-    // provide *something* to look at.
+    return monkeys
+}
+
+Camera.prototype.getField = function(monkeys, options) {
     if(monkeys.length == 0) {
         monkeys.push({
             position: {
@@ -43,33 +67,17 @@ Camera.prototype.update = function(tick) {
             y1 = monkey.position.y
         }
     }
-
-    var xdiff = x1 - x0
-    var ydiff = y1 - y0
-
-    var xzoom = FRAME_WIDTH / xdiff
-    var yzoom = FRAME_HEIGHT / ydiff
-
-    if(xzoom < yzoom) {
-        this.zoom = xzoom
-        this.position.x = x0
-
-        var new_height = FRAME_HEIGHT / xzoom
-        this.position.y = y0 - (Math.abs(new_height - ydiff) / 2)
-    } else {
-        this.zoom = yzoom
-        this.position.y = y0
-
-        var new_width = FRAME_WIDTH / yzoom
-        this.position.x = x0 - (Math.abs(new_width - xdiff) / 2)
+    var padding = options.padding || 0
+    x0 -= padding
+    x1 += padding
+    y0 -= padding
+    y1 += padding
+    return {
+        x: x0,
+        y: y0,
+        width: x1 - x0,
+        height: y1 - y0
     }
-
-    /*if(this.shake > 0) {
-        this.shake -= tick
-        if(this.shake < 0) {
-            this.shake = 0
-        }
-    }*/
 }
 
 Camera.prototype.getStyle = function() {
