@@ -5,11 +5,13 @@ var Input = require("./scripts/systems/Input")
 var Renderer = require("./scripts/systems/Renderer")
 
 window.BLOCK = 32
+window.WIDTH = 640
+window.HEIGHT = 360
 
 window.game = new Game()
+game.update(1)
 
 Loop(function(tick) {
-    game.update(tick)
     Renderer.update(game)
 })
 

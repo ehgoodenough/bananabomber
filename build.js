@@ -1,14 +1,17 @@
 var BrowserSync = require("browser-sync")
+var TextWebpackPlugin = require("extract-text-webpack-plugin")
 var BumpWebpackPlugin = require("bump-webpack-plugin")
 var Webpack = require("webpack")
 
 var yargs = require("yargs")
-var gulp = require("gulp")
 var del = require("del")
+
+var package = require("./package.json")
 
 var webpack = Webpack({
     entry: {
-        "index.js": "./source/index.js"
+        "index.js": "./source/index.js",
+        "index.html": "./source/index.html",
     },
     output: {
         path: "./build/web",
@@ -16,18 +19,14 @@ var webpack = Webpack({
     },
     module: {
         loaders: [
-            {
-                test: /\.(png|jp?|gif|svg)$/i,
-                loaders: ["url-loader", "image-webpack-loader"],
-            },
-            {
-                test: /\.(jsx?)$/i,
-                exclude: /(node_modules)/,
-                loader: "babel-loader",
-            }
+            {test: /\.js$/i, exclude: /(node_modules)/, loader: "babel-loader"},
+            {test: /\.css$/i, loaders: ["style-loader", "css-loader"]},
+            {test: /\.html$/i, loader: TextWebpackPlugin.extract("html-loader")},
+            {test: /\.(png|jpe?g|gif|svg)$/i, loaders: ["url-loader", "image-webpack-loader"]},
         ]
     },
     plugins: [
+        new TextWebpackPlugin("index.html"),
         new BumpWebpackPlugin("package.json"),
     ]
 })
@@ -40,10 +39,6 @@ del("./build/web").then(function() {
             notify: false,
             port: 1234,
         })
-        gulp.src("./source/index.html")
-            .pipe(gulp.dest("./build/web"))
-        gulp.src("./source/index.css")
-            .pipe(gulp.dest("./build/web"))
         webpack.watch({}, function(error, results) {
             console.log("Building ``./source/index.js`` for [web].")
             if(results.compilation.errors.length > 0) {
@@ -55,12 +50,8 @@ del("./build/web").then(function() {
             }
         })
     } else {
-        gulp.src("./source/index.html")
-            .pipe(gulp.dest("./build/web"))
-        gulp.src("./source/index.css")
-            .pipe(gulp.dest("./build/web"))
         webpack.run(function(error, results) {
-            console.log("Building ``./source/index.js`` for [web].")
+            console.log("Building from ``./source/**/*`` for [web].")
             results.compilation.errors.forEach(function(error) {
                 console.log(error.toString())
             })

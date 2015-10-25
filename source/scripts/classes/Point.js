@@ -3,17 +3,24 @@ class Point {
         protopoint = protopoint || {}
         this.x = protopoint.x || protopoint.bx * BLOCK || 0
         this.y = protopoint.y || protopoint.by * BLOCK || 0
+        this.z = protopoint.z || protopoint.bz * BLOCK || 0
     }
     get bx() {
         return Math.floor(this.x / BLOCK)
     }
-    set bx(bx) {
-        this.x = bx * BLOCK
-    }
     get by() {
         return Math.floor(this.y / BLOCK)
     }
+    get bz() {
+        return Math.floor(this.z / BLOCK)
+    }
+    set bx(bx) {
+        this.x = bx * BLOCK
+    }
     set by(by) {
+        this.y = by * BLOCK
+    }
+    set bz(bz) {
         this.y = by * BLOCK
     }
     toString(format) {

@@ -3,6 +3,9 @@ var React = require("react")
 var FrameView = require("./FrameView")
 var ForEachView = require("./ForEachView")
 var GenericView = require("./GenericView")
+var CameraView = require("./CameraView")
+
+var Frame = require("../classes/Frame")
 
 var PrimaryView = React.createClass({
     render: function() {
@@ -12,8 +15,11 @@ var PrimaryView = React.createClass({
             )
         } else {
             return (
-                <FrameView width={640} height={360}>
-                    <ForEachView view={GenericView} data={this.state.blocks}/>
+                <FrameView width={Frame.width} height={Frame.height}>
+                    <CameraView data={this.state.camera}>
+                        <ForEachView view={GenericView} data={this.state.blocks}/>
+                        <ForEachView view={GenericView} data={this.state.arenas}/>
+                    </CameraView>
                 </FrameView>
             )
         }
