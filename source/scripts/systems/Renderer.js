@@ -1,11 +1,10 @@
 var React = require("react")
 
-var ReactRenderer = function(View) {
-    this.rendering = React.render(<View/>, document.body)
-}
+var PrimaryView = require("<scripts>/views/PrimaryView")
 
-ReactRenderer.prototype.update = function(data) {
-    this.rendering.setState(data || {})
+var ReactRenderer = {
+    rendering: React.render(<PrimaryView/>, document.body),
+    update: function(data) {this.rendering.setState(data || {})}
 }
 
 module.exports = ReactRenderer

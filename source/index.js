@@ -1,51 +1,13 @@
 var Renderer = require("<scripts>/systems/Renderer")
-
-var PrimaryView = require("<scripts>/views/PrimaryView")
-var renderer = new Renderer(PrimaryView)
-
+var Game = require("<scripts>/classes/Game")
 var Loop = require("<scripts>/systems/Loop")
 var Input = require("<scripts>/systems/Input")
 
-var ShortID = require("shortid")
-
-class Bomber {
-    consturctor() {
-        //?!
-    }
-}
-
-class Game {
-    constructor(protogame) {
-        this.add("bombers", new Bomber({
-            //?!
-        }))
-    }
-    add(group, object) {
-        if(!this[group]) {
-            this[group] = {}
-        }
-        object.game = this
-        object.id = ShortID.generate()
-        this[group][object.id] = object
-    }
-    remove(group, object) {
-        if(this[group] && this[group][object.id]) {
-            delete this[group][object.id]
-        }
-    }
-}
-
-window.game = new Game({
-    bombers: [
-        //?!
-    ],
-    arena: {
-        //!?
-    }
-})
+window.BLOCK = 32
+window.game = new Game()
 
 Loop(function(tick) {
-    renderer.update(game)
+    Renderer.update(game)
 })
 
 if(false) {
@@ -56,13 +18,13 @@ if(false) {
     window.FRAME_WIDTH = 640
     window.FRAME_HEIGHT = 360
 
-    window.Bomb = require("<scripts>/classes/Bomb")
-    window.Crate = require("<scripts>/classes/Crate")
-    window.World = require("<scripts>/classes/World")
-    window.Monkey = require("<scripts>/classes/Monkey")
-    window.Banana = require("<scripts>/classes/Banana")
-    window.Explosion = require("<scripts>/classes/Explosion")
-    window.Camera = require("<scripts>/classes/Camera")
+    window.Bomb = require("<scripts>/oldclasses/Bomb")
+    window.Crate = require("<scripts>/oldclasses/Crate")
+    window.World = require("<scripts>/oldclasses/World")
+    window.Monkey = require("<scripts>/oldclasses/Monkey")
+    window.Banana = require("<scripts>/oldclasses/Banana")
+    window.Explosion = require("<scripts>/oldclasses/Explosion")
+    window.Camera = require("<scripts>/oldclasses/Camera")
 
     window.Inputs = require("<scripts>/data/Inputs")
     window.Images = require("<scripts>/data/Images")
