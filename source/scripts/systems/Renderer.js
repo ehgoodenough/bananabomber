@@ -1,6 +1,6 @@
 var React = require("react")
 
-var PrimaryView = require("<scripts>/views/PrimaryView")
+var PrimaryView = require("../views/PrimaryView")
 
 var ReactRenderer = {
     rendering: React.render(<PrimaryView/>, document.body),

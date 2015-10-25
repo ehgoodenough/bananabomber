@@ -1,16 +1,19 @@
-var Renderer = require("<scripts>/systems/Renderer")
-var Game = require("<scripts>/classes/Game")
-var Loop = require("<scripts>/systems/Loop")
-var Input = require("<scripts>/systems/Input")
+var Game = require("./scripts/classes/Game")
+
+var Loop = require("./scripts/systems/Loop")
+var Input = require("./scripts/systems/Input")
+var Renderer = require("./scripts/systems/Renderer")
 
 window.BLOCK = 32
+
 window.game = new Game()
 
 Loop(function(tick) {
+    game.update(tick)
     Renderer.update(game)
 })
 
-if(false) {
+/*if(false) {
     window.React = require("react")
     window.Id = require("shortid")
 
@@ -114,18 +117,6 @@ if(false) {
             if(!this.state) {
                 return <div/>
             } else {
-                /*var renderings = []
-                for(var type in Game) {
-                    for(var id in Game[type]) {
-                        var object = Game[type][id]
-                        renderings.push(object.render())
-                    }
-                }
-                return (
-                    <FrameView aspect-ratio="19x13">
-                        {renderings}
-                    </FrameView>
-                )*/
                 return (
                     <FrameView aspect-ratio={FRAME_WIDTH + "x" + FRAME_HEIGHT}>
                         <CameraView data={this.state.camera}>
@@ -157,4 +148,4 @@ if(false) {
     })
 
     React.render(<Bananabomber/>, document.body)
-}
+}*/

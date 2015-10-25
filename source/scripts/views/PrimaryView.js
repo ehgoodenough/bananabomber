@@ -1,6 +1,8 @@
 var React = require("react")
 
-var FrameView = require("<scripts>/views/FrameView")
+var FrameView = require("./FrameView")
+var ForEachView = require("./ForEachView")
+var GenericView = require("./GenericView")
 
 var PrimaryView = React.createClass({
     render: function() {
@@ -11,9 +13,7 @@ var PrimaryView = React.createClass({
         } else {
             return (
                 <FrameView width={640} height={360}>
-                    <span style={{fontSize: "32em"}}>
-                        Hello World!
-                    </span>
+                    <ForEachView view={GenericView} data={this.state.blocks}/>
                 </FrameView>
             )
         }
