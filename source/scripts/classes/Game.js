@@ -29,8 +29,8 @@ class Game {
                 color: protogame.bombers[index].color,
                 inputs: protogame.bombers[index].inputs,
                 position: {
-                    bx: Math.floor(Math.random() * 19),
-                    by: Math.floor(Math.random() * 11)
+                    bx: 0 * Math.floor(Math.random() * 19),
+                    by: 0 * Math.floor(Math.random() * 11)
                 },
             }))
         }

@@ -11,7 +11,7 @@ class Bomber extends Entity {
         this.position = new Point(protobomber.position)
         this.isDead = protobomber.isDead || false
         this.color = protobomber.color || "#CCC"
-        this.speed = protobomber.speed || 100
+        this.speed = protobomber.speed || (BLOCK * 4)
         this.inputs = protobomber.inputs
     }
     update(tick) {
