@@ -1,12 +1,17 @@
-class Arena {
-    constructor(protoarena) {
-        this.width = protoarena.width
-        this.height = protoarena.height
+var Entity = require("./Entity")
+
+class Arena extends Entity {
+    constructor(protoarena = {}) {
+        super(protoarena)
+        this.bwidth = protoarena.bwidth
+        this.bheight = protoarena.bheight
+        this.color = protoarena.color
     }
     render() {
         return {
-            width: this.width * BLOCK,
-            height: this.height * BLOCK,
+            color: this.color,
+            width: this.bwidth * BLOCK,
+            height: this.bheight * BLOCK,
         }
     }
 }

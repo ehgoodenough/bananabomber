@@ -4,26 +4,34 @@ var Block = require("./Block")
 var Arena = require("./Arena")
 var Camera = require("./Camera")
 var Bomber = require("./Bomber")
+var Frame = require("./Frame")
+var Entity = require("./Entity")
 
 class Game {
     constructor(protogame) {
-        this.add("bombers", new Bomber({
-            position: {bx: 0, by: 0}
+        this.put("frame", new Frame({
+            width: 640, height: 360,
+            color: "#96C0CE"
         }))
-        this.add("bombers", new Bomber({
-            position: {bx: 0, by: 13}
+
+        this.put("arena", new Arena({
+            bwidth: 19, bheight: 11,
+            color: "#FEF6EB",
         }))
-        this.add("bombers", new Bomber({
-            position: {bx: 19, by: 0}
-        }))
-        this.add("bombers", new Bomber({
-            position: {bx: 19, by: 13}
-        }))
-        this.add("arenas", new Arena({
-            width: 19, height: 13,
-        }))
+
+        for(var index in protogame.bombers) {
+            this.add("bombers", new Bomber({
+                color: protogame.bombers[index].color,
+                inputs: protogame.bombers[index].inputs,
+                position: {
+                    bx: Math.floor(Math.random() * this.arena.bwidth),
+                    by: Math.floor(Math.random() * this.arena.bheight)
+                },
+            }))
+        }
         this.put("camera", new Camera({
             position: {x: 0, y: 0},
+            padding: 1.5 * BLOCK,
         }))
     }
     put(label, entity) {
@@ -63,11 +71,11 @@ class Game {
     }
     update(tick) {
         for(var label in this) {
-            if(!!this[label].update) {
+            if(this[label] instanceof Entity) {
                 this[label].update(tick)
             } else {
                 for(var id in this[label]) {
-                    if(!!this[label][id].update) {
+                    if(this[label][id] instanceof Entity) {
                         this[label][id].update(tick)
                     }
                 }

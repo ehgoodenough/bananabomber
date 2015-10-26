@@ -1,7 +1,9 @@
 var Point = require("./Point")
+var Entity = require("./Entity")
 
-class Block {
-    constructor(protoblock) {
+class Block extends Entity {
+    constructor(protoblock = {}) {
+        super(protoblock)
         this.type = protoblock.type || "wall"
         this.position = new Point(protoblock.position)
     }

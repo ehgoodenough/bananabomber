@@ -1,13 +1,6 @@
 var React = require("react")
 
 var FrameView = React.createClass({
-    getDefaultProps: function() {
-        return {
-            width: 640,
-            height: 480,
-            color: "#EEE",
-        }
-    },
     render: function() {
         return (
             <div {...this.props}
@@ -16,9 +9,9 @@ var FrameView = React.createClass({
         )
     },
     renderStyle: function() {
-        var width = this.props.width
-        var height = this.props.height
-        var color = this.props.color
+        var width = this.props.data.width || 640
+        var height = this.props.data.height || 480
+        var color = this.props.data.color || "#EEE"
         return {
             top: "0rem",
             left: "0rem",

@@ -1,9 +1,9 @@
 class Entity {
-    constructor(protoentity) {
-        //var entity = this
-        //for(var key in protoentity) {
-        //    entity[key] = protoentity[key]
-        //}
+    update() {
+        return "!"
+    }
+    render() {
+        return {}
     }
     matches(query) {
         for(var key in query) {

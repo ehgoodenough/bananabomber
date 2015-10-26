@@ -2,7 +2,7 @@ var React = require("react")
 
 var GenericView = React.createClass({
     render: function() {
-        var rendering = this.props.data.render()
+        var rendering = this.props.data.render() || {}
         return (
             <div style={{
                 position: "absolute",

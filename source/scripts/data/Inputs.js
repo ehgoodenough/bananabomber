@@ -1,32 +1,32 @@
 var Inputs = {
-    "red monkey": {
+    "wasd": {
         "move north": "W",
         "move south": "S",
         "move west": "A",
         "move east": "D",
         "drop bomb": "E"
     },
-    "green monkey": {
+    "jikl": {
         "move north": "I",
         "move south": "K",
         "move west": "J",
         "move east": "L",
         "drop bomb": "O"
     },
-    "blue monkey": {
-        "move north": "<up>",
-        "move south": "<down>",
-        "move west": "<left>",
-        "move east": "<right>",
-        "drop bomb": "<space>"
-    },
-    "purple monkey": {
+    "fght": {
         "move north": "T",
         "move south": "G",
         "move west": "F",
         "move east": "H",
         "drop bomb": "Y"
+    },
+    "arrows": {
+        "move north": "<up>",
+        "move south": "<down>",
+        "move west": "<left>",
+        "move east": "<right>",
+        "drop bomb": "<space>"
     }
 }
 
-module.exports = Inputs
+export default Inputs

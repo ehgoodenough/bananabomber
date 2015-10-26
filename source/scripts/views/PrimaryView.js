@@ -15,10 +15,11 @@ var PrimaryView = React.createClass({
             )
         } else {
             return (
-                <FrameView width={Frame.width} height={Frame.height}>
+                <FrameView data={this.state.frame}>
                     <CameraView data={this.state.camera}>
+                        <GenericView data={this.state.arena}/>
                         <ForEachView view={GenericView} data={this.state.blocks}/>
-                        <ForEachView view={GenericView} data={this.state.arenas}/>
+                        <ForEachView view={GenericView} data={this.state.bombers}/>
                     </CameraView>
                 </FrameView>
             )
