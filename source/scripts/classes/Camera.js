@@ -14,14 +14,6 @@ class Camera extends Entity {
             return bomber.position
         }))
 
-        // for debugging :]
-        rectangle = new Rectangle([
-            new Point({bx: 0, by: 0}),
-            new Point({bx: this.game.arena.bwidth, by: 0}),
-            new Point({bx: 0, by: this.game.arena.bheight}),
-            new Point({bx: this.game.arena.bwidth, by: this.game.arena.bheight}),
-        ])
-
         rectangle.x0 -= this.padding
         rectangle.x1 += this.padding
         rectangle.y0 -= this.padding

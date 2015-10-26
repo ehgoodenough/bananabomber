@@ -29,8 +29,8 @@ class Bomber extends Entity {
         return {
             width: this.width,
             height: this.height,
-            x: this.position.x - (this.width / 2),
-            y: this.position.y - (this.height / 2),
+            x: this.position.x,
+            y: this.position.y,
             color: this.color,
         }
     }

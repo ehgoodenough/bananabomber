@@ -6,6 +6,9 @@ var Camera = require("./Camera")
 var Bomber = require("./Bomber")
 var Frame = require("./Frame")
 var Entity = require("./Entity")
+var Point = require("./Point")
+
+var Images = require("../data/Images")
 
 class Game {
     constructor(protogame) {
@@ -15,8 +18,10 @@ class Game {
         }))
 
         this.put("arena", new Arena({
-            bwidth: 19, bheight: 11,
-            color: "#FEF6EB",
+            image: Images.arena,
+            width: (19 + 8) * BLOCK,
+            height: (11 + 20) * BLOCK,
+            x: -4 * BLOCK, y: -12 * BLOCK
         }))
 
         for(var index in protogame.bombers) {
@@ -24,8 +29,8 @@ class Game {
                 color: protogame.bombers[index].color,
                 inputs: protogame.bombers[index].inputs,
                 position: {
-                    bx: Math.floor(Math.random() * this.arena.bwidth),
-                    by: Math.floor(Math.random() * this.arena.bheight)
+                    bx: Math.floor(Math.random() * 19),
+                    by: Math.floor(Math.random() * 11)
                 },
             }))
         }
