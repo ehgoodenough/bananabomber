@@ -1,6 +1,6 @@
 {
   "name": "bananabomber",
-  "version": "3.1.336",
+  "version": "3.1.593",
   "description": "A couch-multiplayer game about bombs.",
   "license": {
     "type": "mit",
@@ -11,7 +11,6 @@
     "url": "https://github.com/ehgoodenough/bananabomber.git"
   },
   "dependencies": {
-    "browser-sync": "^2.9.11",
     "expect.js": "^0.3.1",
     "raf": "^3.1.0",
     "react": "^0.12.2",
@@ -21,6 +20,7 @@
   "devDependencies": {
     "babel-core": "^5.8.29",
     "babel-loader": "^5.3.2",
+    "browser-sync": "^2.9.11",
     "bump-webpack-plugin": "^0.1.0",
     "css-loader": "^0.21.0",
     "del": "^2.0.2",

@@ -9,6 +9,8 @@ var Entity = require("./Entity")
 var Point = require("./Point")
 
 var Images = require("../data/Images")
+var Colors = require("../data/Colors")
+var Inputs = require("../data/Inputs")
 
 class Game {
     constructor(protogame) {
@@ -18,25 +20,33 @@ class Game {
         }))
 
         this.put("arena", new Arena({
-            image: Images.arena,
-            width: (19 + 8) * BLOCK,
-            height: (11 + 20) * BLOCK,
-            x: -4 * BLOCK, y: -12 * BLOCK
+            width: 19 * BLOCK,
+            height: 11 * BLOCK,
         }))
 
-        for(var index in protogame.bombers) {
-            this.add("bombers", new Bomber({
-                color: protogame.bombers[index].color,
-                inputs: protogame.bombers[index].inputs,
-                position: {
-                    bx: 0 * Math.floor(Math.random() * 19),
-                    by: 0 * Math.floor(Math.random() * 11)
-                },
-            }))
-        }
+        this.add("bombers", new Bomber({
+            color: Colors["red"],
+            inputs: Inputs["wasd"],
+            position: {bx: 0, by: 0}
+        }))
+        this.add("bombers", new Bomber({
+            color: Colors["purple"],
+            inputs: Inputs["arrows"],
+            position: {bx: 19-1, by: 11-1}
+        }))
+        //for(var index in protogame.bombers) {
+        //    this.add("bombers", new Bomber({
+        //        color: protogame.bombers[index].color,
+        //        inputs: protogame.bombers[index].inputs,
+        //         position: {
+        //             bx: Math.floor(Math.random() * 19),
+        //             by: Math.floor(Math.random() * 11)
+        //         },
+        //     }))
+        // }
         this.put("camera", new Camera({
             position: {x: 0, y: 0},
-            padding: 1.5 * BLOCK,
+            padding: 2 * BLOCK,
         }))
     }
     put(label, entity) {

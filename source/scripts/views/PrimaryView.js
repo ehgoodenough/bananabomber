@@ -19,6 +19,7 @@ var PrimaryView = React.createClass({
                 <FrameView data={this.state.frame}>
                     <CameraView data={this.state.camera}>
                         <GenericView data={this.state.arena}/>
+                        <ArenaView data={this.state.arena}/>
                         <ForEachView view={GenericView} data={this.state.blocks}/>
                         <ForEachView view={GenericView} data={this.state.bombers}/>
                     </CameraView>

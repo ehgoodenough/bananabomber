@@ -10,9 +10,13 @@ class Camera extends Entity {
     }
     update(tick) {
         var bombers = this.game.get("bombers", {isDead: false})
-        var rectangle = new Rectangle(bombers.map(function(bomber) {
-            return bomber.position
-        }))
+        //var rectangle = new Rectangle(bombers.map(function(bomber) {
+        //    return bomber.position
+        //}))
+        var rectangle = new Rectangle([
+            new Point({bx: 0, by: 0 - 1 - 1}),
+            new Point({bx: 19, by: 11 - 1})
+        ])
 
         rectangle.x0 -= this.padding
         rectangle.x1 += this.padding
