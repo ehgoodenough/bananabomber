@@ -7,31 +7,22 @@ var tan = "#FEF6EB"
 var gray = "#BEB9B5"
 var red = "#C25B56"
 
+var GenericView = require("./GenericView")
+var ForEachView = require("./ForEachView")
+
 var ArenaView = React.createClass({
     render: function() {
         return (
-            <div>
-                <div style={this.renderCrowdStyle()}/>
-                <div style={this.renderFieldStyle()}/>
-                {this.renderAudience()}
+            <div style={this.renderStyle()}>
+                <ForEachView view={GenericView} data={this.props.data.blocks}/>
             </div>
         )
     },
-    renderCrowdStyle: function() {
-        return {
-            top: (-5 * BLOCK) + "em",
-            left: (-5 * BLOCK) + "em",
-            width: this.props.data.width + (10 * BLOCK) + "em",
-            height: this.props.data.height + (10 * BLOCK) + "em",
-            position: "absolute",
-            backgroundColor: gray
-        }
-    },
-    renderFieldStyle: function() {
+    renderStyle: function() {
         var x = 0 - (BLOCK / 1.5)
         var y = 0 - (BLOCK * 2)
-        var width = this.props.data.width + (BLOCK / 1.5) + (BLOCK / 1.5)
-        var height = this.props.data.height + (BLOCK * 2) + (BLOCK / 8)
+        var width = (this.props.data.bwidth * BLOCK) + (BLOCK / 1.5) + (BLOCK / 1.5)
+        var height = (this.props.data.bheight * BLOCK) + (BLOCK * 2) + (BLOCK / 8)
         return {
             top: y + "em",
             left: x + "em",
@@ -44,26 +35,6 @@ var ArenaView = React.createClass({
             borderRight: (BLOCK / 1.5) + "em" + " solid " + light_blue,
             borderBottom: (BLOCK / 8) + "em" + " solid " + dark_blue,
         }
-    },
-    renderAudience: function() {
-        var renderings = []
-        for(var key in this.props.data.audience) {
-            var dude = this.props.data.audience[key]
-            renderings.push(
-                <div key={key} style={{
-                    top: Math.floor(dude.y + dude.qy) + "em",
-                    left: Math.floor(dude.x + dude.qx) + "em",
-                    width: dude.width + "em",
-                    height: dude.height + "em",
-                    zIndex: dude.z,
-                    backgroundColor: dude.color,
-                    position: "absolute",
-                    borderRadius: "10%",
-                    transform: "rotate(" + dude.angle + "deg)"
-                }}/>
-            )
-        }
-        return renderings
     }
 })
 

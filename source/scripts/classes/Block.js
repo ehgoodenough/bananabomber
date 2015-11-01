@@ -4,16 +4,17 @@ var Entity = require("./Entity")
 class Block extends Entity {
     constructor(protoblock = {}) {
         super(protoblock)
-        this.type = protoblock.type || "wall"
+        this.density = protoblock.density || 0
         this.position = new Point(protoblock.position)
+        this.color = protoblock.color || "brown"
     }
     render() {
         return {
-            color: "red",
             width: BLOCK,
             height: BLOCK,
             x: this.position.x,
             y: this.position.y,
+            color: this.color,
         }
     }
 }

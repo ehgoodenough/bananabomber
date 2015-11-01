@@ -1,6 +1,6 @@
 class Entity {
     update() {
-        return "!"
+        return null
     }
     render() {
         return {}

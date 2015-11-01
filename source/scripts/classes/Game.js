@@ -12,38 +12,72 @@ var Images = require("../data/Images")
 var Colors = require("../data/Colors")
 var Inputs = require("../data/Inputs")
 
+class Entities {
+    add(entity) {
+        entity.game = this
+        entity.id = ShortID.generate()
+        entity.xy = entity.position.toString("block")
+        this.byID[entity.id] = entity
+        this.byXY[entity.xy] = entity
+    }
+    remove(entity) {
+        delete this.byID[entity.id]
+        delete this.byXY[entity.xy]
+    }
+    get(query) {
+        var entities = []
+        for(var id in this.byID) {
+            var entity = this.byID[id]
+            if(entity.matches(query)) {
+                entities.push(entity)
+            }
+        }
+        return entities
+    }
+    update(tick) {
+        for(var id in this.byID) {
+            this.byID[id].update(tick)
+        }
+    }
+}
+
 class Game {
     constructor(protogame) {
         this.put("frame", new Frame({
-            width: 640, height: 360,
-            color: "#96C0CE"
+            width: 1280, height: 720,
+            color: "#BEB9B5"
         }))
 
         this.put("arena", new Arena({
-            width: 19 * BLOCK,
-            height: 11 * BLOCK,
+            bwidth: 17,
+            bheight: 11,
         }))
 
-        this.add("bombers", new Bomber({
-            color: Colors["red"],
-            inputs: Inputs["wasd"],
-            position: {bx: 0, by: 0}
-        }))
-        this.add("bombers", new Bomber({
-            color: Colors["purple"],
-            inputs: Inputs["arrows"],
-            position: {bx: 19-1, by: 11-1}
-        }))
-        //for(var index in protogame.bombers) {
-        //    this.add("bombers", new Bomber({
-        //        color: protogame.bombers[index].color,
-        //        inputs: protogame.bombers[index].inputs,
-        //         position: {
-        //             bx: Math.floor(Math.random() * 19),
-        //             by: Math.floor(Math.random() * 11)
-        //         },
-        //     }))
-        // }
+        for(var bx = 0; bx < this.arena.bwidth; bx++) {
+            for(var by = 0; by < this.arena.bheight; by++) {
+                if(bx % 2 == 0 || by % 2 == 0) {
+                    this.add("blocks", new Block({
+                        position: {bx: bx, by: by},
+                        color: Colors.crates[Math.floor(Math.random() * Colors.crates.length)],
+                        density: 0
+                    }))
+                } else {
+                    this.add("blocks", new Block({
+                        position: {bx: bx, by: by},
+                        color: Colors.arena.darkblue,
+                        density: 1
+                    }))
+                }
+            }
+        }
+
+        for(var index in protogame.bombers) {
+            this.add("bombers", new Bomber({
+                color: protogame.bombers[index].color,
+                inputs: protogame.bombers[index].inputs,
+            }))
+        }
+
         this.put("camera", new Camera({
             position: {x: 0, y: 0},
             padding: 2 * BLOCK,
@@ -58,7 +92,7 @@ class Game {
         entity.game = this
         entity.id = ShortID.generate()
         if(this[label] == undefined) {
-            this[label] = new Object()
+            this[label] = {}
         }
         this[label][entity.id] = entity
     }
