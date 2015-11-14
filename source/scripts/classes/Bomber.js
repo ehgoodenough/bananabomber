@@ -7,26 +7,20 @@ class Bomber extends Entity {
     constructor(protobomber = {}) {
         super("Bomber", protobomber)
 
+        this.width = BLOCK * 0.9
+        this.height = BLOCK * 0.9
+
         if(!!protobomber.position) {
             this.position = new Point(protobomber.position)
         } else {
-            //var cratekey = Object.keys(this.game.arena.crates)[Math.floor(Math.random() * Object.keys(this.game.arena.crates).length)]
-            //var crate = this.game.arena.crates[cratekey]
-            //this.game.remove("blocks", crate)
-            //this.position = new Point(crate.position)
             this.position = new Point()
         }
 
-        var bx = this.position.bx
-        var by = this.position.by
-        //get all crates (not blocks) around you
-        //pick on at random
-        //get all crates (not blocks) around you and the random crate
-        //pick a different one at random
-        //remove those two blocks
+        this.position.x += this.width / 2
+        this.position.y += this.height / 2
+        this.position.x += (BLOCK - this.width) / 2
+        this.position.y += (BLOCK - this.height) / 2
 
-        this.width = protobomber.width || BLOCK
-        this.height = protobomber.height || BLOCK
         this.velocity = new Point()
         this.isDead = protobomber.isDead || false
         this.color = protobomber.color || "#111"
@@ -53,8 +47,8 @@ class Bomber extends Entity {
     render() {
         return {
             color: this.color,
-            x: this.position.x,
-            y: this.position.y,
+            x: this.position.x - (this.width / 2),
+            y: this.position.y - (this.height / 2),
             width: this.width,
             height: this.height,
         }

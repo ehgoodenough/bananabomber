@@ -23,29 +23,27 @@ class Game {
             bheight: 11,
         }))
 
-        for(var bx = 0; bx < this.arena.bwidth; bx++) {
-            for(var by = 0; by < this.arena.bheight; by++) {
-                if(bx % 2 == 0 || by % 2 == 0) {
-                    this.add("blocks", new Block({
-                        position: {bx: bx, by: by},
-                        color: Colors.crates[Math.floor(Math.random() * Colors.crates.length)],
-                        density: 0
-                    }))
-                } else {
-                    this.add("blocks", new Block({
-                        position: {bx: bx, by: by},
-                        color: Colors.arena.darkblue,
-                        density: 1
-                    }))
-                }
-            }
-        }
+        // for(var bx = 0; bx < this.arena.bwidth; bx++) {
+        //     for(var by = 0; by < this.arena.bheight; by++) {
+        //         if(bx % 2 == 0 || by % 2 == 0) {
+        //             this.add("blocks", new Block({
+        //                 position: {bx: bx, by: by},
+        //                 color: Colors.crates[Math.floor(Math.random() * Colors.crates.length)],
+        //                 density: 0
+        //             }))
+        //         } else {
+        //             this.add("blocks", new Block({
+        //                 position: {bx: bx, by: by},
+        //                 color: Colors.arena.darkblue,
+        //                 density: 1
+        //             }))
+        //         }
+        //     }
+        // }
 
         for(var index in protogame.bombers) {
-            this.add("bombers", new Bomber({
-                color: protogame.bombers[index].color,
-                inputs: protogame.bombers[index].inputs,
-            }))
+            var protobomber = protogame.bombers[index]
+            this.add("bombers", new Bomber(protobomber))
         }
 
         this.put("camera", new Camera({

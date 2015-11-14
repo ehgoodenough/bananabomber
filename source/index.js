@@ -11,10 +11,10 @@ window.BLOCK = 32
 
 var game = new Game({
     bombers: [
-        {color: Colors.bombers.red, inputs: Inputs["wasd"]},
-        {color: Colors.bombers.green, inputs: Inputs["fght"]},
-        {color: Colors.bombers.blue, inputs: Inputs["jikl"]},
-        {color: Colors.bombers.purple, inputs: Inputs["arrows"]},
+        {color: Colors.bombers.red, inputs: Inputs["wasd"], position: {bx: 0+2, by: 0+2}},
+        {color: Colors.bombers.green, inputs: Inputs["fght"], position: {bx: 17-1-2, by: 0+2}},
+        {color: Colors.bombers.blue, inputs: Inputs["jikl"], position: {bx: 0+2, by: 11-1-2}},
+        {color: Colors.bombers.purple, inputs: Inputs["arrows"], position: {bx: 17-1-2, by: 11-1-2}},
     ]
 })
 
