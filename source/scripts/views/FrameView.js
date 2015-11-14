@@ -27,10 +27,10 @@ class FrameView extends React.Component {
         }
     }
     componentDidMount() {
-        window.addEventListener("resize", this.onResize)
+        window.addEventListener("resize", () => this.onResize)
     }
     componentWillUnmount() {
-        window.removeEventListener("resize", this.onResize)
+        window.removeEventListener("resize", () => this.onResize)
     }
     onResize() {
         this.forceUpdate()

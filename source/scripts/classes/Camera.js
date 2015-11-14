@@ -14,8 +14,8 @@ class Camera extends Entity {
         //    return bomber.position
         //}))
         var rectangle = new Rectangle([
-            new Point({bx: 0, by: 0 - 1 - 1}),
-            new Point({bx: 19, by: 11 - 1})
+            new Point({bx: 0, by: 0}),
+            new Point({bx: 17, by: 11 })
         ])
 
         rectangle.x0 -= this.padding
