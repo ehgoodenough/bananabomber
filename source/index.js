@@ -17,6 +17,7 @@ var game = new Game({
         {color: Colors.bombers.purple, inputs: Inputs["arrows"], position: {bx: 17-1-2, by: 11-1-2}},
     ]
 })
+window.game = game
 
 Loop(function(tick) {
     game.update(tick)

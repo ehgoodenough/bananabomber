@@ -7,8 +7,8 @@ class Bomber extends Entity {
     constructor(protobomber = {}) {
         super("Bomber", protobomber)
 
-        this.width = BLOCK * 0.9
-        this.height = BLOCK * 0.9
+        this.width = BLOCK * 0.75
+        this.height = BLOCK * 0.75
 
         if(!!protobomber.position) {
             this.position = new Point(protobomber.position)

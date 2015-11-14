@@ -12,6 +12,7 @@ class GenericView extends React.Component {
                 height: Math.round(rendering.height || 16) + "em",
                 backgroundColor: rendering.color || "#FF69B4",
                 borderRadius: (rendering.roundness || 0) + "em",
+                transform: "rotate(" + rendering.rotation + "deg)",
             }}/>
         )
     }
