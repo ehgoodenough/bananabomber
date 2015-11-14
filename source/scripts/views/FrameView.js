@@ -1,14 +1,14 @@
 var React = require("react")
 
-var FrameView = React.createClass({
-    render: function() {
+class FrameView extends React.Component {
+    render() {
         return (
             <div {...this.props}
                 className="frame-view"
                 style={this.renderStyle()}/>
         )
-    },
-    renderStyle: function() {
+    }
+    renderStyle() {
         var width = this.props.data.width || 640
         var height = this.props.data.height || 480
         var color = this.props.data.color || "#EEE"
@@ -25,16 +25,16 @@ var FrameView = React.createClass({
             height: window.innerWidth / window.innerHeight > width / height ? 100 + "vh" : height / width * 100 + "vw",
             fontSize: window.innerWidth / window.innerHeight > width / height ? (width / height * 100) / width + "vh" : (height / width * 100) / height + "vw",
         }
-    },
-    componentDidMount: function() {
+    }
+    componentDidMount() {
         window.addEventListener("resize", this.onResize)
-    },
-    componentWillUnmount: function() {
+    }
+    componentWillUnmount() {
         window.removeEventListener("resize", this.onResize)
-    },
-    onResize: function() {
+    }
+    onResize() {
         this.forceUpdate()
     }
-})
+}
 
-module.exports = FrameView
+export default FrameView

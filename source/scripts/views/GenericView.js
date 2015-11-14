@@ -1,7 +1,7 @@
 var React = require("react")
 
-var GenericView = React.createClass({
-    render: function() {
+class GenericView extends React.Component {
+    render() {
         var rendering = this.props.data.render() || {}
         return (
             <div style={{
@@ -15,6 +15,6 @@ var GenericView = React.createClass({
             }}/>
         )
     }
-})
+}
 
-module.exports = GenericView
+export default GenericView

@@ -1,7 +1,7 @@
 var React = require("react")
 
-var ForEachView = React.createClass({
-    render: function() {
+class ForEachView extends React.Component {
+    render() {
         var renderings = new Array()
         for(var key in this.props.data) {
             var data = this.props.data[key]
@@ -17,6 +17,6 @@ var ForEachView = React.createClass({
             </div>
         )
     }
-})
+}
 
-module.exports = ForEachView
+export default ForEachView

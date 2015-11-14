@@ -1,17 +1,12 @@
 var raf = require("raf")
 
-var Loop = function(alpha, omega) {
-    var func = alpha instanceof Function ? alpha : omega
-    var maxtick = alpha instanceof Function ? 0 : alpha
-    return (function loop(tick, time) {
-        tick += (Date.now() - time) / 1000
-        if(tick >= maxtick) {
-            func(tick)
-            tick = 0
-        }
-        time = Date.now()
-        raf(loop.bind(this, tick, time))
-    })(maxtick, Date.now())
+function Loop(func) {
+    return (function loop(tick) {
+        tick = (Date.now() - tick) / 1000
+        tick = Math.min(tick, 1000)
+        func(tick)
+        raf(loop.bind(this, Date.now()))
+    })(Date.now())
 }
 
-module.exports = Loop
+export default Loop

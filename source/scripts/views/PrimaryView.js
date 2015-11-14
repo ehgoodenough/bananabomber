@@ -8,8 +8,8 @@ var ArenaView = require("./ArenaView")
 
 var Frame = require("../classes/Frame")
 
-var PrimaryView = React.createClass({
-    render: function() {
+class PrimaryView extends React.Component {
+    render() {
         if(!this.state) {
             return (
                 <div/>
@@ -26,6 +26,6 @@ var PrimaryView = React.createClass({
             )
         }
     }
-})
+}
 
-module.exports = PrimaryView
+export default PrimaryView

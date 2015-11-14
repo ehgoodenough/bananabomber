@@ -1,7 +1,7 @@
 var React = require("react")
 
-var CameraView = React.createClass({
-    render: function() {
+class CameraView extends React.Component {
+    render() {
         return (
             <div style={{position: "absolute",
                 top: (this.props.data.position.y || 0) * -1 + "em",
@@ -11,6 +11,6 @@ var CameraView = React.createClass({
             </div>
         )
     }
-})
+}
 
-module.exports = CameraView
+export default CameraView

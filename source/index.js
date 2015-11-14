@@ -9,7 +9,7 @@ var Inputs = require("./scripts/data/Inputs")
 
 window.BLOCK = 32
 
-window.game = new Game({
+var game = new Game({
     bombers: [
         {color: Colors.bombers.red, inputs: Inputs["wasd"]},
         {color: Colors.bombers.green, inputs: Inputs["fght"]},

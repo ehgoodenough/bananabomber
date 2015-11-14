@@ -8,38 +8,8 @@ var Frame = require("./Frame")
 var Entity = require("./Entity")
 var Point = require("./Point")
 
-var Images = require("../data/Images")
 var Colors = require("../data/Colors")
 var Inputs = require("../data/Inputs")
-
-class Entities {
-    add(entity) {
-        entity.game = this
-        entity.id = ShortID.generate()
-        entity.xy = entity.position.toString("block")
-        this.byID[entity.id] = entity
-        this.byXY[entity.xy] = entity
-    }
-    remove(entity) {
-        delete this.byID[entity.id]
-        delete this.byXY[entity.xy]
-    }
-    get(query) {
-        var entities = []
-        for(var id in this.byID) {
-            var entity = this.byID[id]
-            if(entity.matches(query)) {
-                entities.push(entity)
-            }
-        }
-        return entities
-    }
-    update(tick) {
-        for(var id in this.byID) {
-            this.byID[id].update(tick)
-        }
-    }
-}
 
 class Game {
     constructor(protogame) {
