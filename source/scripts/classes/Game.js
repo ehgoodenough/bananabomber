@@ -23,23 +23,34 @@ class Game {
             bheight: 11,
         }))
 
-        // for(var bx = 0; bx < this.arena.bwidth; bx++) {
-        //     for(var by = 0; by < this.arena.bheight; by++) {
-        //         if(bx % 2 == 0 || by % 2 == 0) {
-        //             this.add("blocks", new Block({
-        //                 position: {bx: bx, by: by},
-        //                 color: Colors.crates[Math.floor(Math.random() * Colors.crates.length)],
-        //                 density: 0
-        //             }))
-        //         } else {
-        //             this.add("blocks", new Block({
-        //                 position: {bx: bx, by: by},
-        //                 color: Colors.arena.darkblue,
-        //                 density: 1
-        //             }))
-        //         }
-        //     }
-        // }
+        for(var bx = 0; bx < this.arena.bwidth; bx++) {
+            for(var by = 0; by < this.arena.bheight; by++) {
+                if(bx % 2 == 0 || by % 2 == 0) {
+                    var hasBomber = false
+                    for(var index in protogame.bombers) {
+                        var protobomber = protogame.bombers[index]
+                        if(Math.abs(protobomber.position.bx - bx) < 2
+                        && Math.abs(protobomber.position.by - by) < 2) {
+                            hasBomber = true
+                        }
+                    }
+                    if(!hasBomber) {
+                        this.add("blocks", new Block({
+                            position: {bx: bx, by: by},
+                            color: Colors.crates[Math.floor(Math.random() * Colors.crates.length)],
+                            rotation: Math.floor(Math.random() * 12) - 6,
+                            type: "crate"
+                        }), "position")
+                    }
+                } else {
+                    this.add("blocks", new Block({
+                        position: {bx: bx, by: by},
+                        color: Colors.arena.darkblue,
+                        type: "wall"
+                    }), "position")
+                }
+            }
+        }
 
         for(var index in protogame.bombers) {
             var protobomber = protogame.bombers[index]
@@ -56,9 +67,13 @@ class Game {
         entity.id = ShortID.generate()
         this[label] = entity
     }
-    add(label, entity) {
+    add(label, entity, key) {
         entity.game = this
-        entity.id = ShortID.generate()
+        if(key == "position") {
+            entity.id = entity.position.toString("block")
+        } else {
+            entity.id = ShortID.generate()
+        }
         if(this[label] == undefined) {
             this[label] = {}
         }
