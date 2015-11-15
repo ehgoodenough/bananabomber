@@ -3,12 +3,113 @@ var Entity = require("./Entity")
 
 var Input = require("../systems/Input")
 
+class Bomber extends Entity {
+    constructor(protobomber = {}) {
+        super("Bomber", protobomber)
+
+        this.inputs = protobomber.inputs
+
+        this.position = new Rectangle({
+            bx: protobomber.position.bx || 0,
+            by: protobomber.position.by || 0,
+            w: BLOCK * 0.75,
+            h: BLOCK * 0.75,
+        })
+        this.velocity = new Point()
+
+        this.isDead = protobomber.isDead || false
+
+        this.color = protobomber.color || "#111"
+        this.speed = BLOCK * 4
+    }
+    update(tick) {
+        // Input
+        if(Input.isDown(this.inputs["move north"])) {
+            this.velocity.y = -1 * this.speed
+        } if(Input.isDown(this.inputs["move south"])) {
+            this.velocity.y = +1 * this.speed
+        } if(Input.isDown(this.inputs["move west"])) {
+            this.velocity.x = -1 * this.speed
+        } if(Input.isDown(this.inputs["move east"])) {
+            this.velocity.x = +1 * this.speed
+        }
+
+        // Collision
+        var positions = this.position.getDeltaBlocks({
+            x: this.velocity.x * tick
+        })
+        for(var key in positions) {
+            var position = positions[key]
+            var block = this.game.blocks[key]
+            if(!!block) {
+                if(this.velocity.x > 0) {
+                    this.position.bx1 = position.bx
+                    this.velocity.x = 0
+                } else if(this.velocity.x < 0) {
+                    this.position.bx0 = position.bx + 1
+                    this.velocity.x = 0
+                }
+            }
+        }
+        var positions = this.position.getDeltaBlocks({
+            x: this.velocity.x * tick,
+            y: this.velocity.y * tick
+        })
+        for(var key in positions) {
+            var position = positions[key]
+            var block = this.game.blocks[key]
+            if(!!block) {
+                if(this.velocity.y > 0) {
+                    this.position.by1 = position.by
+                    this.velocity.y = 0
+                } else if(this.velocity.y < 0) {
+                    this.position.by0 = position.by + 1
+                    this.velocity.y = 0
+                }
+            }
+        }
+
+        // Translation
+        this.position.x += this.velocity.x * tick
+        this.position.y += this.velocity.y * tick
+
+        // Deceleration
+        this.velocity.x = 0
+        this.velocity.y = 0
+    }
+    render() {
+        return {
+            color: this.color,
+            x: this.position.x,
+            y: this.position.y,
+            width: this.position.w,
+            height: this.position.h,
+        }
+    }
+}
+
+export default Bomber
+
 class Rectangle {
     constructor(protorectangle) {
-        this.bx = protorectangle.bx
-        this.by = protorectangle.by
-        this.w = protorectangle.w
-        this.h = protorectangle.h
+        this.x = 0
+        this.y = 0
+        this.w = 0
+        this.h = 0
+
+        if(!!protorectangle.bx) {
+            this.bx = protorectangle.bx
+        } if(!!protorectangle.by) {
+            this.by = protorectangle.by
+        } if(!!protorectangle.x) {
+            this.x = protorectangle.x
+        } if(!!protorectangle.y) {
+            this.y = protorectangle.y
+        } if(!!protorectangle.w) {
+            this.w = protorectangle.w
+        } if(!!protorectangle.h) {
+            this.h = protorectangle.h
+        }
     }
     get bx() {
         return Math.floor(this.x / BLOCK)
@@ -113,90 +214,3 @@ class Rectangle {
         return deltablocks
     }
 }
-
-class Bomber extends Entity {
-    constructor(protobomber = {}) {
-        super("Bomber", protobomber)
-
-        this.inputs = protobomber.inputs
-
-        this.position = new Rectangle({
-            bx: protobomber.position.bx || 0,
-            by: protobomber.position.by || 0,
-            w: BLOCK * 0.75,
-            h: BLOCK * 0.75,
-        })
-        this.velocity = new Point()
-
-        this.isDead = protobomber.isDead || false
-
-        this.color = protobomber.color || "#111"
-        this.speed = BLOCK * 4
-    }
-    update(tick) {
-        // Input
-        if(Input.isDown(this.inputs["move north"])) {
-            this.velocity.y = -1 * this.speed
-        } if(Input.isDown(this.inputs["move south"])) {
-            this.velocity.y = +1 * this.speed
-        } if(Input.isDown(this.inputs["move west"])) {
-            this.velocity.x = -1 * this.speed
-        } if(Input.isDown(this.inputs["move east"])) {
-            this.velocity.x = +1 * this.speed
-        }
-
-        // Collision
-        var positions = this.position.getDeltaBlocks({
-            x: this.velocity.x * tick
-        })
-        for(var key in positions) {
-            var position = positions[key]
-            var block = this.game.blocks[key]
-            if(!!block) {
-                if(this.velocity.x > 0) {
-                    this.position.bx1 = position.bx
-                    this.velocity.x = 0
-                } else if(this.velocity.x < 0) {
-                    this.position.bx0 = position.bx + 1
-                    this.velocity.x = 0
-                }
-            }
-        }
-        var positions = this.position.getDeltaBlocks({
-            x: this.velocity.x * tick,
-            y: this.velocity.y * tick
-        })
-        for(var key in positions) {
-            var position = positions[key]
-            var block = this.game.blocks[key]
-            if(!!block) {
-                if(this.velocity.y > 0) {
-                    this.position.by1 = position.by
-                    this.velocity.y = 0
-                } else if(this.velocity.y < 0) {
-                    this.position.by0 = position.by + 1
-                    this.velocity.y = 0
-                }
-            }
-        }
-
-        // Translation
-        this.position.x += this.velocity.x * tick
-        this.position.y += this.velocity.y * tick
-
-        // Deceleration
-        this.velocity.x = 0
-        this.velocity.y = 0
-    }
-    render() {
-        return {
-            color: this.color,
-            x: this.position.x,
-            y: this.position.y,
-            width: this.position.w,
-            height: this.position.h,
-        }
-    }
-}
-
-export default Bomber
