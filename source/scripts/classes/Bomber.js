@@ -1,5 +1,6 @@
 var Point = require("./Point")
 var Entity = require("./Entity")
+var Bomb = require("./Bomb")
 
 var Input = require("../systems/Input")
 
@@ -40,8 +41,9 @@ class Bomber extends Entity {
         })
         for(var key in positions) {
             var position = positions[key]
+            var bomb = this.game.bombs[key]
             var block = this.game.blocks[key]
-            if(!!block) {
+            if(!!bomb || !!block) {
                 if(this.velocity.x > 0) {
                     this.position.bx1 = position.bx
                     this.velocity.x = 0
@@ -57,8 +59,9 @@ class Bomber extends Entity {
         })
         for(var key in positions) {
             var position = positions[key]
+            var bomb = this.game.bombs[key]
             var block = this.game.blocks[key]
-            if(!!block) {
+            if(!!bomb || !!block) {
                 if(this.velocity.y > 0) {
                     this.position.by1 = position.by
                     this.velocity.y = 0
@@ -76,6 +79,18 @@ class Bomber extends Entity {
         // Deceleration
         this.velocity.x = 0
         this.velocity.y = 0
+
+        // More Input
+        if(Input.isJustDown(this.inputs["drop bomb"])) {
+            if(!this.game.bombs[this.position.toString("block")]) {
+                this.game.add("bombs", new Bomb({
+                    position: {
+                        bx: this.position.bx,
+                        by: this.position.by
+                    }
+                }))
+            }
+        }
     }
     render() {
         return {
@@ -212,5 +227,12 @@ class Rectangle {
             }
         }
         return deltablocks
+    }
+    toString(format) {
+        if(format == "block") {
+            return Math.round(this.bx) + "x" + Math.round(this.by)
+        } else {
+            return Math.round(this.x) + "x" + Math.round(this.y)
+        }
     }
 }

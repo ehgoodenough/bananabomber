@@ -20,6 +20,7 @@ class PrimaryView extends React.Component {
                     <CameraView data={this.state.camera}>
                         <ArenaView data={this.state.arena}/>
                         <ForEachView view={GenericView} data={this.state.blocks}/>
+                        <ForEachView view={GenericView} data={this.state.bombs}/>
                         <ForEachView view={GenericView} data={this.state.bombers}/>
                     </CameraView>
                 </FrameView>

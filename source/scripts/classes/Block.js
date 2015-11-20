@@ -6,8 +6,10 @@ class Block extends Entity {
         super(protoblock)
         this.type = protoblock.type || "wall"
         this.rotation = protoblock.rotation || 0
-        this.position = new Point(protoblock.position)
         this.color = protoblock.color || "brown"
+
+        this.position = new Point(protoblock.position)
+        this.id = this.position.toString("block")
     }
     render() {
         if(this.type == "wall") {
