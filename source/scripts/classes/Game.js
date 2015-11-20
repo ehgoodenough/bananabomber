@@ -40,14 +40,14 @@ class Game {
                             color: Colors.crates[Math.floor(Math.random() * Colors.crates.length)],
                             rotation: Math.floor(Math.random() * 12) - 6,
                             type: "crate"
-                        }), "position")
+                        }))
                     }
                 } else {
                     this.add("blocks", new Block({
                         position: {bx: bx, by: by},
                         color: Colors.arena.darkblue,
                         type: "wall"
-                    }), "position")
+                    }))
                 }
             }
         }
@@ -61,6 +61,8 @@ class Game {
             position: {x: 0, y: 0},
             padding: 2 * BLOCK,
         }))
+
+        this.bombs = {}
     }
     put(label, entity) {
         entity.game = this
@@ -69,9 +71,7 @@ class Game {
     }
     add(label, entity, key) {
         entity.game = this
-        if(key == "position") {
-            entity.id = entity.position.toString("block")
-        } else {
+        if(entity.id == undefined) {
             entity.id = ShortID.generate()
         }
         if(this[label] == undefined) {
