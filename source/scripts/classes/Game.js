@@ -67,6 +67,9 @@ class Game {
         entity.game = this
         entity.id = ShortID.generate()
         this[label] = entity
+        if(!!entity.initialize) {
+            entity.initialize()
+        }
     }
     add(label, entity, key) {
         entity.game = this
@@ -77,6 +80,9 @@ class Game {
             this[label] = {}
         }
         this[label][entity.id] = entity
+        if(!!entity.initialize) {
+            entity.initialize()
+        }
     }
     remove(label, entity) {
         if(this[label] != undefined) {
