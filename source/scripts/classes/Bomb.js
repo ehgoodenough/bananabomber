@@ -53,6 +53,12 @@ class Bomb extends Entity {
             return
         }
 
+        // boom does not reach outside of arena.
+        if(position.x < 0 || position.x > this.game.arena.width
+        || position.y < 0 || position.y > this.game.arena.height) {
+            return
+        }
+
         // boom can reach through crates, but
         // unless it is a piercing boom, will
         // stop at the crate.
