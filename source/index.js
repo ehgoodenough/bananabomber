@@ -9,9 +9,6 @@ var Inputs = require("./scripts/data/Inputs")
 
 window.BLOCK = 32
 
-var Point = require("./scripts/classes/Point")
-window.point = new Point({x: 0, y: 0})
-
 var game = new Game({
     bombers: [
         {color: Colors.bombers.red, inputs: Inputs["wasd"], position: {bx: 0+2, by: 0+2}},

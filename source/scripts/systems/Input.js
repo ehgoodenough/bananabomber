@@ -54,4 +54,20 @@ document.addEventListener("keyup", function(event) {
     Input.setUp(vkey[event.keyCode])
 })
 
-export default Input
+export class Keyboard {
+    constructor(key) {
+        this.key = key
+    }
+    isDown() {
+        return Input.isDown(this.key)
+    }
+    isJustDown() {
+        return Input.isJustDown(this.key)
+    }
+    isUp() {
+        return Input.isUp(this.key)
+    }
+    isJustUp() {
+        return Input.isJustUp(this.key)
+    }
+}

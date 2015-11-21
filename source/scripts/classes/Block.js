@@ -1,15 +1,15 @@
-var Point = require("./Point")
+var Geometry = require("./Geometry")
 var Entity = require("./Entity")
 
 class Block extends Entity {
     constructor(protoblock = {}) {
-        super(protoblock)
+        super()
         this.type = protoblock.type || "wall"
         this.rotation = protoblock.rotation || 0
         this.color = protoblock.color || "brown"
 
-        this.position = new Point(protoblock.position)
-        this.id = this.position.toString("block")
+        this.position = new Geometry.Point(protoblock.position)
+        this.id = this.position.toString()
     }
     render() {
         if(this.type == "wall") {

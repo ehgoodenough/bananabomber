@@ -1,6 +1,6 @@
 class Entity {
     update() {
-        return null
+        return
     }
     render() {
         return {}

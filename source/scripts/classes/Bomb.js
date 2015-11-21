@@ -1,19 +1,19 @@
-var Point = require("./Point")
+var Geometry = require("./Geometry")
 var Entity = require("./Entity")
-var BoomSmoke = require("./BoomSmoke")
+var Smoke = require("./Smoke")
 
 class Bomb extends Entity {
     constructor(protobomb) {
-        super(protobomb)
-        this.position = new Point(protobomb.position)
+        super()
+        this.position = new Geometry.Point(protobomb.position)
         this.position.x += BLOCK * 0.5
         this.position.y += BLOCK * 0.5
         this.size = BLOCK * 0.9
 
-        this.id = this.position.toString("block")
+        this.id = this.position.toString()
 
         this.bomber = protobomb.bomber
-        this.type = protobomb.type
+        this.model = protobomb.model
         this.fuse = 1
     }
     render() {
@@ -31,21 +31,18 @@ class Bomb extends Entity {
         if(this.fuse <= 0) {
             this.boom({
                 intensity: 1,
-                position: {
-                    bx: this.position.bx,
-                    by: this.position.by
-                }
+                position: this.position.toPoint()
             })
             this.game.remove("bombs", this)
-            this.bomber.queue.push(this.type)
+            this.bomber.prebombs.push(this.model)
         }
     }
     boom(protoboom) {
-        var position = new Point(protoboom.position)
+        var position = new Geometry.Point(protoboom.position)
         var direction = protoboom.direction || "all"
         var intensity = protoboom.intensity || 0
 
-        var key = position.toString("block")
+        var key = position.toString()
         var block = this.game.blocks[key]
 
         // boom does not reach through walls
@@ -67,11 +64,8 @@ class Bomb extends Entity {
             intensity = 0
         }
 
-        this.game.add("boomsmokes", new BoomSmoke({
-            position: {
-                bx: position.bx,
-                by: position.by,
-            }
+        this.game.add("smoke", new Smoke({
+            position: position.toPoint()
         }))
 
         if(intensity > 0) {
@@ -80,40 +74,28 @@ class Bomb extends Entity {
                 this.boom({
                     direction: "north",
                     intensity: intensity - 1,
-                    position: {
-                        bx: position.bx,
-                        by: position.by - 1
-                    }
+                    position: position.toPoint({by: -1})
                 })
             } if(direction == "all"
             || direction == "south") {
                 this.boom({
                     direction: "south",
                     intensity: intensity - 1,
-                    position: {
-                        bx: position.bx,
-                        by: position.by + 1
-                    }
+                    position: position.toPoint({by: +1})
                 })
             } if(direction == "all"
             || direction == "west") {
                 this.boom({
                     direction: "west",
                     intensity: intensity - 1,
-                    position: {
-                        bx: position.bx - 1,
-                        by: position.by
-                    }
+                    position: position.toPoint({bx: -1})
                 })
             } if(direction == "all"
             || direction == "east") {
                 this.boom({
                     direction: "east",
                     intensity: intensity - 1,
-                    position: {
-                        bx: position.bx + 1,
-                        by: position.by
-                    }
+                    position: position.toPoint({bx: +1})
                 })
             }
         }

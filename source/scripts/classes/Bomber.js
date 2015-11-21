@@ -1,45 +1,39 @@
-var Point = require("./Point")
 var Entity = require("./Entity")
-var Bomb = require("./Bomb")
+var Geometry = require("./Geometry")
 var Block = require("./Block")
-
-var Input = require("../systems/Input")
+var Bomb = require("./Bomb")
 
 class Bomber extends Entity {
-    constructor(protobomber = {}) {
-        super("Bomber", protobomber)
-
-        this.inputs = protobomber.inputs
-
-        this.position = new Rectangle({
-            bx: protobomber.position.bx || 0,
-            by: protobomber.position.by || 0,
+    constructor(protobomber = new Object()) {
+        super()
+        this.velocity = new Geometry.Point()
+        this.position = new Geometry.Space({
+            bx: protobomber.position.bx + 0.5,
+            by: protobomber.position.by + 0.5,
             w: BLOCK * 0.75,
             h: BLOCK * 0.75,
         })
-        this.velocity = new Point()
 
-        this.isDead = protobomber.isDead || false
-
+        this.inputs = protobomber.inputs || {}
         this.color = protobomber.color || "#111"
-        this.speed = BLOCK * 4
-
-        this.queue = ["standard", "standard"]
+        this.isDead = protobomber.isDead || false
+        this.speed = protobomber.speed || 4 * BLOCK
+        this.prebombs = ["standard", "standard"]
     }
     update(tick) {
-        // Input
-        if(Input.isDown(this.inputs["move north"])) {
+        // Input: Move Around
+        if(this.inputs["move north"].isDown()) {
             this.velocity.y = -1 * this.speed
-        } if(Input.isDown(this.inputs["move south"])) {
+        } if(this.inputs["move south"].isDown()) {
             this.velocity.y = +1 * this.speed
-        } if(Input.isDown(this.inputs["move west"])) {
+        } if(this.inputs["move west"].isDown()) {
             this.velocity.x = -1 * this.speed
-        } if(Input.isDown(this.inputs["move east"])) {
+        } if(this.inputs["move east"].isDown()) {
             this.velocity.x = +1 * this.speed
         }
 
-        // Collision
-        var positions = this.position.getDeltaBlocks({
+        // Collision: Blocks, Bombs
+        var positions = this.position.getDeltaBositions({
             x: this.velocity.x * tick
         })
         for(var key in positions) {
@@ -60,7 +54,7 @@ class Bomber extends Entity {
                 }
             }
         }
-        var positions = this.position.getDeltaBlocks({
+        var positions = this.position.getDeltaBositions({
             x: this.velocity.x * tick,
             y: this.velocity.y * tick
         })
@@ -91,17 +85,14 @@ class Bomber extends Entity {
         this.velocity.x = 0
         this.velocity.y = 0
 
-        // More Input
-        if(Input.isJustDown(this.inputs["drop bomb"])) {
-            if(this.queue.length > 0) {
-                if(!this.game.bombs[this.position.toString("block")]) {
+        // Input: Drop Bombs
+        if(this.inputs["drop bomb"].isJustDown()) {
+            if(this.prebombs.length > 0) {
+                if(!this.game.bombs[this.position]) {
                     this.game.add("bombs", new Bomb({
-                        type: this.queue.shift(),
-                        bomber: this,
-                        position: {
-                            bx: this.position.bx,
-                            by: this.position.by
-                        },
+                        position: this.position.toPoint(),
+                        model: this.prebombs.shift(),
+                        bomber: this
                     }))
                 }
             }
@@ -110,8 +101,8 @@ class Bomber extends Entity {
     render() {
         return {
             color: this.color,
-            x: this.position.x,
-            y: this.position.y,
+            x: this.position.x0,
+            y: this.position.y0,
             width: this.position.w,
             height: this.position.h,
         }
@@ -119,135 +110,3 @@ class Bomber extends Entity {
 }
 
 export default Bomber
-
-class Rectangle {
-    constructor(protorectangle) {
-        this.x = 0
-        this.y = 0
-        this.w = 0
-        this.h = 0
-
-        if(!!protorectangle.bx) {
-            this.bx = protorectangle.bx
-        } if(!!protorectangle.by) {
-            this.by = protorectangle.by
-        } if(!!protorectangle.x) {
-            this.x = protorectangle.x
-        } if(!!protorectangle.y) {
-            this.y = protorectangle.y
-        } if(!!protorectangle.w) {
-            this.w = protorectangle.w
-        } if(!!protorectangle.h) {
-            this.h = protorectangle.h
-        }
-    }
-    get bx() {
-        return Math.floor(this.x / BLOCK)
-    }
-    get by() {
-        return Math.floor(this.y / BLOCK)
-    }
-    get bw() {
-        return Math.floor(this.width / BLOCK)
-    }
-    get bh() {
-        return Math.floor(this.height / BLOCK)
-    }
-    set bx(bx) {
-        this.x = bx * BLOCK
-    }
-    set by(by) {
-        this.y = by * BLOCK
-    }
-    set bw(bw) {
-        this.w = bw * BLOCK
-    }
-    set bh(bh) {
-        this.h = bh * BLOCK
-    }
-    get x0() {
-        return this.x
-    }
-    get y0() {
-        return this.y
-    }
-    get x1() {
-        return this.x + this.w
-    }
-    get y1() {
-        return this.y + this.h
-    }
-    set x0(x0) {
-        this.x = x0
-    }
-    set y0(y0) {
-        this.y = y0
-    }
-    set x1(x1) {
-        this.x = x1 - this.w
-    }
-    set y1(y1) {
-        this.y = y1 - this.h
-    }
-    get bx0() {
-        return Math.floor(this.x0 / BLOCK)
-    }
-    get bx1() {
-        return Math.floor(this.x1 / BLOCK)
-    }
-    get by0() {
-        return Math.floor(this.y0 / BLOCK)
-    }
-    get by1() {
-        return Math.floor(this.y1 / BLOCK)
-    }
-    set bx0(bx0) {
-        this.x0 = bx0 * BLOCK
-    }
-    set bx1(bx1) {
-        this.x1 = bx1 * BLOCK
-    }
-    set by0(by0) {
-        this.y0 = by0 * BLOCK
-    }
-    set by1(by1) {
-        this.y1 = by1 * BLOCK
-    }
-    getBlocks(delta={}) {
-        delta.x = delta.x || 0
-        delta.y = delta.y || 0
-
-        var bx0 = Math.floor((this.x0 + delta.x) / BLOCK)
-        var bx1 = Math.ceil((this.x1 + delta.x) / BLOCK)
-        var by0 = Math.floor((this.y0 + delta.y) / BLOCK)
-        var by1 = Math.ceil((this.y1 + delta.y) / BLOCK)
-
-        var blocks = {}
-        for(var bx = bx0; bx < bx1; bx++) {
-            for(var by = by0; by < by1; by++) {
-                blocks[bx + "x" + by] = new Point({
-                    bx: bx, by: by
-                })
-            }
-        }
-        return blocks
-    }
-    getDeltaBlocks(delta={}) {
-        var blocks = this.getBlocks()
-        var deltablocks = this.getBlocks(delta)
-
-        for(var key in deltablocks) {
-            if(blocks[key] != undefined) {
-                delete deltablocks[key]
-            }
-        }
-        return deltablocks
-    }
-    toString(format) {
-        if(format == "block") {
-            return Math.round(this.bx) + "x" + Math.round(this.by)
-        } else {
-            return Math.round(this.x) + "x" + Math.round(this.y)
-        }
-    }
-}

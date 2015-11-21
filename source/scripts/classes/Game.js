@@ -6,7 +6,6 @@ var Camera = require("./Camera")
 var Bomber = require("./Bomber")
 var Frame = require("./Frame")
 var Entity = require("./Entity")
-var Point = require("./Point")
 
 var Colors = require("../data/Colors")
 var Inputs = require("../data/Inputs")

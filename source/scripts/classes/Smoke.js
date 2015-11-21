@@ -1,17 +1,17 @@
-var Point = require("./Point")
+var Geometry = require("./Geometry")
 var Entity = require("./Entity")
 
-class BoomSmoke extends Entity {
-    constructor(protoboomsmoke = new Object()) {
+class Smoke extends Entity {
+    constructor(protosmoke = new Object()) {
         super()
-        this.position = new Point(protoboomsmoke.position)
+        this.position = new Geometry.Point(protosmoke.position)
 
         this.fade = 0.5
     }
     update(tick) {
         this.fade -= tick
         if(this.fade <= 0) {
-            this.game.remove("boomsmokes", this)
+            this.game.remove("smoke", this)
         }
     }
     render() {
@@ -25,4 +25,4 @@ class BoomSmoke extends Entity {
     }
 }
 
-export default BoomSmoke
+export default Smoke
