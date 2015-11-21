@@ -22,6 +22,8 @@ class Bomber extends Entity {
 
         this.color = protobomber.color || "#111"
         this.speed = BLOCK * 4
+
+        this.queue = ["standard", "standard"]
     }
     update(tick) {
         // Input
@@ -82,13 +84,17 @@ class Bomber extends Entity {
 
         // More Input
         if(Input.isJustDown(this.inputs["drop bomb"])) {
-            if(!this.game.bombs[this.position.toString("block")]) {
-                this.game.add("bombs", new Bomb({
-                    position: {
-                        bx: this.position.bx,
-                        by: this.position.by
-                    }
-                }))
+            if(this.queue.length > 0) {
+                if(!this.game.bombs[this.position.toString("block")]) {
+                    this.game.add("bombs", new Bomb({
+                        type: this.queue.shift(),
+                        bomber: this,
+                        position: {
+                            bx: this.position.bx,
+                            by: this.position.by
+                        },
+                    }))
+                }
             }
         }
     }

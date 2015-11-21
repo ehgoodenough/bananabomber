@@ -5,19 +5,32 @@ class Bomb extends Entity {
     constructor(protobomb) {
         super(protobomb)
         this.position = new Point(protobomb.position)
-        this.id = this.position.toString("block")
         this.position.x += BLOCK * 0.5
         this.position.y += BLOCK * 0.5
-        this.radius = BLOCK * 0.9 * 0.5
+        this.size = BLOCK * 0.9
+
+        this.id = this.position.toString("block")
+
+        this.bomber = protobomb.bomber
+        this.type = protobomb.type
+        this.fuse = 1
     }
     render() {
         return {
             color: "#111",
-            x: this.position.x - this.radius,
-            y: this.position.y - this.radius,
-            width: this.radius * 2,
-            height: this.radius * 2,
-            roundness: this.radius,
+            width: this.size,
+            height: this.size,
+            roundness: this.size,
+            x: this.position.x - (this.size / 2),
+            y: this.position.y - (this.size / 2),
+        }
+    }
+    update(tick) {
+        this.fuse -= tick
+        if(this.fuse <= 0) {
+            console.log("boom")
+            this.game.remove("bombs", this)
+            this.bomber.queue.push(this.type)
         }
     }
 }
