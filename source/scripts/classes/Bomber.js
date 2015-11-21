@@ -1,6 +1,7 @@
 var Point = require("./Point")
 var Entity = require("./Entity")
 var Bomb = require("./Bomb")
+var Block = require("./Block")
 
 var Input = require("../systems/Input")
 
@@ -45,6 +46,10 @@ class Bomber extends Entity {
             var position = positions[key]
             var bomb = this.game.bombs[key]
             var block = this.game.blocks[key]
+            if(position.x < 0 || position.x > this.game.arena.width
+            || position.y < 0 || position.y > this.game.arena.height) {
+                block = new Block({position: position})
+            }
             if(!!bomb || !!block) {
                 if(this.velocity.x > 0) {
                     this.position.bx1 = position.bx
@@ -63,6 +68,10 @@ class Bomber extends Entity {
             var position = positions[key]
             var bomb = this.game.bombs[key]
             var block = this.game.blocks[key]
+            if(position.x < 0 || position.x > this.game.arena.width
+            || position.y < 0 || position.y > this.game.arena.height) {
+                block = new Block({position: position})
+            }
             if(!!bomb || !!block) {
                 if(this.velocity.y > 0) {
                     this.position.by1 = position.by
