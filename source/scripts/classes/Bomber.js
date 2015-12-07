@@ -10,8 +10,8 @@ class Bomber extends Entity {
         this.position = new Geometry.Space({
             bx: protobomber.position.bx + 0.5,
             by: protobomber.position.by + 0.5,
-            w: BLOCK * 0.75,
-            h: BLOCK * 0.75,
+            w: BLOCK * 0.618,
+            h: BLOCK * 0.618,
         })
 
         this.inputs = protobomber.inputs || {}

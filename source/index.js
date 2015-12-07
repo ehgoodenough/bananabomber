@@ -17,8 +17,6 @@ var bombers = [
     {color: Colors.bombers.purple, inputs: Inputs["arrows"], position: {bx: 17-1-2, by: 11-1-2}},
 ]
 
-var ShortID = require("shortid")
-
 var Block = require("./scripts/classes/Block")
 var Arena = require("./scripts/classes/Arena")
 var Camera = require("./scripts/classes/Camera")
