@@ -1,68 +1,8 @@
 var ShortID = require("shortid")
 
-var Block = require("./Block")
-var Arena = require("./Arena")
-var Camera = require("./Camera")
-var Bomber = require("./Bomber")
-var Frame = require("./Frame")
 var Entity = require("./Entity")
 
-var Colors = require("../data/Colors")
-var Inputs = require("../data/Inputs")
-
 class Game {
-    constructor(protogame) {
-        this.put("frame", new Frame({
-            width: 1280, height: 720,
-            color: "#BEB9B5"
-        }))
-
-        this.put("arena", new Arena({
-            bwidth: 17,
-            bheight: 11,
-        }))
-
-        for(var bx = 0; bx < this.arena.bwidth; bx++) {
-            for(var by = 0; by < this.arena.bheight; by++) {
-                if(bx % 2 == 0 || by % 2 == 0) {
-                    var hasBomber = false
-                    for(var index in protogame.bombers) {
-                        var protobomber = protogame.bombers[index]
-                        if(Math.abs(protobomber.position.bx - bx) < 2
-                        && Math.abs(protobomber.position.by - by) < 2) {
-                            hasBomber = true
-                        }
-                    }
-                    if(!hasBomber) {
-                        this.add("blocks", new Block({
-                            position: {bx: bx, by: by},
-                            color: Colors.crates[Math.floor(Math.random() * Colors.crates.length)],
-                            rotation: Math.floor(Math.random() * 12) - 6,
-                            type: "crate"
-                        }))
-                    }
-                } else {
-                    this.add("blocks", new Block({
-                        position: {bx: bx, by: by},
-                        color: Colors.arena.darkblue,
-                        type: "wall"
-                    }))
-                }
-            }
-        }
-
-        for(var index in protogame.bombers) {
-            var protobomber = protogame.bombers[index]
-            this.add("bombers", new Bomber(protobomber))
-        }
-
-        this.put("camera", new Camera({
-            position: {x: 0, y: 0},
-            padding: 2 * BLOCK,
-        }))
-
-        this.bombs = {}
-    }
     put(label, entity) {
         entity.game = this
         entity.id = ShortID.generate()
