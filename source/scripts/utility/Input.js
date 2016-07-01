@@ -1,6 +1,6 @@
-var vkey = require("vkey")
+import vkey from "vkey"
 
-var Input = {
+var Keyb = {
     isDown: function(key) {
         if(this.data[key] == undefined) {
             this.data[key] = -1
@@ -41,33 +41,36 @@ var Input = {
     setUp: function(key) {
         this.data[key] = -1
     },
-    data: new Object(),
+    data: new Object()
 }
 
 document.addEventListener("keydown", function(event) {
-    if(Input.isUp(vkey[event.keyCode])) {
-        Input.setDown(vkey[event.keyCode])
+    if(Keyb.isUp(vkey[event.keyCode])) {
+        Keyb.setDown(vkey[event.keyCode])
     }
 })
 
 document.addEventListener("keyup", function(event) {
-    Input.setUp(vkey[event.keyCode])
+    Keyb.setUp(vkey[event.keyCode])
 })
 
-export class Keyboard {
-    constructor(key) {
-        this.key = key
+class Input {
+    constructor(inputs) {
+        if(inputs.constructor != Array) {
+            this.inputs = new Array()
+            this.inputs.push(inputs)
+        } else {
+            this.inputs = inputs
+        }
+    }
+    static isDown(input) {
+        return Keyb.isDown(input)
     }
     isDown() {
-        return Input.isDown(this.key)
-    }
-    isJustDown() {
-        return Input.isJustDown(this.key)
-    }
-    isUp() {
-        return Input.isUp(this.key)
-    }
-    isJustUp() {
-        return Input.isJustUp(this.key)
+        return this.inputs.some((input) => {
+            return Keyb.isDown(input)
+        })
     }
 }
+
+export default Input
