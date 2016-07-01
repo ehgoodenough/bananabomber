@@ -4,9 +4,34 @@ import Render from "scripts/utility/Render.js"
 import StatDump from "scripts/utility/StatDump.js"
 
 import shortid from "shortid"
+function key() {
+    return shortid.generate()
+}
+
+var DATA = {
+    TILES: {
+        BLOCK: {
+            isBlock: true,
+            image: require("images/block.png"),
+        },
+        BOX: {
+            isBlock: true,
+            image: require("images/box.png"),
+        },
+    }
+}
+
+function collides(a, b) {
+    return !(
+           b.position.x - (b.width / 2) > a.position.x + (a.width / 2)
+        || b.position.x + (b.width / 2) < a.position.x - (a.width / 2)
+        || b.position.y - (b.height / 2) > a.position.y - (a.height / 2)
+        || b.position.y + (b.height / 2) < a.position.y - (a.height / 2)
+    )
+}
 
 class PlayerBomber {
-    constructor(bomber = {}) {
+    constructor(bomber) {
         this.inputs = bomber.inputs || {undefined: undefined}
         this.position = bomber.position || {x: 0, y: 0}
         this.width = 26
@@ -15,28 +40,42 @@ class PlayerBomber {
         this.color = "#577F46"
         this.hasBorder = true
 
+        this.velocity = {x: 0, y: 0}
         this.speed = 5
-
-        this.key = shortid.generate()
     }
-    update(time = 0) {
+    update(time) {
         if(this.inputs["north"].isDown()) {
-            this.position.y -= this.speed
+            this.move({y: -1 * this.speed})
         } if(this.inputs["south"].isDown()) {
-            this.position.y += this.speed
+            this.move({y: +1 * this.speed})
         } if(this.inputs["west"].isDown()) {
-            this.position.x -= this.speed
+            this.move({x: -1 * this.speed})
         } if(this.inputs["east"].isDown()) {
-            this.position.x += this.speed
+            this.move({x: +1 * this.speed})
         }
+    }
+    move(movement) {
+        movement = movement || {}
+        movement.x = movement.x || 0
+        movement.y = movement.y || 0
+
+        // this.game.tiles.forEach((tile) => {
+        //     if(collides(tile, {position: this.position, width: 10, height: 10})) {
+        //         movement.x = 0
+        //         movement.y = 0
+        //     }
+        // })
+
+        this.position.x += movement.x
+        this.position.y += movement.y
     }
 }
 
 class Tile {
     constructor(tile = {}) {
         this.position = tile.position || {x: 0, y: 0}
-        this.image = require("images/box.png")
-        this.color = "hotpink"
+        this.image = tile.type.image || require("images/box.png")
+        this.isBlock = tile.type.isBlock || false
 
         this.width = 32
         this.height = 32
@@ -47,29 +86,38 @@ class Tile {
 
 class Game {
     constructor() {
-        this.players = [
-            new PlayerBomber({
-                position: {
-                    x: 640 / 2,
-                    y: 360 / 2,
-                },
-                inputs: {
-                    "north": new Input(["<up>", "W"]),
-                    "south": new Input(["<down>", "S"]),
-                    "west": new Input(["<left>", "A"]),
-                    "east": new Input(["<right>", "D"]),
-                }
-            }),
-        ]
+        this.players = []
+        this.add("players", new PlayerBomber({
+            position: {
+                x: 640 / 2 + 32,
+                y: 360 / 2,
+            },
+            inputs: {
+                "north": new Input(["<up>", "W"]),
+                "south": new Input(["<down>", "S"]),
+                "west": new Input(["<left>", "A"]),
+                "east": new Input(["<right>", "D"]),
+            }
+        }))
 
-        this.tiles = [
-            new Tile({
-                position: {
-                    x: 32 * 4,
-                    y: 32 * 3,
+        this.tiles = new Array()
+        for(var x = 32 * 4; x < 32 * 17; x += 32) {
+            for(var y = 32 * 3; y < 32 * 9; y += 32) {
+                if(x / 32 % 2 == 0 && y / 32 % 2 == 0) {
+                    this.tiles.push(new Tile({
+                        position: {x: x, y: y},
+                        type: DATA.TILES.BLOCK,
+                    }))
                 }
-            })
-        ]
+            }
+        }
+    }
+    add(label, entity) {
+        this[label] = this[label] || []
+        this[label].push(entity)
+
+        entity.game = this
+        entity.key = key()
     }
     get entities() {
         return new Array()
@@ -86,7 +134,7 @@ class Game {
 var state = {
     frame: {
         width: 640,
-        height: 360,
+        height: 352,
         color: "#453e66",
     },
     inputs: {
