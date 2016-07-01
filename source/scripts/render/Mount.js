@@ -8,8 +8,8 @@ export default class Mount extends React.Component {
     render() {
         if(!!this.state) {
             return (
-                <Frame frame={this.state.game.frame}>
-                    <Entity entity={this.state.game.player}/>
+                <Frame frame={this.state.frame}>
+                    <Entity entity={this.state.game.entities[0]}/>
                 </Frame>
             )
         } else {
@@ -17,8 +17,5 @@ export default class Mount extends React.Component {
                 <div/>
             )
         }
-    }
-    update(state) {
-        this.setState(state || {})
     }
 }
