@@ -4,10 +4,19 @@
     cursor: default;
     user-select: none;
     box-sizing: border-box;
+    image-rendering: pixelated;
 }
 
 html {
     color: #EEE;
     background-color: #111;
     font-family: box;
+}
+
+.entity {
+    img {
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+    }
 }

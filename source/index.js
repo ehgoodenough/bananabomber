@@ -3,15 +3,21 @@ import Input from "scripts/utility/Input.js"
 import Render from "scripts/utility/Render.js"
 import StatDump from "scripts/utility/StatDump.js"
 
+import shortid from "shortid"
+
 class PlayerBomber {
-    constructor(bomber) {
+    constructor(bomber = {}) {
         this.inputs = bomber.inputs || {undefined: undefined}
         this.position = bomber.position || {x: 0, y: 0}
-        this.color = "#C00"
-        this.width = 32
-        this.height = 32
+        this.width = 26
+        this.height = 26
+
+        this.color = "#577F46"
+        this.hasBorder = true
 
         this.speed = 5
+
+        this.key = shortid.generate()
     }
     update(time = 0) {
         if(this.inputs["north"].isDown()) {
@@ -23,6 +29,19 @@ class PlayerBomber {
         } if(this.inputs["east"].isDown()) {
             this.position.x += this.speed
         }
+    }
+}
+
+class Tile {
+    constructor(tile = {}) {
+        this.position = tile.position || {x: 0, y: 0}
+        this.image = require("images/box.png")
+        this.color = "hotpink"
+
+        this.width = 32
+        this.height = 32
+
+        this.key = shortid.generate()
     }
 }
 
@@ -42,10 +61,20 @@ class Game {
                 }
             }),
         ]
+
+        this.tiles = [
+            new Tile({
+                position: {
+                    x: 32 * 4,
+                    y: 32 * 3,
+                }
+            })
+        ]
     }
     get entities() {
         return new Array()
             .concat(this.players)
+            .concat(this.tiles)
     }
     update(time = 0) {
         this.players.forEach((player) => {
@@ -57,7 +86,8 @@ class Game {
 var state = {
     frame: {
         width: 640,
-        height: 360
+        height: 360,
+        color: "#453e66",
     },
     inputs: {
         "red": {

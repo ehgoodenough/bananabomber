@@ -77,6 +77,10 @@ rimraf("./builds/web", function() {
                         "html-loader?interpolate"
                     ]),
                 },
+                {
+                    test: /\.(png|jpe?g|gif|svg|ttf|otf|woff|svg|mp3|wav)$/i,
+                    loader: "url-loader",
+                },
             ],
         },
         postcss: function() {
