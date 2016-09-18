@@ -75,10 +75,11 @@ class Tile {
     constructor(tile = {}) {
         this.position = tile.position || {x: 0, y: 0}
         this.image = tile.type.image || require("images/box.png")
-        this.isBlock = tile.type.isBlock || false
+        //this.color = "hotpink"
 
         this.width = 32
         this.height = 32
+        this.isBlock = tile.type.isBlock || false
 
         this.key = shortid.generate()
     }
@@ -89,8 +90,8 @@ class Game {
         this.players = []
         this.add("players", new PlayerBomber({
             position: {
-                x: 640 / 2 + 32,
-                y: 360 / 2,
+                x: 32 * 9,
+                y: 32 * 7,
             },
             inputs: {
                 "north": new Input(["<up>", "W"]),
